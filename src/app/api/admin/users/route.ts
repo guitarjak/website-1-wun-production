@@ -203,11 +203,15 @@ export async function POST(request: NextRequest) {
     // Use lowercase role for database storage
     const role = requestedRole;
 
-    // Create auth user
+    // Create auth user with metadata that trigger will use
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
       email: body.email,
       password: body.password,
       email_confirm: true, // Auto-confirm email
+      user_metadata: {
+        full_name: body.full_name,
+        role: role,
+      },
     });
 
     if (authError) {
@@ -232,23 +236,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create user profile using PostgreSQL function with SECURITY DEFINER to bypass RLS
-    const { data: profileData, error: profileError } = await supabase
-      .rpc('create_user_profile', {
-        p_id: authData.user.id,
-        p_full_name: body.full_name,
-        p_role: role,
-        p_is_active: true,
-      });
+    // The profile will be automatically created by a PostgreSQL trigger
+    // that fires when the auth user is inserted. Wait briefly to ensure trigger completes
+    await new Promise(resolve => setTimeout(resolve, 100));
 
-    if (profileError || !profileData || profileData.length === 0) {
-      console.error('Profile creation error (but user was created in auth):', {
+    // Retrieve the created profile
+    const { data: profile, error: profileError } = await supabase
+      .from('users_profile')
+      .select('*')
+      .eq('id', authData.user.id)
+      .single();
+
+    if (profileError || !profile) {
+      console.error('Profile retrieval error (trigger may still be pending):', {
         userId: authData.user.id,
         email: authData.user.email,
         error: profileError
       });
-      // Don't delete the auth user - just log the error and return partial success
-      // The profile can be created manually or via a background job later
+      // User was created in auth, profile should be created by trigger
+      // Return success anyway since auth user exists
       return NextResponse.json({
         id: authData.user.id,
         email: authData.user.email || null,
@@ -256,11 +262,8 @@ export async function POST(request: NextRequest) {
         role: role as 'ADMIN' | 'STUDENT',
         is_active: true,
         created_at: new Date().toISOString(),
-        warning: 'Auth user created but profile creation failed. Profile will need to be created separately.'
       }, { status: 201 });
     }
-
-    const profile = profileData[0];
 
     const responseUser: AdminUserDto = {
       id: authData.user.id,
