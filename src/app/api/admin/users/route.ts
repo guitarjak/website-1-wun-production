@@ -70,7 +70,7 @@ function validateInput(body: unknown): { valid: boolean; errors?: ValidationErro
       email: (input.email as string).toLowerCase(),
       password: input.password as string,
       full_name: (input.full_name as string).trim(),
-      role: (input.role as string).toUpperCase().trim(),
+      role: (input.role as string).toLowerCase().trim(),
     },
   };
 }
@@ -178,21 +178,19 @@ export async function POST(request: NextRequest): Promise<NextResponse<SuccessRe
     const userId = authData.user.id;
     console.log(`✅ Auth user created: ${userId}`);
 
-    // 5. Insert profile into users_profile table
+    // 5. Create profile using RPC function (bypasses REST API RLS limitations)
     console.log(`📝 Creating profile for: ${userId}`);
-    const { error: profileError } = await supabase
-      .from('users_profile')
-      .insert({
-        id: userId,
-        full_name,
-        role,
+    const { error: profileError, data: profileData } = await supabase
+      .rpc('create_user_profile', {
+        user_id: userId,
+        user_full_name: full_name,
+        user_role: role,
       });
 
     if (profileError) {
       console.error('❌ Profile creation failed:', profileError.message);
 
       // Try to clean up: delete the auth user we just created
-      // (Optional - you can remove this if you prefer to leave orphaned users)
       console.log(`🧹 Attempting to delete orphaned auth user: ${userId}`);
       await supabase.auth.admin.deleteUser(userId).catch(deleteError => {
         console.warn('⚠️ Failed to delete orphaned user:', deleteError.message);
