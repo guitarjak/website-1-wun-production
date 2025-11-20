@@ -55,7 +55,18 @@ async function fetchSubmissions(lessonFilter?: string, statusFilter?: string): P
   }
 
   // Transform the data to flat structure
-  const submissions: Submission[] = data.map((item: any) => ({
+  type SubmissionData = {
+    id: string;
+    lesson_id: string;
+    user_id: string;
+    submission_text: string | null;
+    submitted_at: string;
+    feedback: string | null;
+    status: string;
+    users_profile?: { full_name: string | null; email: string | null } | null;
+    lessons?: { id: string; title: string } | null;
+  };
+  const submissions: Submission[] = (data as SubmissionData[]).map((item) => ({
     id: item.id,
     lesson_id: item.lesson_id,
     user_id: item.user_id,

@@ -107,7 +107,7 @@ async function getUserProgress(
     return new Map();
   }
 
-  return new Map(progress.map((p) => [p.lesson_id, p]));
+  return new Map((progress as Array<{ lesson_id: string; completed: boolean }>).map((p) => [p.lesson_id, p]));
 }
 
 async function getLatestHomeworkSubmission(
@@ -126,7 +126,7 @@ async function getLatestHomeworkSubmission(
     return null;
   }
 
-  const lessonIds = lessons.map((l) => l.id);
+  const lessonIds = (lessons as Array<{ id: string }>).map((l) => l.id);
 
   const { data: submissions, error } = await supabase
     .from('homework_submissions')
@@ -193,7 +193,7 @@ export default async function ModulePage({
   }
 
   // Get user progress
-  const lessonIds = lessons.map((l) => l.id);
+  const lessonIds = (lessons as Array<{ id: string; title: string; order: number }>).map((l) => l.id);
   const userProgress = await getUserProgress(user!.user.id, lessonIds);
 
   // Get latest homework submission

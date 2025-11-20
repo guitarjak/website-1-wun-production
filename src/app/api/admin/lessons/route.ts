@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 
       const maxOrder = Math.max(
         -1,
-        ...(lessons || []).map((l) => l.order || 0)
+        ...(lessons || [] as Array<{ order: number | null }>).map((l) => l.order || 0)
       );
       order = maxOrder + 1;
     }

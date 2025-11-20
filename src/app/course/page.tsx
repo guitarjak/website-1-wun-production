@@ -65,22 +65,23 @@ async function getCourseData(): Promise<Course | null> {
     }
 
     // OPTIMIZATION: Fetch ALL lessons in a single batch query instead of per-module
+    const typedModules = modules as Array<{ id: string; title: string; description: string | null; order: number }>;
     const { data: allLessons, error: lessonsError } = await supabase
       .from('lessons')
       .select('id, title, description, content, order, module_id')
       .in(
         'module_id',
-        modules.map((m) => m.id)
+        typedModules.map((m) => m.id)
       )
       .order('order', { ascending: true });
 
     if (lessonsError || !allLessons) {
-      return { ...courses, modules: modules.map((m) => ({ ...m, lessons: [] })) };
+      return { ...courses, modules: typedModules.map((m) => ({ ...m, lessons: [] })) };
     }
 
     // Group lessons by module_id in memory (O(n) operation)
     const lessonsByModule = new Map<string, Lesson[]>();
-    for (const lesson of allLessons) {
+    for (const lesson of allLessons as Array<{ id: string; title: string; description: string | null; content: string | null; order: number; module_id: string }>) {
       if (!lessonsByModule.has(lesson.module_id)) {
         lessonsByModule.set(lesson.module_id, []);
       }
@@ -95,7 +96,7 @@ async function getCourseData(): Promise<Course | null> {
     }
 
     // Build modules with lessons
-    const modulesWithLessons: Module[] = modules.map((module) => ({
+    const modulesWithLessons: Module[] = typedModules.map((module) => ({
       ...module,
       lessons: lessonsByModule.get(module.id) || [],
     }));
@@ -120,7 +121,7 @@ async function getUserProgress(userId: string): Promise<Set<string>> {
     return new Set();
   }
 
-  return new Set(progress.map((p) => p.lesson_id));
+  return new Set((progress as Array<{ lesson_id: string }>).map((p) => p.lesson_id));
 }
 
 async function getUserHomeworkSubmissions(
@@ -143,7 +144,8 @@ async function getUserHomeworkSubmissions(
     return new Set();
   }
 
-  const lessonIds = lessons.map((l) => l.id);
+  const typedLessons = lessons as Array<{ id: string; module_id: string }>;
+  const lessonIds = typedLessons.map((l) => l.id);
 
   // Get submissions for this user for any of these lessons
   const { data: submissions } = await supabase
@@ -157,9 +159,9 @@ async function getUserHomeworkSubmissions(
   }
 
   // Map lesson_ids back to module_ids
-  const lessonToModule = new Map(lessons.map((l) => [l.id, l.module_id]));
+  const lessonToModule = new Map(typedLessons.map((l) => [l.id, l.module_id]));
   const modulesWithSubmission = new Set(
-    submissions.map((s) => lessonToModule.get(s.lesson_id)).filter((m) => m)
+    (submissions as Array<{ id: string; lesson_id: string }>).map((s) => lessonToModule.get(s.lesson_id)).filter((m) => m)
   );
 
   return modulesWithSubmission as Set<string>;

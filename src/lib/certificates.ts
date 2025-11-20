@@ -65,7 +65,7 @@ export async function checkCertificateEligibility(
     .select('id, module_id')
     .in(
       'module_id',
-      modules.map((m) => m.id)
+      (modules as Array<{ id: string }>).map((m) => m.id)
     );
 
   if (lessonsError || !lessons) {
@@ -98,7 +98,7 @@ export async function checkCertificateEligibility(
   }
 
   const completedLessonIds = new Set(
-    (completedProgress || []).map((p) => p.lesson_id)
+    (completedProgress || [] as Array<{ lesson_id: string }>).map((p) => p.lesson_id)
   );
   const missingLessonsCount = totalLessonsCount - completedLessonIds.size;
 
@@ -132,7 +132,7 @@ export async function checkCertificateEligibility(
 
   // Create a set of submitted lesson IDs for O(1) lookup
   const submittedLessonIds = new Set(
-    (userSubmissions || []).map((s) => s.lesson_id)
+    (userSubmissions || [] as Array<{ lesson_id: string }>).map((s) => s.lesson_id)
   );
 
   // Create a map of lessons by module_id for quick lookup

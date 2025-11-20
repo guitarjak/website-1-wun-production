@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
       .select('id')
       .eq('module_id', moduleId);
 
-    const allLessonIds = (allLessons || []).map((l) => l.id);
+    const allLessonIds = (allLessons || [] as Array<{ id: string }>).map((l) => l.id);
 
     let existingSubmissionId: string | null = null;
 
@@ -238,7 +238,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const lessonIds = lessons.map((l) => l.id);
+    const lessonIds = (lessons as Array<{ id: string }>).map((l) => l.id);
 
     // Fetch all submissions for this user for any lesson in this module, ordered by newest first
     const { data: submissions, error } = await supabase

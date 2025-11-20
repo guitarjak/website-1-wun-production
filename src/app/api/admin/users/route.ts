@@ -107,11 +107,11 @@ export async function GET(request: NextRequest) {
 
     // Create a map of user IDs to emails
     const emailMap = new Map(
-      authUsers.users.map((u: any) => [u.id, u.email])
+      authUsers.users.map((u: { id: string; email?: string }) => [u.id, u.email])
     );
 
     // Combine data
-    const users: AdminUserDto[] = profiles.map((profile) => ({
+    const users: AdminUserDto[] = (profiles as Array<{ id: string; full_name: string | null; role: string; is_active: boolean | null; created_at: string }>).map((profile) => ({
       id: profile.id,
       email: emailMap.get(profile.id) || null,
       full_name: profile.full_name,

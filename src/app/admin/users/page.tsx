@@ -29,7 +29,8 @@ async function fetchUsers(): Promise<User[]> {
   }
 
   // Map profiles to User format
-  const users: User[] = profiles.map((profile) => ({
+  const typedProfiles = profiles as Array<{ id: string; email: string | null; full_name: string | null; role: string; created_at: string; is_active: boolean }>;
+  const users: User[] = typedProfiles.map((profile) => ({
     userId: profile.id,
     email: profile.email || '',
     full_name: profile.full_name,

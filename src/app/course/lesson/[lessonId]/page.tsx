@@ -84,7 +84,7 @@ async function getUserProgress(
     return new Map();
   }
 
-  return new Map(progress.map((p) => [p.lesson_id, p]));
+  return new Map((progress as Array<{ lesson_id: string; completed: boolean; completed_at: string | null }>).map((p) => [p.lesson_id, p]));
 }
 
 /**
@@ -149,7 +149,7 @@ export default async function LessonPage({
   }
 
   // Get user progress
-  const moduleLessonIds = moduleLessons.map((l) => l.id);
+  const moduleLessonIds = (moduleLessons as Array<{ id: string; order: number }>).map((l) => l.id);
   const userProgress = await getUserProgress(user!.user.id, moduleLessonIds);
 
   // Check if current lesson is unlocked
