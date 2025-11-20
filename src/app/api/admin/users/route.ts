@@ -203,20 +203,6 @@ export async function POST(request: NextRequest) {
     // Use lowercase role for database storage
     const role = requestedRole;
 
-    // Store user data in pending table so trigger can use it
-    const { error: pendingError } = await supabase
-      .from('_user_profile_pending')
-      .insert({
-        email: body.email,
-        full_name: body.full_name,
-        role: role,
-      });
-
-    if (pendingError) {
-      console.warn('Failed to store pending user data:', pendingError);
-      // Continue anyway - trigger will use fallback
-    }
-
     // Create auth user
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
       email: body.email,
@@ -246,10 +232,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Wait a brief moment for the trigger to create the profile
+    // Insert profile directly using RPC function that bypasses REST API RLS
+    const { error: profileError } = await supabase.rpc(
+      'insert_user_profile_direct',
+      {
+        p_user_id: authData.user.id,
+        p_full_name: body.full_name,
+        p_role: role,
+      }
+    );
+
+    if (profileError) {
+      console.warn('RPC profile creation failed, trigger will create fallback:', profileError);
+      // Profile may be created by trigger with email prefix fallback
+    }
+
+    // Wait briefly for profile to be created
     await new Promise(resolve => setTimeout(resolve, 100));
 
-    // Fetch the created profile
+    // Try to fetch the created profile
     const { data: profile } = await supabase
       .from('users_profile')
       .select('*')
