@@ -178,13 +178,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const role = body.role || 'STUDENT';
-    if (!['ADMIN', 'STUDENT'].includes(role)) {
+    // Accept both uppercase and lowercase role values
+    const requestedRole = (body.role || 'student').toLowerCase();
+    if (!['admin', 'student', 'instructor'].includes(requestedRole)) {
       return NextResponse.json(
-        { error: 'Invalid role. Must be ADMIN or STUDENT' },
+        { error: 'Invalid role. Must be admin, student, or instructor' },
         { status: 400 }
       );
     }
+
+    // Use lowercase role for database storage
+    const role = requestedRole;
 
     // Create auth user
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
@@ -215,7 +219,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create user profile
+    // Create user profile (RLS policy now allows service role inserts)
     const { data: profileData, error: profileError } = await supabase
       .from('users_profile')
       .insert({
