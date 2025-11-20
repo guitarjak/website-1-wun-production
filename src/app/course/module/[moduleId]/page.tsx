@@ -183,6 +183,10 @@ export default async function ModulePage({
     moduleId
   );
 
+  const canEditHomeworkSubmission = !!homeworkSubmission && homeworkSubmission.status !== 'APPROVED';
+  const shouldShowHomeworkForm = !homeworkSubmission || canEditHomeworkSubmission;
+  const homeworkFormTitle = canEditHomeworkSubmission ? '✏️ แก้ไขการบ้าน' : 'ส่งการบ้าน';
+
   // Calculate completion stats
   const completedLessons = lessons.filter((l) => {
     const progress = userProgress.get(l.id);
@@ -390,10 +394,10 @@ export default async function ModulePage({
             )}
 
             {/* Homework Form - Hidden if approved */}
-            {!homeworkSubmission || homeworkSubmission.status !== 'APPROVED' && (
+            {shouldShowHomeworkForm && (
               <div className="p-6 rounded-lg border" style={{ backgroundColor: 'rgba(74, 113, 246, 0.05)', borderColor: 'var(--blue)' }}>
                 <h3 className="text-lg font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-                  {homeworkSubmission && homeworkSubmission.status !== 'APPROVED' ? '✏️ แก้ไขการบ้าน' : 'ส่งการบ้าน'}
+                  {homeworkFormTitle}
                 </h3>
                 <HomeworkForm moduleId={moduleId} existingSubmission={homeworkSubmission} />
               </div>

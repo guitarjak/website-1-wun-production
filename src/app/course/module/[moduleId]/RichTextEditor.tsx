@@ -39,7 +39,7 @@ export default function RichTextEditor({
       const currentContent = editor.getHTML();
       // Only update if content has actually changed and we're not in the middle of typing
       if (currentContent !== value && editor.isEditable) {
-        editor.commands.setContent(value, { preserveWhitespace: true });
+        editor.commands.setContent(value, { emitUpdate: false });
       }
     }
   }, [editor, value]);
