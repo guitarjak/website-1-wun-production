@@ -232,19 +232,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create user profile using Supabase Admin SDK (bypasses REST API RLS limitations)
+    // Create user profile using PostgreSQL function with SECURITY DEFINER to bypass RLS
     const { data: profileData, error: profileError } = await supabase
-      .from('users_profile')
-      .insert({
-        id: authData.user.id,
-        full_name: body.full_name,
-        role,
-        is_active: true,
-      })
-      .select()
-      .single();
+      .rpc('create_user_profile', {
+        p_id: authData.user.id,
+        p_full_name: body.full_name,
+        p_role: role,
+        p_is_active: true,
+      });
 
-    if (profileError) {
+    if (profileError || !profileData || profileData.length === 0) {
       console.error('Profile creation error (but user was created in auth):', {
         userId: authData.user.id,
         email: authData.user.email,
@@ -263,7 +260,7 @@ export async function POST(request: NextRequest) {
       }, { status: 201 });
     }
 
-    const profile = profileData;
+    const profile = profileData[0];
 
     const responseUser: AdminUserDto = {
       id: authData.user.id,
