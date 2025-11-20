@@ -10,6 +10,17 @@
       "args": [
         "@playwright/mcp@latest"
       ]
+    },
+    "n8n-mcp": {
+      "command": "npx",
+      "args": ["n8n-mcp"],
+      "env": {
+        "MCP_MODE": "stdio",
+        "LOG_LEVEL": "error",
+        "DISABLE_CONSOLE_OUTPUT": "true",
+        "N8N_API_URL": "https://atm.guitarjkp.me",
+        "N8N_API_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4MGE1ZDQ2My1kNDM0LTQwZTktYTJmMy0yYTEwNWZkNGY4MmMiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzYzNjU0MTE3LCJleHAiOjE3NjYyMDY4MDB9.L_IY64KSAArNsanwbl98MKr3479oHv9f19zJgcFL_uc"
+      }
     }
   }
 }
