@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
 
     // Upsert into lesson_progress
     // If the row already exists, update it; otherwise, create it
-    const { data: existingProgress, error: checkError } = await supabase
+    const { data: existingProgress } = await supabase
       .from('lesson_progress')
       .select('id')
       .eq('user_id', user.id)

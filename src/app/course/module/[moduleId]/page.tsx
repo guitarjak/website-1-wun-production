@@ -4,25 +4,6 @@ import { createSupabaseServerClient } from '@/lib/supabaseServer';
 import { HomeworkForm } from './HomeworkForm';
 import HomeworkInstructionsInlineEditor from './HomeworkInstructionsInlineEditor';
 
-interface Lesson {
-  id: string;
-  title: string;
-  order: number;
-}
-
-interface Module {
-  id: string;
-  title: string;
-  description: string | null;
-  order: number;
-  course_id: string;
-}
-
-interface Course {
-  id: string;
-  title: string;
-}
-
 interface LessonProgress {
   lesson_id: string;
   completed: boolean;

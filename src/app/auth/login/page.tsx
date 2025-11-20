@@ -25,9 +25,9 @@ export default function LoginPage() {
       }
 
       // If successful, loginAction will redirect automatically
-    } catch (err: any) {
+    } catch (err: unknown) {
       // Check if this is a redirect error (which means success)
-      if (err?.message?.includes('NEXT_REDIRECT')) {
+      if (err instanceof Error && err.message.includes('NEXT_REDIRECT')) {
         return;
       }
       setError('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');

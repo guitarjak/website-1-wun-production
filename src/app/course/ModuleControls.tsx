@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 interface ModuleControlsProps {
   moduleId: string;
-  courseId: string;
   initialTitle: string;
   initialDescription: string | null;
   onSuccess?: () => void;
@@ -12,7 +11,6 @@ interface ModuleControlsProps {
 
 export default function ModuleControls({
   moduleId,
-  courseId,
   initialTitle,
   initialDescription,
   onSuccess,

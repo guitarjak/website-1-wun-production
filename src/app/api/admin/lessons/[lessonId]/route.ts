@@ -23,7 +23,7 @@ export async function PUT(
 
     const supabase = await createSupabaseServerClient();
 
-    const updateData: any = {
+    const updateData: Record<string, string | number | null> = {
       updated_at: new Date().toISOString(),
     };
 

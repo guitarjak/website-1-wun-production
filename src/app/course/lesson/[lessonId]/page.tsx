@@ -6,23 +6,6 @@ import LessonTitleDescriptionEditor from './LessonTitleDescriptionEditor';
 import VideoEmbedEditor from './VideoEmbedEditor';
 import LessonContentEditor from './LessonContentEditor';
 
-interface Lesson {
-  id: string;
-  title: string;
-  description: string | null;
-  content: string | null;
-  video_embed: string | null;
-  order: number;
-  module_id: string;
-}
-
-interface Module {
-  id: string;
-  title: string;
-  description: string | null;
-  order: number;
-}
-
 interface LessonProgress {
   lesson_id: string;
   completed: boolean;

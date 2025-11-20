@@ -63,21 +63,26 @@ async function fetchSubmissions(lessonFilter?: string, statusFilter?: string): P
     submitted_at: string;
     feedback: string | null;
     status: string;
-    users_profile?: { full_name: string | null; email: string | null } | null;
-    lessons?: { id: string; title: string } | null;
+    users_profile?: { full_name: string | null; email: string | null }[] | null;
+    lessons?: { id: string; title: string }[] | null;
   };
-  const submissions: Submission[] = (data as SubmissionData[]).map((item) => ({
-    id: item.id,
-    lesson_id: item.lesson_id,
-    user_id: item.user_id,
-    submission_text: item.submission_text,
-    submitted_at: item.submitted_at,
-    feedback: item.feedback,
-    status: item.status as 'SUBMITTED' | 'REVIEWED' | 'APPROVED',
-    full_name: item.users_profile?.full_name || null,
-    email: item.users_profile?.email || null,
-    lesson_title: item.lessons?.title || 'Unknown Lesson',
-  }));
+  const submissions: Submission[] = (data as SubmissionData[]).map((item) => {
+    const userProfile = item.users_profile?.[0];
+    const lesson = item.lessons?.[0];
+
+    return {
+      id: item.id,
+      lesson_id: item.lesson_id,
+      user_id: item.user_id,
+      submission_text: item.submission_text,
+      submitted_at: item.submitted_at,
+      feedback: item.feedback,
+      status: item.status as 'SUBMITTED' | 'REVIEWED' | 'APPROVED',
+      full_name: userProfile?.full_name ?? null,
+      email: userProfile?.email ?? null,
+      lesson_title: lesson?.title || 'Unknown Lesson',
+    };
+  });
 
   return submissions;
 }

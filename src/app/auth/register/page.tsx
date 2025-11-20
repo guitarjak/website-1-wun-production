@@ -34,6 +34,7 @@ export default function RegisterPage() {
       // Redirect to course page on success
       router.push('/course');
     } catch (err) {
+      console.error('Registration error:', err);
       setError('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
       setLoading(false);
     }

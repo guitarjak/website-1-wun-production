@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { createSupabaseServerClient } from '@/lib/supabaseServer';
 import { getCurrentUserWithProfile } from '@/lib/auth';
 
@@ -20,7 +20,9 @@ type UpdateUserRequest = {
 };
 
 // Helper function to check admin authorization and get Supabase client
-async function getAdminSupabaseClient(request: NextRequest): Promise<{ isAdmin: boolean; supabase: any }> {
+type AdminSupabaseClient = SupabaseClient;
+
+async function getAdminSupabaseClient(request: NextRequest): Promise<{ isAdmin: boolean; supabase: AdminSupabaseClient }> {
   // Check for API key first (for external tools like n8n)
   const apiKey = request.headers.get('Authorization')?.replace('Bearer ', '');
   if (apiKey === process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -164,7 +166,7 @@ export async function PUT(
     }
 
     // Prepare profile update data
-    const updateData: Record<string, any> = {};
+    const updateData: Partial<{ full_name: string; role: 'ADMIN' | 'STUDENT'; is_active: boolean }> = {};
     if (body.full_name !== undefined) updateData.full_name = body.full_name;
     if (body.role !== undefined) updateData.role = body.role;
     if (body.is_active !== undefined) updateData.is_active = body.is_active;

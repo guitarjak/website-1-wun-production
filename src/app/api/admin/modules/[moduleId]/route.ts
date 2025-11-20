@@ -28,7 +28,7 @@ export async function PUT(
 
     const supabase = await createSupabaseServerClient();
 
-    const updateData: any = {
+    const updateData: Record<string, string | number | null> = {
       title: body.title,
       description: body.description !== undefined ? body.description : null,
       updated_at: new Date().toISOString(),

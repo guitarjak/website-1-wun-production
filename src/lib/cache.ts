@@ -11,13 +11,13 @@ interface CacheEntry<T> {
 }
 
 class SimpleCache {
-  private store: Map<string, CacheEntry<any>> = new Map();
+  private store: Map<string, CacheEntry<unknown>> = new Map();
 
   /**
    * Get a cached value if it exists and hasn't expired
    */
   get<T>(key: string): T | null {
-    const entry = this.store.get(key);
+    const entry = this.store.get(key) as CacheEntry<T> | undefined;
 
     if (!entry) {
       return null;
@@ -36,10 +36,11 @@ class SimpleCache {
    * Set a cached value with TTL in milliseconds
    */
   set<T>(key: string, data: T, ttlMs: number): void {
-    this.store.set(key, {
+    const entry: CacheEntry<T> = {
       data,
       expiresAt: Date.now() + ttlMs,
-    });
+    };
+    this.store.set(key, entry);
   }
 
   /**
@@ -54,6 +55,10 @@ class SimpleCache {
    */
   clearAll(): void {
     this.store.clear();
+  }
+
+  keys(): string[] {
+    return Array.from(this.store.keys());
   }
 }
 
@@ -111,7 +116,7 @@ export function clearCachePattern(pattern: string): void {
 
   // Note: In real production, you'd want a more efficient implementation
   // For now, this is sufficient for small datasets
-  for (const key of Array.from((cache as any).store.keys())) {
+  for (const key of cache.keys()) {
     if (regex.test(key)) {
       cache.clear(key);
     }

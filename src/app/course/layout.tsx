@@ -6,7 +6,7 @@ export default async function CourseLayout({
   children: React.ReactNode;
 }) {
   // Protect this route - redirects to /auth/login if not logged in
-  const user = await requireUser();
+  await requireUser();
 
   return (
     <div className="min-h-screen py-12" style={{ backgroundColor: '#efe3d4' }}>

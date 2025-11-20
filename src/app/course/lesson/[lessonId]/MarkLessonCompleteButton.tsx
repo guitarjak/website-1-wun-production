@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 interface MarkLessonCompleteButtonProps {
@@ -15,11 +14,8 @@ export function MarkLessonCompleteButton({
   isCompleted: initialCompleted,
   nextLessonId,
 }: MarkLessonCompleteButtonProps) {
-  const router = useRouter();
   const [isCompleted, setIsCompleted] = useState(initialCompleted);
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
 
   const handleToggleCompletion = async () => {
     // Update state immediately (optimistic update)
@@ -47,7 +43,7 @@ export function MarkLessonCompleteButton({
       }
 
       // Success - no automatic redirect, let user click next lesson button if they want
-      setSuccess(true);
+      return;
     } catch (err) {
       // Revert state on error
       setIsCompleted(!newCompletedState);

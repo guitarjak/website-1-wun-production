@@ -8,6 +8,7 @@ import AdminUserMenu from './AdminUserMenu';
 export default function AdminNav({ userName }: { userName?: string }) {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const displayName = userName || 'Admin';
 
   const navItems = [
     {
@@ -43,7 +44,7 @@ export default function AdminNav({ userName }: { userName?: string }) {
       {/* Top Navigation Bar */}
       <nav style={{ backgroundColor: '#efe3d4', borderColor: 'var(--border-light)' }} className="border-b">
         <div className="max-w-7xl mx-auto px-4">
-          <div>
+          <div className="flex items-center justify-between py-4">
             {/* Logo */}
             <div className="flex items-center gap-2">
               <div className="text-2xl">🎓</div>
@@ -53,6 +54,11 @@ export default function AdminNav({ userName }: { userName?: string }) {
                 </h1>
                 <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>ระบบจัดการ</p>
               </div>
+            </div>
+
+            {/* User Menu */}
+            <div className="hidden md:block">
+              <AdminUserMenu userName={displayName} />
             </div>
           </div>
 

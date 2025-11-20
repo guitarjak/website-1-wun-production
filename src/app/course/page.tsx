@@ -341,7 +341,6 @@ export default async function CoursePage() {
                     {isAdmin ? (
                       <ModuleControls
                         moduleId={module.id}
-                        courseId={course.id}
                         initialTitle={module.title}
                         initialDescription={module.description}
                       />

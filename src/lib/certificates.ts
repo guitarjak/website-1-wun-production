@@ -145,11 +145,11 @@ export async function checkCertificateEligibility(
   }
 
   // Check which modules have at least one submission
-  let modulesWithSubmission = new Set<string>();
-  for (const module of modules) {
-    const moduleLesson = lessonsByModule.get(module.id) || [];
+  const modulesWithSubmission = new Set<string>();
+  for (const courseModule of modules) {
+    const moduleLesson = lessonsByModule.get(courseModule.id) || [];
     if (moduleLesson.some((lessonId) => submittedLessonIds.has(lessonId))) {
-      modulesWithSubmission.add(module.id);
+      modulesWithSubmission.add(courseModule.id);
     }
   }
 
