@@ -232,54 +232,37 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Attempt to create profile via RPC (may be blocked by REST API RLS)
-    // Regardless, the trigger will create a profile as fallback
-    supabase.rpc(
-      'insert_user_profile_direct',
+    // Store user metadata and create profile with correct full_name
+    // This function bypasses REST API RLS by using SECURITY DEFINER
+    const { error: storeError } = await supabase.rpc(
+      'store_user_metadata',
       {
         p_user_id: authData.user.id,
         p_full_name: body.full_name,
         p_role: role,
+        p_email: body.email,
       }
-    ).catch(err => {
-      console.warn('RPC profile creation failed, relying on trigger:', err);
-    });
+    );
 
-    // Wait for the PostgreSQL trigger to create the profile
+    if (storeError) {
+      console.warn('Failed to store user metadata, trigger will create fallback:', storeError);
+      // Trigger will still create profile with email prefix as fallback
+    }
+
+    // Wait for profile to be created
     await new Promise(resolve => setTimeout(resolve, 150));
 
-    // Update the profile with correct full_name and role
-    // (in case trigger created it with email prefix fallback)
-    await supabase.rpc(
-      'update_user_profile',
-      {
-        p_user_id: authData.user.id,
-        p_full_name: body.full_name,
-        p_role: role,
-      }
-    ).catch(err => {
-      console.warn('RPC profile update failed:', err);
-    });
-
-    // Fetch the final profile
+    // Fetch the created profile
     const { data: profile } = await supabase
       .from('users_profile')
       .select('*')
       .eq('id', authData.user.id)
       .single();
 
-    // Determine the full_name to return
-    // If profile has correct full_name (not email prefix), use it
-    // Otherwise use the requested full_name
-    const emailPrefix = body.email.split('@')[0];
-    const actualFullName = profile?.full_name && profile.full_name !== emailPrefix
-      ? profile.full_name
-      : body.full_name;
-
     const responseUser: AdminUserDto = {
       id: authData.user.id,
       email: authData.user.email || null,
-      full_name: actualFullName,
+      full_name: profile?.full_name || body.full_name,
       role: (profile?.role || role) as 'ADMIN' | 'STUDENT',
       is_active: profile?.is_active !== undefined ? profile.is_active : true,
       created_at: profile?.created_at || new Date().toISOString(),
