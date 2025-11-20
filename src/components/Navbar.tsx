@@ -16,7 +16,7 @@ export default async function Navbar() {
   if (!currentUser) {
     // Not logged in
     return (
-      <nav className="w-full" style={{
+      <nav className="relative z-40 w-full" style={{
         background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9))',
         backdropFilter: 'blur(10px)',
         borderBottom: '1px solid var(--border-light)'
@@ -35,15 +35,10 @@ export default async function Navbar() {
           <div className="flex gap-3 items-center">
             <Link
               href="/auth/login"
-              className="text-gray-600 hover:text-blue-600 font-medium transition-colors text-sm"
+              className="btn-primary text-sm font-semibold text-black"
+              style={{ backgroundColor: 'var(--golden)', color: '#1f2937' }}
             >
               เข้าสู่ระบบ
-            </Link>
-            <Link
-              href="/auth/register"
-              className="btn-primary text-sm"
-            >
-              สมัครสมาชิก
             </Link>
           </div>
         </div>
@@ -56,7 +51,7 @@ export default async function Navbar() {
   const isAdmin = profile.role === "ADMIN";
 
   return (
-    <nav className="w-full" style={{
+    <nav className="relative z-40 w-full" style={{
       background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9))',
       backdropFilter: 'blur(10px)',
       borderBottom: '1px solid var(--border-light)'

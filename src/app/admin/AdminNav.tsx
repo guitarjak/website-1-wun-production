@@ -3,12 +3,10 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import AdminUserMenu from './AdminUserMenu';
 
-export default function AdminNav({ userName }: { userName?: string }) {
+export default function AdminNav() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const displayName = userName || 'Admin';
 
   const navItems = [
     {
@@ -44,7 +42,7 @@ export default function AdminNav({ userName }: { userName?: string }) {
       {/* Top Navigation Bar */}
       <nav style={{ backgroundColor: '#efe3d4', borderColor: 'var(--border-light)' }} className="border-b">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between py-4">
+          <div className="flex flex-col gap-4 py-4 md:flex-row md:items-center md:justify-between">
             {/* Logo */}
             <div className="flex items-center gap-2">
               <div className="text-2xl">🎓</div>
@@ -56,9 +54,17 @@ export default function AdminNav({ userName }: { userName?: string }) {
               </div>
             </div>
 
-            {/* User Menu */}
-            <div className="hidden md:block">
-              <AdminUserMenu userName={displayName} />
+            {/* Dashboard summary moved up */}
+            <div className="text-left md:text-right">
+              <div className="inline-flex items-center px-4 py-1 rounded-full text-xs font-semibold mb-2" style={{ background: 'var(--golden-lighter)', color: '#8b6600' }}>
+                🚀 Dashboard Statistics
+              </div>
+              <h2 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                ควบคุมระบบ
+              </h2>
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                ยินดีต้อนรับสู่แผงควบคุมการจัดการ
+              </p>
             </div>
           </div>
 

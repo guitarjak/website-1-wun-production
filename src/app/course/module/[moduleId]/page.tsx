@@ -252,7 +252,7 @@ export default async function ModulePage({
 
         {/* Lessons Summary */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8" style={{ borderColor: 'var(--border-light)' }}>
-          <div className="px-6 py-4 text-white flex items-center gap-2" style={{ background: 'var(--blue)' }}>
+          <div className="px-6 py-4 flex items-center gap-2" style={{ background: 'var(--golden)', color: '#1f2937' }}>
             <span>📚</span>
             <h2 className="text-xl font-bold">บทเรียนในโมดูลนี้</h2>
           </div>
@@ -306,7 +306,7 @@ export default async function ModulePage({
 
         {/* Homework Section */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-8" style={{ borderColor: 'var(--border-light)' }}>
-          <div className="px-6 py-4 text-white flex items-center gap-2" style={{ background: 'var(--blue)' }}>
+          <div className="px-6 py-4 flex items-center gap-2" style={{ background: 'var(--golden)', color: '#1f2937' }}>
             <span>📝</span>
             <h2 className="text-xl font-bold">การบ้านของโมดูลนี้</h2>
           </div>

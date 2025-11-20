@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { requireUser } from '@/lib/auth';
 import { createSupabaseServerClient } from '@/lib/supabaseServer';
-import { withCache, CACHE_TTL } from '@/lib/cache';
 import CourseEditButton from './CourseEditButton';
 import ModuleControls from './ModuleControls';
 import AddModuleButton from './AddModuleButton';
@@ -37,75 +36,72 @@ interface Course {
 }
 
 async function getCourseData(): Promise<Course | null> {
-  // Cache the entire course structure with 1 hour TTL
-  return withCache('course:main', CACHE_TTL.COURSE_STRUCTURE, async () => {
-    const supabase = await createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
-    // Fetch the first course, ordered by created_at to ensure consistency
-    const { data: courses, error: coursesError } = await supabase
-      .from('courses')
-      .select('id, title, description, instructor_id, completion_title, completion_message')
-      .order('created_at', { ascending: true })
-      .limit(1)
-      .single();
+  // Fetch the first course, ordered by created_at to ensure consistency
+  const { data: courses, error: coursesError } = await supabase
+    .from('courses')
+    .select('id, title, description, instructor_id, completion_title, completion_message')
+    .order('created_at', { ascending: true })
+    .limit(1)
+    .single();
 
-    if (coursesError || !courses) {
-      return null;
+  if (coursesError || !courses) {
+    return null;
+  }
+
+  // Fetch all modules for this course, ordered by order ASC
+  const { data: modules, error: modulesError } = await supabase
+    .from('modules')
+    .select('id, title, description, order')
+    .eq('course_id', courses.id)
+    .order('order', { ascending: true });
+
+  if (modulesError || !modules) {
+    return { ...courses, modules: [] };
+  }
+
+  // OPTIMIZATION: Fetch ALL lessons in a single batch query instead of per-module
+  const typedModules = modules as Array<{ id: string; title: string; description: string | null; order: number }>;
+  const { data: allLessons, error: lessonsError } = await supabase
+    .from('lessons')
+    .select('id, title, description, content, order, module_id')
+    .in(
+      'module_id',
+      typedModules.map((m) => m.id)
+    )
+    .order('order', { ascending: true });
+
+  if (lessonsError || !allLessons) {
+    return { ...courses, modules: typedModules.map((m) => ({ ...m, lessons: [] })) };
+  }
+
+  // Group lessons by module_id in memory (O(n) operation)
+  const lessonsByModule = new Map<string, Lesson[]>();
+  for (const lesson of allLessons as Array<{ id: string; title: string; description: string | null; content: string | null; order: number; module_id: string }>) {
+    if (!lessonsByModule.has(lesson.module_id)) {
+      lessonsByModule.set(lesson.module_id, []);
     }
+    lessonsByModule.get(lesson.module_id)!.push({
+      id: lesson.id,
+      title: lesson.title,
+      description: lesson.description,
+      content: lesson.content,
+      order: lesson.order,
+      module_id: lesson.module_id,
+    });
+  }
 
-    // Fetch all modules for this course, ordered by order ASC
-    const { data: modules, error: modulesError } = await supabase
-      .from('modules')
-      .select('id, title, description, order')
-      .eq('course_id', courses.id)
-      .order('order', { ascending: true });
+  // Build modules with lessons
+  const modulesWithLessons: Module[] = typedModules.map((module) => ({
+    ...module,
+    lessons: lessonsByModule.get(module.id) || [],
+  }));
 
-    if (modulesError || !modules) {
-      return { ...courses, modules: [] };
-    }
-
-    // OPTIMIZATION: Fetch ALL lessons in a single batch query instead of per-module
-    const typedModules = modules as Array<{ id: string; title: string; description: string | null; order: number }>;
-    const { data: allLessons, error: lessonsError } = await supabase
-      .from('lessons')
-      .select('id, title, description, content, order, module_id')
-      .in(
-        'module_id',
-        typedModules.map((m) => m.id)
-      )
-      .order('order', { ascending: true });
-
-    if (lessonsError || !allLessons) {
-      return { ...courses, modules: typedModules.map((m) => ({ ...m, lessons: [] })) };
-    }
-
-    // Group lessons by module_id in memory (O(n) operation)
-    const lessonsByModule = new Map<string, Lesson[]>();
-    for (const lesson of allLessons as Array<{ id: string; title: string; description: string | null; content: string | null; order: number; module_id: string }>) {
-      if (!lessonsByModule.has(lesson.module_id)) {
-        lessonsByModule.set(lesson.module_id, []);
-      }
-      lessonsByModule.get(lesson.module_id)!.push({
-        id: lesson.id,
-        title: lesson.title,
-        description: lesson.description,
-        content: lesson.content,
-        order: lesson.order,
-        module_id: lesson.module_id,
-      });
-    }
-
-    // Build modules with lessons
-    const modulesWithLessons: Module[] = typedModules.map((module) => ({
-      ...module,
-      lessons: lessonsByModule.get(module.id) || [],
-    }));
-
-    return {
-      ...courses,
-      modules: modulesWithLessons,
-    };
-  });
+  return {
+    ...courses,
+    modules: modulesWithLessons,
+  };
 }
 
 async function getUserProgress(userId: string): Promise<Set<string>> {
@@ -558,7 +554,8 @@ export default async function CoursePage() {
             <div className="mt-6 text-center">
               <Link
                 href="/certificate"
-                className="inline-block px-6 sm:px-8 py-3 bg-green-100 text-black font-semibold rounded-lg hover:bg-green-200 transition-all text-sm sm:text-base"
+                className="inline-block px-6 sm:px-8 py-3 text-black font-semibold rounded-lg transition-all text-sm sm:text-base"
+                style={{ backgroundColor: 'var(--golden)' }}
               >
                 ดูใบรับรองของฉัน
               </Link>

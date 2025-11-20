@@ -156,11 +156,11 @@ a:hover {
 }
 
 /* Button Links - Preserve button styling */
-a[className*="bg-"], a[className*="text-black"], a[className*="text-white"] {
+a[className*="bg-"], a[className*="text-black"], a[className*="text-white"], a.inline-block {
   color: inherit !important;
 }
 
-a[className*="bg-"]:hover {
+a[className*="bg-"]:hover, a.inline-block:hover {
   color: inherit !important;
 }
 

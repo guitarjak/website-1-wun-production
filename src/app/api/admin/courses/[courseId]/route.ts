@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabaseServer';
+import { clearCachePattern } from '@/lib/cache';
 
 interface UpdateCourseBody {
   title: string;
@@ -78,6 +79,9 @@ export async function PUT(
       );
     }
 
+    clearCachePattern('course:*');
+    clearCachePattern('progress:*');
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Unexpected error in courses PUT:', error);
@@ -147,6 +151,9 @@ export async function DELETE(
         { status: 500 }
       );
     }
+
+    clearCachePattern('course:*');
+    clearCachePattern('progress:*');
 
     return NextResponse.json({ success: true });
   } catch (error) {

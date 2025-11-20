@@ -74,21 +74,6 @@ export default async function AdminDashboard() {
   return (
     <div className="min-h-screen py-8 sm:py-12 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#efe3d4' }}>
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8 sm:mb-12 animate-in fade-in slide-in-from-top-2 duration-500">
-          <div className="inline-block mb-4">
-            <div className="px-4 py-2 rounded-full text-xs sm:text-sm font-semibold" style={{ background: 'var(--golden-lighter)', color: '#8b6600' }}>
-              🚀 Dashboard Statistics
-            </div>
-          </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 break-words" style={{ color: 'var(--text-primary)' }}>
-            ควบคุมระบบ
-          </h1>
-          <p className="text-base sm:text-lg" style={{ color: 'var(--text-secondary)' }}>
-            ยินดีต้อนรับสู่แผงควบคุมการจัดการ
-          </p>
-        </div>
-
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12">
           {cards.map((card, index) => (

@@ -5,6 +5,8 @@ import {
   getOrCreateCertificateForUser,
 } from '@/lib/certificates';
 import { PrintButton } from './PrintButton';
+import { SimpleCertificateContent } from './SimpleCertificateContent';
+import { ShareCertificateSection } from './ShareCertificateSection';
 
 export default async function CertificatePage() {
   const user = await requireUser();
@@ -156,83 +158,120 @@ export default async function CertificatePage() {
     );
   }
 
-  // User is eligible - show beautiful certificate
-  const certificateDate = new Date(certificate.issued_at);
-  const formattedDate = certificateDate.toLocaleDateString('th-TH', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#efe3d4' }}>
-      <div className="max-w-4xl mx-auto">
-        {/* Certificate Card */}
-        <div data-certificate className="bg-white rounded-2xl shadow-2xl overflow-hidden mb-8" style={{ borderColor: 'var(--golden)', borderWidth: '4px' }}>
-          {/* Certificate Header */}
-          <div className="text-white px-8 sm:px-12 py-8 sm:py-10 text-center" style={{ background: 'var(--golden)' }}>
-            <div className="text-5xl mb-4">🏆</div>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-2">ใบประกาศนียบัตร</h2>
-            <p className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-              Certificate of Completion
-            </p>
-          </div>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
-          {/* Certificate Content */}
-          <div className="px-8 sm:px-12 py-12 text-center">
-            {/* Title */}
-            <div className="mb-8 pb-8" style={{ borderBottom: '2px solid var(--border-light)' }}>
-              <p className="mb-4" style={{ color: 'var(--text-secondary)' }}>นี้เพื่อรับรองว่า</p>
-              <h3 className="text-3xl sm:text-4xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
-                {user.profile.full_name}
-              </h3>
-              <p style={{ color: 'var(--text-secondary)' }}>ได้ส่วนร่วมอย่างมีความสำเร็จในการเรียน</p>
-            </div>
+        .cert-container {
+          animation: slideInCert 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
 
-            {/* Course Title */}
-            <div className="mb-8">
-              <p className="text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>หลักสูตร</p>
-              <h4 className="text-2xl sm:text-3xl font-bold mb-4" style={{ color: 'var(--golden)' }}>
-                {courseTitle}
-              </h4>
-              <p className="text-sm max-w-lg mx-auto" style={{ color: 'var(--text-secondary)' }}>
-                โดยการเรียนจบทุกบทเรียน และส่งการบ้านสำหรับแต่ละโมดูลตามที่กำหนด
-              </p>
-            </div>
+        @keyframes slideInCert {
+          from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
 
-            {/* Certificate Details */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 my-8 py-8" style={{ borderTop: '1px solid var(--border-light)', borderBottom: '1px solid var(--border-light)' }}>
-              <div>
-                <p className="text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>เลขที่ใบประกาศนียบัตร</p>
-                <p className="text-lg font-mono font-bold" style={{ color: 'var(--text-primary)' }}>
-                  {certificate.certificate_number}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>วันที่ออกใบประกาศนียบัตร</p>
-                <p className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
-                  {formattedDate}
-                </p>
-              </div>
-            </div>
+        .cert-accent {
+          position: absolute;
+          opacity: 0.15;
+        }
 
-            {/* Signature Area */}
-            <div className="mt-12">
-              <p className="text-xs mb-8" style={{ color: 'var(--text-tertiary)' }}>ออกให้โดย</p>
-              <div className="text-2xl font-bold" style={{ color: 'var(--golden)' }}>
-                MyCoursePlatform
-              </div>
-              <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>Learning Management System</p>
-            </div>
-          </div>
+        .cert-header-accent {
+          background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+          height: 2px;
+        }
 
-          {/* Certificate Footer */}
-          <div className="px-8 sm:px-12 py-4 text-center" style={{ backgroundColor: '#f9fafb' }}>
-            <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
-              ✓ ใบประกาศนียบัตรนี้เป็นสัญญาณของความสำเร็จในการศึกษาอย่างต่อเนื่อง
-            </p>
-          </div>
-        </div>
+        .cert-name {
+          animation: fadeInName 1.2s ease-out 0.4s both;
+          letter-spacing: 0.02em;
+          opacity: 1 !important;
+          visibility: visible !important;
+          display: block !important;
+        }
+
+        @keyframes fadeInName {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        [data-certificate] {
+          aspect-ratio: 16 / 10;
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+          box-sizing: border-box;
+          opacity: 1 !important;
+          visibility: visible !important;
+          overflow: visible;
+          width: 100%;
+          max-width: 100%;
+        }
+
+        [data-certificate] * {
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+        }
+
+        [data-certificate] h1,
+        [data-certificate] h2,
+        [data-certificate] h3,
+        [data-certificate] p {
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          hyphens: auto;
+        }
+
+        @media print {
+          @page {
+            size: 254mm 158.75mm;
+            margin: 0;
+          }
+
+          html, body {
+            width: 254mm;
+            height: 158.75mm;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+          }
+
+          .cert-name {
+            animation: none !important;
+            opacity: 1 !important;
+          }
+
+          [data-certificate] {
+            width: 100% !important;
+            height: 100% !important;
+            page-break-inside: avoid !important;
+            page-break-before: avoid !important;
+            page-break-after: avoid !important;
+            break-inside: avoid !important;
+            position: relative;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+        }
+      `}</style>
+
+      <div className="max-w-5xl mx-auto cert-container">
+        <SimpleCertificateContent
+          certificate={certificate}
+          userName={user.profile.full_name}
+          courseTitle={courseTitle}
+        />
 
         {/* Actions */}
         <div className="flex justify-center gap-4 flex-wrap mb-12">
@@ -240,29 +279,18 @@ export default async function CertificatePage() {
           <Link
             href="/course"
             className="px-6 py-3 font-semibold rounded-lg transition-all hover:opacity-90 text-white"
-            style={{ backgroundColor: '#9ca3af' }}
+            style={{ backgroundColor: '#000000', color: '#ffffff' }}
           >
             ← กลับไปเรียนเพิ่มเติม
           </Link>
         </div>
 
         {/* Share Section */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 text-center" style={{ borderColor: 'var(--border-light)' }}>
-          <p className="mb-4 text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-            🌟 แบ่งปันความสำเร็จของคุณให้กับเพื่อนๆ
-          </p>
-          <div className="flex justify-center gap-3 flex-wrap">
-            <button className="px-4 py-2 text-white rounded-lg transition-all hover:opacity-90 text-sm font-semibold" style={{ background: 'var(--blue)' }}>
-              📱 แชร์บน Facebook
-            </button>
-            <button className="px-4 py-2 text-white rounded-lg transition-all hover:opacity-90 text-sm font-semibold" style={{ backgroundColor: '#1DA1F2' }}>
-              𝕏 แชร์บน Twitter
-            </button>
-            <button className="px-4 py-2 text-white rounded-lg transition-all hover:opacity-90 text-sm font-semibold" style={{ backgroundColor: '#1f2937' }}>
-              🔗 คัดลอกลิงก์
-            </button>
-          </div>
-        </div>
+        <ShareCertificateSection
+          certificateNumber={certificate.certificate_number}
+          userName={user.profile.full_name}
+          courseTitle={courseTitle}
+        />
       </div>
 
       {/* Print Styles */}
