@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { createSupabaseServerClient } from '@/lib/supabaseServer';
 import { getCurrentUserWithProfile } from '@/lib/auth';
+import { Pool } from 'pg';
 
 // Type definitions
 type AdminUserDto = {
@@ -19,6 +20,45 @@ type CreateUserRequest = {
   full_name: string;
   role?: 'ADMIN' | 'STUDENT';
 };
+
+// Helper function to create user profile using direct PostgreSQL connection
+async function createProfileDirectly(
+  userId: string,
+  fullName: string,
+  role: string,
+  email: string
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false },
+    });
+
+    const client = await pool.connect();
+    try {
+      await client.query(
+        `INSERT INTO public.users_profile (id, full_name, role, is_active, metadata, created_at)
+         VALUES ($1, $2, $3, true, $4, NOW())
+         ON CONFLICT (id) DO UPDATE SET
+           full_name = EXCLUDED.full_name,
+           role = EXCLUDED.role,
+           is_active = true`,
+        [
+          userId,
+          fullName,
+          role,
+          JSON.stringify({ email, requested_full_name: fullName }),
+        ]
+      );
+      return { success: true };
+    } finally {
+      client.release();
+    }
+  } catch (error) {
+    console.error('Direct PostgreSQL profile creation failed:', error);
+    return { success: false, error: String(error) };
+  }
+}
 
 // Helper function to check admin authorization and get Supabase client
 type AdminSupabaseClient = SupabaseClient;
@@ -232,40 +272,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Store user metadata and create profile with correct full_name
-    // This function bypasses REST API RLS by using SECURITY DEFINER
-    const { error: storeError } = await supabase.rpc(
-      'store_user_metadata',
-      {
-        p_user_id: authData.user.id,
-        p_full_name: body.full_name,
-        p_role: role,
-        p_email: body.email,
-      }
+    // Create profile using direct PostgreSQL connection
+    // This bypasses Supabase REST API RLS enforcement entirely
+    const profileResult = await createProfileDirectly(
+      authData.user.id,
+      body.full_name,
+      role,
+      body.email
     );
 
-    if (storeError) {
-      console.warn('Failed to store user metadata, trigger will create fallback:', storeError);
-      // Trigger will still create profile with email prefix as fallback
+    if (!profileResult.success) {
+      console.warn('Failed to create profile directly:', profileResult.error);
+      // Profile may still be created by trigger with email prefix fallback
     }
 
-    // Wait for profile to be created
-    await new Promise(resolve => setTimeout(resolve, 150));
-
-    // Fetch the created profile
-    const { data: profile } = await supabase
-      .from('users_profile')
-      .select('*')
-      .eq('id', authData.user.id)
-      .single();
-
+    // Return successful response with user data
     const responseUser: AdminUserDto = {
       id: authData.user.id,
       email: authData.user.email || null,
-      full_name: profile?.full_name || body.full_name,
-      role: (profile?.role || role) as 'ADMIN' | 'STUDENT',
-      is_active: profile?.is_active !== undefined ? profile.is_active : true,
-      created_at: profile?.created_at || new Date().toISOString(),
+      full_name: body.full_name, // Return the requested full_name
+      role: (role) as 'ADMIN' | 'STUDENT',
+      is_active: true,
+      created_at: new Date().toISOString(),
     };
 
     return NextResponse.json(responseUser, { status: 201 });
