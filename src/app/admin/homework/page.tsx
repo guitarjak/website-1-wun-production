@@ -73,7 +73,7 @@ async function fetchSubmissions(lessonFilter?: string, statusFilter?: string): P
     submission_text: item.submission_text,
     submitted_at: item.submitted_at,
     feedback: item.feedback,
-    status: item.status,
+    status: item.status as 'SUBMITTED' | 'REVIEWED' | 'APPROVED',
     full_name: item.users_profile?.full_name || null,
     email: item.users_profile?.email || null,
     lesson_title: item.lessons?.title || 'Unknown Lesson',
