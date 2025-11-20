@@ -232,25 +232,36 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Insert profile directly using RPC function that bypasses REST API RLS
-    const { error: profileError } = await supabase.rpc(
+    // Attempt to create profile via RPC (may be blocked by REST API RLS)
+    // Regardless, the trigger will create a profile as fallback
+    supabase.rpc(
       'insert_user_profile_direct',
       {
         p_user_id: authData.user.id,
         p_full_name: body.full_name,
         p_role: role,
       }
-    );
+    ).catch(err => {
+      console.warn('RPC profile creation failed, relying on trigger:', err);
+    });
 
-    if (profileError) {
-      console.warn('RPC profile creation failed, trigger will create fallback:', profileError);
-      // Profile may be created by trigger with email prefix fallback
-    }
+    // Wait for the PostgreSQL trigger to create the profile
+    await new Promise(resolve => setTimeout(resolve, 150));
 
-    // Wait briefly for profile to be created
-    await new Promise(resolve => setTimeout(resolve, 100));
+    // Update the profile with correct full_name and role
+    // (in case trigger created it with email prefix fallback)
+    await supabase.rpc(
+      'update_user_profile',
+      {
+        p_user_id: authData.user.id,
+        p_full_name: body.full_name,
+        p_role: role,
+      }
+    ).catch(err => {
+      console.warn('RPC profile update failed:', err);
+    });
 
-    // Try to fetch the created profile
+    // Fetch the final profile
     const { data: profile } = await supabase
       .from('users_profile')
       .select('*')
