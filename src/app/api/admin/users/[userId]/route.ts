@@ -43,7 +43,7 @@ async function getAdminSupabaseClient(request: NextRequest): Promise<{ isAdmin: 
 // GET /api/admin/users/[userId] - Get a specific user
 export async function GET(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
     // Check admin authorization and get appropriate Supabase client
@@ -55,7 +55,7 @@ export async function GET(
       );
     }
 
-    const userId = params.userId;
+    const { userId } = await params;
 
     // Fetch user profile
     const { data: profile, error: profileError } = await supabase
@@ -104,7 +104,7 @@ export async function GET(
 // PUT /api/admin/users/[userId] - Update a user
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
     // Check admin authorization and get appropriate Supabase client
@@ -117,7 +117,7 @@ export async function PUT(
     }
 
     const body: UpdateUserRequest = await request.json();
-    const userId = params.userId;
+    const { userId } = await params;
 
     // Validate input
     if (body.role && !['ADMIN', 'STUDENT'].includes(body.role)) {
@@ -210,7 +210,7 @@ export async function PUT(
 // DELETE /api/admin/users/[userId] - Delete a user
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
     // Check admin authorization and get appropriate Supabase client
@@ -222,7 +222,7 @@ export async function DELETE(
       );
     }
 
-    const userId = params.userId;
+    const { userId } = await params;
 
     // Check if user exists
     const { data: profile, error: fetchError } = await supabase
