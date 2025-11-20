@@ -236,25 +236,41 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // The profile will be automatically created by a PostgreSQL trigger
-    // that fires when the auth user is inserted. Wait briefly to ensure trigger completes
-    await new Promise(resolve => setTimeout(resolve, 100));
+    // Create profile directly using database insert with retry logic
+    let profile = null;
+    let insertError = null;
 
-    // Retrieve the created profile
-    const { data: profile, error: profileError } = await supabase
-      .from('users_profile')
-      .select('*')
-      .eq('id', authData.user.id)
-      .single();
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const { data: profileData, error: profileError } = await supabase
+        .from('users_profile')
+        .insert({
+          id: authData.user.id,
+          full_name: body.full_name,
+          role,
+          is_active: true,
+        })
+        .select()
+        .single();
 
-    if (profileError || !profile) {
-      console.error('Profile retrieval error (trigger may still be pending):', {
+      if (!profileError) {
+        profile = profileData;
+        break;
+      }
+
+      insertError = profileError;
+      // Wait before retrying
+      if (attempt < 2) {
+        await new Promise(resolve => setTimeout(resolve, 200 * (attempt + 1)));
+      }
+    }
+
+    if (insertError || !profile) {
+      console.warn('Profile creation deferred (will be created by trigger or background job):', {
         userId: authData.user.id,
         email: authData.user.email,
-        error: profileError
+        error: insertError?.message
       });
-      // User was created in auth, profile should be created by trigger
-      // Return success anyway since auth user exists
+      // Return 201 anyway - auth user was created successfully
       return NextResponse.json({
         id: authData.user.id,
         email: authData.user.email || null,
