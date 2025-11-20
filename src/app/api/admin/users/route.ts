@@ -232,6 +232,16 @@ export async function POST(request: NextRequest) {
     // Use lowercase role for database storage
     const role = requestedRole;
 
+    // Store the full_name before creating auth user
+    // This allows the trigger to look it up later
+    await supabase.rpc('store_user_full_name', {
+      p_email: body.email,
+      p_full_name: body.full_name,
+    }).catch(err => {
+      console.warn('Failed to pre-store full_name:', err);
+      // Continue anyway - trigger will use email prefix fallback
+    });
+
     // Create auth user
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
       email: body.email,
@@ -264,7 +274,12 @@ export async function POST(request: NextRequest) {
     // Wait for the trigger to create the profile
     await new Promise(resolve => setTimeout(resolve, 150));
 
-    // Attempt to update the profile with correct full_name via SQL
+    // Apply any stored full_names from the store table
+    await supabase.rpc('apply_stored_full_names').catch(err => {
+      console.warn('Failed to apply stored full_names:', err);
+    });
+
+    // Attempt to update the profile with correct full_name via SQL as fallback
     // (in case trigger created it with email prefix fallback)
     updateProfileViaSQL(supabase, authData.user.id, body.full_name, role).catch(err => {
       console.warn('Profile update attempt failed:', err);
