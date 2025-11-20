@@ -13,8 +13,9 @@ export default async function PublicCertificatePage({
     issued_at: string;
     user_id: string;
     course_id: string;
-    users: { full_name: string | null } | null;
-    courses: { title: string | null } | null;
+    // Supabase returns related records as arrays by default
+    users: { full_name: string | null }[] | null;
+    courses: { title: string | null }[] | null;
   };
   // Unwrap the params promise
   const { certificateNumber } = await params;
@@ -70,8 +71,8 @@ export default async function PublicCertificatePage({
   }
 
   const certificate = certificates as CertificateData;
-  const userName = certificate.users?.full_name || 'Unknown';
-  const courseTitle = certificate.courses?.title || 'Unknown Course';
+  const userName = certificate.users?.[0]?.full_name || 'Unknown';
+  const courseTitle = certificate.courses?.[0]?.title || 'Unknown Course';
 
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#efe3d4' }}>

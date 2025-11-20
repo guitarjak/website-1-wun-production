@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { PrintButton } from './PrintButton';
 
@@ -21,6 +22,42 @@ export function PublicCertificateContent({
     month: 'long',
     day: 'numeric',
   });
+
+  useEffect(() => {
+    // Load Facebook SDK
+    if (typeof window !== 'undefined' && !(window as any).FB) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.defer = true;
+      script.crossOrigin = 'anonymous';
+      script.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0';
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  const handleFacebookShare = (certificateNumber: string) => {
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+    const shareUrl = `${baseUrl}/view-certificate/${certificateNumber}`;
+
+    if ((window as any).FB) {
+      (window as any).FB.ui(
+        {
+          method: 'share',
+          href: shareUrl,
+          hashtag: '#Website1Wun',
+          quote: `${userName} completed ${courseTitle}! 🎉`,
+        },
+        function (response: any) {}
+      );
+    } else {
+      // Fallback if SDK not loaded
+      window.open(
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+        'facebook-share-dialog',
+        'width=800,height=600'
+      );
+    }
+  };
 
   return (
     <div className="max-w-5xl mx-auto cert-container">
@@ -232,15 +269,7 @@ export function PublicCertificateContent({
         </p>
         <div className="flex justify-center gap-3 flex-wrap">
           <button
-            onClick={() => {
-              const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
-              const shareUrl = `${baseUrl}/view-certificate/${certificate.certificate_number}`;
-              window.open(
-                `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
-                'facebook-share-dialog',
-                'width=800,height=600'
-              );
-            }}
+            onClick={() => handleFacebookShare(certificate.certificate_number)}
             className="px-4 py-2 text-white rounded-lg transition-all hover:opacity-90 text-sm font-semibold"
             style={{ background: 'var(--blue)' }}
           >

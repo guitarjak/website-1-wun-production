@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function ShareCertificateSection({
   certificateNumber,
@@ -15,6 +15,18 @@ export function ShareCertificateSection({
   const shareUrl = `${baseUrl}/view-certificate/${certificateNumber}`;
   const [copied, setCopied] = useState(false);
 
+  useEffect(() => {
+    // Load Facebook SDK
+    if (typeof window !== 'undefined' && !(window as any).FB) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.defer = true;
+      script.crossOrigin = 'anonymous';
+      script.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0';
+      document.body.appendChild(script);
+    }
+  }, []);
+
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(shareUrl);
@@ -22,6 +34,27 @@ export function ShareCertificateSection({
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Copy failed', err);
+    }
+  };
+
+  const handleFacebookShare = () => {
+    if ((window as any).FB) {
+      (window as any).FB.ui(
+        {
+          method: 'share',
+          href: shareUrl,
+          hashtag: '#Website1Wun',
+          quote: `${userName} completed ${courseTitle}! 🎉`,
+        },
+        function (response: any) {}
+      );
+    } else {
+      // Fallback if SDK not loaded
+      window.open(
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+        'facebook-share-dialog',
+        'width=800,height=600'
+      );
     }
   };
 
@@ -35,13 +68,7 @@ export function ShareCertificateSection({
       </p>
       <div className="flex justify-center gap-2 sm:gap-3 flex-wrap">
         <button
-          onClick={() => {
-            window.open(
-              `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
-              'facebook-share-dialog',
-              'width=800,height=600'
-            );
-          }}
+          onClick={handleFacebookShare}
           className="px-3 sm:px-4 py-2 text-white rounded-lg transition-all hover:opacity-90 text-xs sm:text-sm font-semibold"
           style={{ background: 'var(--blue)' }}
         >

@@ -15,6 +15,8 @@ export default async function CertificatePage() {
   const { certificate, courseTitle } = await getOrCreateCertificateForUser(
     user.user.id
   );
+  const userName = user.profile.full_name ?? 'ผู้เรียน';
+  const safeCourseTitle = courseTitle ?? 'คอร์สเรียนของคุณ';
 
   // If not eligible, show eligibility requirements
   if (!certificate) {
@@ -269,8 +271,8 @@ export default async function CertificatePage() {
       <div className="max-w-5xl mx-auto cert-container">
         <SimpleCertificateContent
           certificate={certificate}
-          userName={user.profile.full_name}
-          courseTitle={courseTitle}
+          userName={userName}
+          courseTitle={safeCourseTitle}
         />
 
         {/* Actions */}
@@ -288,8 +290,8 @@ export default async function CertificatePage() {
         {/* Share Section */}
         <ShareCertificateSection
           certificateNumber={certificate.certificate_number}
-          userName={user.profile.full_name}
-          courseTitle={courseTitle}
+          userName={userName}
+          courseTitle={safeCourseTitle}
         />
       </div>
 

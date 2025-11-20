@@ -26,8 +26,8 @@ export default async function Navbar() {
             <Image
               src="/w1w-logo.png"
               alt="Website 1 Wun"
-              width={140}
-              height={70}
+              width={98}
+              height={49}
               priority
               style={{ width: 'auto', height: 'auto' }}
             />
@@ -62,8 +62,8 @@ export default async function Navbar() {
           <Image
             src="/w1w-logo.png"
             alt="Website 1 Wun"
-            width={140}
-            height={70}
+            width={98}
+            height={49}
             priority
             style={{ width: 'auto', height: 'auto' }}
           />
