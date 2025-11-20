@@ -265,12 +265,36 @@ export async function POST(request: NextRequest) {
     }
 
     if (insertError || !profile) {
-      console.warn('Profile creation deferred (will be created by trigger or background job):', {
+      console.warn('Profile insert via REST API failed, waiting for trigger:', {
         userId: authData.user.id,
         email: authData.user.email,
         error: insertError?.message
       });
-      // Return 201 anyway - auth user was created successfully
+
+      // Wait for the PostgreSQL trigger to create the profile
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Try to fetch the profile created by trigger
+      const { data: triggerProfile, error: triggerError } = await supabase
+        .from('users_profile')
+        .select('*')
+        .eq('id', authData.user.id)
+        .single();
+
+      if (triggerProfile) {
+        const responseUser: AdminUserDto = {
+          id: authData.user.id,
+          email: authData.user.email || null,
+          full_name: triggerProfile.full_name,
+          role: triggerProfile.role as 'ADMIN' | 'STUDENT',
+          is_active: triggerProfile.is_active,
+          created_at: triggerProfile.created_at,
+        };
+        return NextResponse.json(responseUser, { status: 201 });
+      }
+
+      // If trigger profile also failed, return auth user data
+      console.warn('Trigger also failed to create profile:', triggerError?.message);
       return NextResponse.json({
         id: authData.user.id,
         email: authData.user.email || null,
