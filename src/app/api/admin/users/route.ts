@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { createSupabaseServerClient } from '@/lib/supabaseServer';
 import { getCurrentUserWithProfile } from '@/lib/auth';
+import { Pool } from 'pg';
 
 // Type definitions
 type AdminUserDto = {
@@ -20,32 +21,49 @@ type CreateUserRequest = {
   role?: 'ADMIN' | 'STUDENT';
 };
 
-// Helper function to manually update user profile in Supabase via SQL
-// This is a workaround for Supabase REST API RLS limitations
-async function updateProfileViaSQL(
-  supabase: SupabaseClient,
+// Create user profile using direct PostgreSQL connection (bypasses REST API RLS)
+async function createProfileDirectPostgres(
   userId: string,
   fullName: string,
-  role: string
-): Promise<boolean> {
+  role: string,
+  email: string
+): Promise<{ success: boolean; error?: string }> {
+  const dbUrl = process.env.DATABASE_URL;
+  if (!dbUrl) {
+    console.warn('DATABASE_URL not set, skipping direct PostgreSQL insert');
+    return { success: false, error: 'DATABASE_URL not configured' };
+  }
+
+  let pool: Pool | null = null;
   try {
-    // Try using the update_user_profile function
-    const { error } = await supabase.rpc('update_user_profile', {
-      p_user_id: userId,
-      p_full_name: fullName,
-      p_role: role,
+    pool = new Pool({
+      connectionString: dbUrl,
+      ssl: { rejectUnauthorized: false },
     });
 
-    if (error) {
-      console.warn('RPC update failed, will need manual SQL update:', error);
-      // Log that manual update is needed
-      console.log(`Manual fix needed - Run in Supabase SQL:
-        UPDATE public.users_profile SET full_name = '${fullName}' WHERE id = '${userId}';`);
+    const client = await pool.connect();
+    try {
+      await client.query(
+        `INSERT INTO public.users_profile (id, full_name, role, is_active, created_at)
+         VALUES ($1, $2, $3, true, NOW())
+         ON CONFLICT (id) DO UPDATE SET
+           full_name = EXCLUDED.full_name,
+           role = EXCLUDED.role,
+           is_active = true`,
+        [userId, fullName, role]
+      );
+      console.log(`✅ Profile created via direct PostgreSQL for ${email}`);
+      return { success: true };
+    } finally {
+      client.release();
     }
-    return !error;
-  } catch (err) {
-    console.error('Error updating profile:', err);
-    return false;
+  } catch (error) {
+    console.error('❌ Direct PostgreSQL profile creation failed:', error);
+    return { success: false, error: String(error) };
+  } finally {
+    if (pool) {
+      await pool.end();
+    }
   }
 }
 
@@ -271,19 +289,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Wait for the trigger to create the profile
-    await new Promise(resolve => setTimeout(resolve, 150));
+    // Create profile using direct PostgreSQL connection (bypasses REST API RLS)
+    const pgResult = await createProfileDirectPostgres(
+      authData.user.id,
+      body.full_name,
+      role,
+      body.email
+    );
 
-    // Apply any stored full_names from the store table
-    await supabase.rpc('apply_stored_full_names').catch(err => {
-      console.warn('Failed to apply stored full_names:', err);
-    });
-
-    // Attempt to update the profile with correct full_name via SQL as fallback
-    // (in case trigger created it with email prefix fallback)
-    updateProfileViaSQL(supabase, authData.user.id, body.full_name, role).catch(err => {
-      console.warn('Profile update attempt failed:', err);
-    });
+    if (!pgResult.success) {
+      console.warn('Direct PostgreSQL insertion failed, will fall back to trigger:', pgResult.error);
+      // Wait for trigger to create profile with email prefix fallback
+      await new Promise(resolve => setTimeout(resolve, 150));
+    }
 
     // Return successful response with user data
     const responseUser: AdminUserDto = {
