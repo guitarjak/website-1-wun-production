@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website 1 Wun - Design Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Primary Colors */
+            --primary-pink: #EC4899;
+            --primary-blue: #3B82F6;
+            --primary-green: #10B981;
+
+            /* Neutral Colors */
+            --slate-900: #0F172A;
+            --slate-700: #334155;
+            --slate-600: #475569;
+            --slate-500: #64748B;
+            --slate-400: #94A3B8;
+            --slate-300: #CBD5E1;
+            --slate-200: #E2E8F0;
+            --slate-100: #F1F5F9;
+            --slate-50: #F8FAFC;
+
+            /* Semantic Colors */
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --info: #3B82F6;
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #EC4899 0%, #3B82F6 100%);
+            --gradient-light: linear-gradient(to bottom right, #FFF7ED, #F0FDF4);
+
+            /* Typography */
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Prompt', sans-serif;
+
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --spacing-3xl: 4rem;
+
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --radius-full: 9999px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--slate-900);
+            background: linear-gradient(to bottom right, #FFFFFF, #F8FAFC);
+            line-height: 1.6;
+        }
+
+        /* ==================== TYPOGRAPHY ==================== */
+        section.typography {
+            padding: var(--spacing-3xl);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section h1 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: var(--spacing-lg);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .type-samples {
+            display: grid;
+            gap: var(--spacing-2xl);
+            margin-top: var(--spacing-2xl);
+        }
+
+        .type-sample h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--slate-900);
+        }
+
+        .type-sample p {
+            font-size: 1rem;
+            color: var(--slate-600);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .h1-display {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--slate-900);
+        }
+
+        .h2-display {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--slate-900);
+        }
+
+        .h3-display {
+            font-family: var(--font-display);
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--slate-900);
+        }
+
+        .body-large {
+            font-size: 1.125rem;
+            line-height: 1.75;
+            color: var(--slate-700);
+        }
+
+        .body-regular {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--slate-600);
+        }
+
+        .body-small {
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: var(--slate-500);
+        }
+
+        /* ==================== COLOR PALETTE ==================== */
+        section.colors {
+            padding: var(--spacing-3xl);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-2xl);
+        }
+
+        .color-box {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .color-box:hover {
+            transform: translateY(-4px);
+        }
+
+        .color-swatch {
+            height: 120px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+            padding: var(--spacing-md);
+        }
+
+        .color-info {
+            padding: var(--spacing-md);
+            background: var(--slate-50);
+            border-top: 1px solid var(--slate-200);
+        }
+
+        .color-info p {
+            font-size: 0.875rem;
+            color: var(--slate-600);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        /* ==================== COMPONENTS ==================== */
+        section.components {
+            padding: var(--spacing-3xl);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .component-section {
+            margin-bottom: var(--spacing-3xl);
+            padding: var(--spacing-2xl);
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--slate-200);
+        }
+
+        .component-section h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-lg);
+            color: var(--slate-900);
+        }
+
+        .component-demo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            background: var(--slate-50);
+            border-radius: var(--radius-md);
+        }
+
+        /* ==================== BUTTONS ==================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-family: var(--font-body);
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563EB;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--slate-100);
+            color: var(--slate-900);
+            border: 1px solid var(--slate-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--slate-200);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-danger {
+            background: var(--error);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #DC2626;
+            transform: translateY(-2px);
+        }
+
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        /* ==================== CARDS ==================== */
+        .card {
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--slate-200);
+            padding: var(--spacing-lg);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary-pink);
+            transform: translateY(-4px);
+        }
+
+        .card h4 {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--slate-900);
+        }
+
+        .card p {
+            color: var(--slate-600);
+            font-size: 0.875rem;
+        }
+
+        /* ==================== BADGES ==================== */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: 0.375rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-primary {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary-blue);
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .badge-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+
+        /* ==================== INPUT FIELDS ==================== */
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--slate-300);
+            border-radius: var(--radius-md);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* ==================== PROGRESS BAR ==================== */
+        .progress-bar {
+            width: 100%;
+            height: 0.75rem;
+            background: var(--slate-200);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: width 0.5s ease;
+            border-radius: var(--radius-full);
+        }
+
+        /* ==================== ALERTS ==================== */
+        .alert {
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            border-left: 4px solid;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--error);
+            color: var(--error);
+        }
+
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--info);
+            color: var(--info);
+        }
+
+        /* ==================== LAYOUT ==================== */
+        section {
+            border-top: 1px solid var(--slate-200);
+        }
+
+        section:first-of-type {
+            border-top: none;
+            background: linear-gradient(135deg, #EC4899 0%, #3B82F6 100%);
+            color: white;
+            padding: var(--spacing-3xl);
+            text-align: center;
+        }
+
+        section:first-of-type h1 {
+            font-size: 3.5rem;
+            background: none;
+            -webkit-text-fill-color: white;
+            color: white;
+            margin-bottom: var(--spacing-md);
+        }
+
+        section:first-of-type p {
+            font-size: 1.125rem;
+            opacity: 0.95;
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .component-section {
+            animation: slideUp 0.6s ease;
+        }
+
+        /* ==================== UTILITIES ==================== */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-lg);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+        }
+
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mt-lg { margin-top: var(--spacing-lg); }
+        .mb-lg { margin-bottom: var(--spacing-lg); }
+        .mb-2xl { margin-bottom: var(--spacing-2xl); }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            section {
+                padding: var(--spacing-lg);
+            }
+
+            section h1 {
+                font-size: 2rem;
+            }
+
+            .h1-display {
+                font-size: 2rem;
+            }
+
+            .h2-display {
+                font-size: 1.5rem;
+            }
+
+            .h3-display {
+                font-size: 1.25rem;
+            }
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .component-demo {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section>
+        <h1>Website 1 Wun Design Guide</h1>
+        <p>Comprehensive design system for consistent, beautiful user interfaces</p>
+    </section>
+
+    <!-- Typography Section -->
+    <section class="typography">
+        <h1>Typography</h1>
+        <p class="body-large">We use two complementary font families to create visual hierarchy and personality.</p>
+
+        <div class="type-samples">
+            <div class="type-sample">
+                <h3>Display Font: Playfair Display</h3>
+                <p class="h1-display">H1 - 56px, Weight 900</p>
+                <p class="h2-display">H2 - 40px, Weight 700</p>
+                <p class="h3-display">H3 - 30px, Weight 700</p>
+                <p style="margin-top: var(--spacing-lg); color: var(--slate-600);">Used for headings, titles, and prominent text that needs personality and impact.</p>
+            </div>
+
+            <div class="type-sample">
+                <h3>Body Font: Prompt (Thai)</h3>
+                <p class="body-large"><strong>Large (18px):</strong> Used for introductory paragraphs and emphasis text.</p>
+                <p class="body-regular"><strong>Regular (16px):</strong> Standard body text for all content and descriptions.</p>
+                <p class="body-small"><strong>Small (14px):</strong> Used for captions, labels, and secondary information.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Colors Section -->
+    <section class="colors">
+        <h1>Color Palette</h1>
+        <p class="body-large">A thoughtfully curated color system that supports accessibility and visual consistency.</p>
+
+        <div class="color-grid">
+            <div class="color-box">
+                <div class="color-swatch" style="background: var(--primary-pink);">Primary Pink</div>
+                <div class="color-info">
+                    <p><strong>#EC4899</strong></p>
+                    <p>Accent and emphasis</p>
+                </div>
+            </div>
+
+            <div class="color-box">
+                <div class="color-swatch" style="background: var(--primary-blue);">Primary Blue</div>
+                <div class="color-info">
+                    <p><strong>#3B82F6</strong></p>
+                    <p>Primary actions</p>
+                </div>
+            </div>
+
+            <div class="color-box">
+                <div class="color-swatch" style="background: var(--primary-green);">Success Green</div>
+                <div class="color-info">
+                    <p><strong>#10B981</strong></p>
+                    <p>Positive actions</p>
+                </div>
+            </div>
+
+            <div class="color-box">
+                <div class="color-swatch" style="background: var(--warning);">Warning</div>
+                <div class="color-info">
+                    <p><strong>#F59E0B</strong></p>
+                    <p>Caution states</p>
+                </div>
+            </div>
+
+            <div class="color-box">
+                <div class="color-swatch" style="background: var(--error);">Error Red</div>
+                <div class="color-info">
+                    <p><strong>#EF4444</strong></p>
+                    <p>Destructive actions</p>
+                </div>
+            </div>
+
+            <div class="color-box">
+                <div class="color-swatch" style="background: var(--slate-900);">Slate 900</div>
+                <div class="color-info">
+                    <p><strong>#0F172A</strong></p>
+                    <p>Primary text</p>
+                </div>
+            </div>
+
+            <div class="color-box">
+                <div class="color-swatch" style="background: var(--slate-600);">Slate 600</div>
+                <div class="color-info">
+                    <p><strong>#475569</strong></p>
+                    <p>Secondary text</p>
+                </div>
+            </div>
+
+            <div class="color-box">
+                <div class="color-swatch" style="background: var(--slate-200);">Slate 200</div>
+                <div class="color-info">
+                    <p><strong>#E2E8F0</strong></p>
+                    <p>Borders & dividers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Components Section -->
+    <section class="components">
+        <h1>Components</h1>
+        <p class="body-large">Pre-built, reusable components for consistent UI patterns across the platform.</p>
+
+        <!-- Buttons -->
+        <div class="component-section">
+            <h3>Buttons</h3>
+            <div class="component-demo">
+                <button class="btn btn-primary">Primary Button</button>
+                <button class="btn btn-secondary">Secondary Button</button>
+                <button class="btn btn-success">Success Button</button>
+                <button class="btn btn-danger">Danger Button</button>
+                <button class="btn btn-primary btn-lg">Large Button</button>
+                <button class="btn btn-primary btn-sm">Small Button</button>
+            </div>
+        </div>
+
+        <!-- Badges -->
+        <div class="component-section">
+            <h3>Badges</h3>
+            <div class="component-demo">
+                <span class="badge badge-primary">✓ Completed</span>
+                <span class="badge badge-success">✓ Submitted</span>
+                <span class="badge badge-warning">→ In Progress</span>
+                <span class="badge badge-error">🔒 Locked</span>
+            </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="component-section">
+            <h3>Cards</h3>
+            <div class="grid-3">
+                <div class="card">
+                    <h4>Module Title</h4>
+                    <p>Brief description of the module content goes here. Cards are used to group related information.</p>
+                </div>
+                <div class="card">
+                    <h4>Another Module</h4>
+                    <p>Cards are interactive and respond to user interactions with smooth animations.</p>
+                </div>
+                <div class="card">
+                    <h4>Third Module</h4>
+                    <p>Each card can contain different types of content - text, images, or interactive elements.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bars -->
+        <div class="component-section">
+            <h3>Progress Indicators</h3>
+            <div style="margin-top: var(--spacing-lg);">
+                <label>Course Progress: 75%</label>
+                <div class="progress-bar" style="margin-top: var(--spacing-md);">
+                    <div class="progress-fill" style="width: 75%;"></div>
+                </div>
+            </div>
+            <div style="margin-top: var(--spacing-2xl);">
+                <label>Module Progress: 50%</label>
+                <div class="progress-bar" style="margin-top: var(--spacing-md);">
+                    <div class="progress-fill" style="width: 50%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerts -->
+        <div class="component-section">
+            <h3>Alerts</h3>
+            <div class="alert alert-success">✓ Success: Your submission has been received.</div>
+            <div class="alert alert-warning">⚠️ Warning: Please review before proceeding.</div>
+            <div class="alert alert-error">✗ Error: Something went wrong. Please try again.</div>
+            <div class="alert alert-info">ℹ️ Info: New course content is available.</div>
+        </div>
+
+        <!-- Input Fields -->
+        <div class="component-section">
+            <h3>Form Elements</h3>
+            <div class="grid-2" style="margin-top: var(--spacing-lg);">
+                <div>
+                    <label style="display: block; margin-bottom: var(--spacing-sm); font-weight: 600; color: var(--slate-900);">Text Input</label>
+                    <input type="text" placeholder="Enter text here...">
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: var(--spacing-sm); font-weight: 600; color: var(--slate-900);">Email Input</label>
+                    <input type="email" placeholder="your@email.com">
+                </div>
+            </div>
+            <div style="margin-top: var(--spacing-lg);">
+                <label style="display: block; margin-bottom: var(--spacing-sm); font-weight: 600; color: var(--slate-900);">Textarea</label>
+                <textarea placeholder="Enter your message..." rows="4"></textarea>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spacing Section -->
+    <section style="padding: var(--spacing-3xl); max-width: 1200px; margin: 0 auto;">
+        <h1>Spacing System</h1>
+        <p class="body-large" style="margin-bottom: var(--spacing-2xl);">Consistent spacing scale for maintaining visual rhythm and hierarchy.</p>
+
+        <div class="grid-2">
+            <div>
+                <p><strong>xs</strong> - 4px</p>
+                <p><strong>sm</strong> - 8px</p>
+                <p><strong>md</strong> - 16px</p>
+                <p><strong>lg</strong> - 24px</p>
+            </div>
+            <div>
+                <p><strong>xl</strong> - 32px</p>
+                <p><strong>2xl</strong> - 48px</p>
+                <p><strong>3xl</strong> - 64px</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Principles -->
+    <section style="padding: var(--spacing-3xl); max-width: 1200px; margin: 0 auto;">
+        <h1>Design Principles</h1>
+        <div class="grid-3" style="margin-top: var(--spacing-2xl);">
+            <div class="card">
+                <h4>Consistency</h4>
+                <p>Use the same colors, typography, spacing, and component patterns throughout the application to create a cohesive experience.</p>
+            </div>
+            <div class="card">
+                <h4>Clarity</h4>
+                <p>Information should be easy to understand and navigate. Use clear labeling, hierarchy, and visual feedback.</p>
+            </div>
+            <div class="card">
+                <h4>Accessibility</h4>
+                <p>Ensure sufficient color contrast, provide keyboard navigation, and use semantic HTML for screen readers.</p>
+            </div>
+            <div class="card">
+                <h4>Feedback</h4>
+                <p>Provide visual feedback for user actions through animations, color changes, and status indicators.</p>
+            </div>
+            <div class="card">
+                <h4>Efficiency</h4>
+                <p>Design for quick scanning and navigation. Minimize cognitive load and reduce unnecessary steps.</p>
+            </div>
+            <div class="card">
+                <h4>Delight</h4>
+                <p>Include thoughtful micro-interactions and animations that make the interface feel polished and responsive.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implementation Guide -->
+    <section style="padding: var(--spacing-3xl); max-width: 1200px; margin: 0 auto;">
+        <h1>Implementation Guide</h1>
+        <p class="body-large" style="margin-bottom: var(--spacing-2xl);">How to use this design system in your Next.js React components.</p>
+
+        <div class="component-section">
+            <h3>CSS Variables</h3>
+            <p>All colors and spacings are defined as CSS variables in the :root selector. Use them in your Tailwind config or directly in your CSS:</p>
+            <pre style="background: var(--slate-100); padding: var(--spacing-lg); border-radius: var(--radius-md); overflow-x: auto; margin-top: var(--spacing-lg);">
+<code>/* In your CSS files */
+color: var(--primary-blue);
+padding: var(--spacing-lg);
+border-radius: var(--radius-md);</code>
+            </pre>
+        </div>
+
+        <div class="component-section">
+            <h3>Component Library</h3>
+            <p>Use the predefined Tailwind classes alongside this design guide:</p>
+            <ul style="margin-top: var(--spacing-lg); margin-left: var(--spacing-lg); list-style: disc; color: var(--slate-600);">
+                <li>Primary: <code style="background: var(--slate-100); padding: 0.25rem 0.5rem; border-radius: 0.25rem;">bg-blue-600</code> for main actions</li>
+                <li>Success: <code style="background: var(--slate-100); padding: 0.25rem 0.5rem; border-radius: 0.25rem;">bg-green-100</code> for positive feedback</li>
+                <li>Warning: <code style="background: var(--slate-100); padding: 0.25rem 0.5rem; border-radius: 0.25rem;">bg-yellow-100</code> for caution</li>
+                <li>Error: <code style="background: var(--slate-100); padding: 0.25rem 0.5rem; border-radius: 0.25rem;">bg-red-100</code> for destructive actions</li>
+            </ul>
+        </div>
+
+        <div class="component-section">
+            <h3>Color Usage Guidelines</h3>
+            <ul style="margin-top: var(--spacing-lg); margin-left: var(--spacing-lg); list-style: disc; color: var(--slate-600);">
+                <li><strong>Primary Blue (#3B82F6):</strong> Main buttons, links, and primary actions</li>
+                <li><strong>Primary Pink (#EC4899):</strong> Accent elements, highlights, and hover states</li>
+                <li><strong>Success Green (#10B981):</strong> Completion badges, success messages, and positive feedback</li>
+                <li><strong>Warning Yellow (#F59E0B):</strong> In-progress states and caution messages</li>
+                <li><strong>Slate grays:</strong> Text, backgrounds, borders, and neutral elements</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section style="background: var(--slate-900); color: white; padding: var(--spacing-2xl); text-align: center; margin-top: var(--spacing-3xl);">
+        <p>Website 1 Wun Design Guide © 2024</p>
+        <p style="margin-top: var(--spacing-md); opacity: 0.7; font-size: 0.875rem;">For questions or updates, please refer to the main design system documentation.</p>
+    </section>
+</body>
+</html>
