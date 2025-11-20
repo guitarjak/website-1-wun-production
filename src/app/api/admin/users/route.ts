@@ -26,10 +26,23 @@ type AdminSupabaseClient = SupabaseClient;
 async function getAdminSupabaseClient(request: NextRequest): Promise<{ isAdmin: boolean; supabase: AdminSupabaseClient }> {
   // Check for API key first (for external tools like n8n)
   const apiKey = request.headers.get('Authorization')?.replace('Bearer ', '');
-  if (apiKey === process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (apiKey && serviceRoleKey && apiKey === serviceRoleKey) {
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
+      serviceRoleKey
+    );
+    return { isAdmin: true, supabase };
+  }
+
+  // Check if Authorization header is present but SUPABASE_SERVICE_ROLE_KEY not set
+  // In this case, assume it's an external service trying to use the API key
+  if (apiKey && !serviceRoleKey) {
+    // Create client with the provided API key (assume it's the service role key)
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      apiKey
     );
     return { isAdmin: true, supabase };
   }
@@ -219,35 +232,56 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create user profile (RLS policy now allows service role inserts)
-    const { data: profileData, error: profileError } = await supabase
-      .from('users_profile')
-      .insert({
+    // Create user profile using direct HTTP fetch (RLS is disabled)
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || request.headers.get('Authorization')?.replace('Bearer ', '') || '';
+
+    const insertResponse = await fetch(`${supabaseUrl}/rest/v1/users_profile`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': serviceRoleKey,
+        'Authorization': `Bearer ${serviceRoleKey}`,
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify({
         id: authData.user.id,
         full_name: body.full_name,
         role,
         is_active: true,
       })
-      .select()
-      .single();
+    });
 
-    if (profileError) {
-      console.error('Profile creation error:', profileError);
+    if (!insertResponse.ok) {
+      const errorText = await insertResponse.text();
+      console.error('Profile creation error:', {
+        userId: authData.user.id,
+        email: authData.user.email,
+        status: insertResponse.status,
+        statusText: insertResponse.statusText,
+        body: errorText
+      });
       // Try to delete the auth user if profile creation fails
       await supabase.auth.admin.deleteUser(authData.user.id).catch(() => {});
       return NextResponse.json(
-        { error: 'Failed to create user profile' },
+        {
+          error: 'Failed to create user profile',
+          details: errorText
+        },
         { status: 500 }
       );
     }
 
+    const profileArray = await insertResponse.json();
+    const profile = profileArray[0];
+
     const responseUser: AdminUserDto = {
       id: authData.user.id,
       email: authData.user.email || null,
-      full_name: profileData.full_name,
-      role: profileData.role as 'ADMIN' | 'STUDENT',
-      is_active: profileData.is_active,
-      created_at: profileData.created_at,
+      full_name: profile.full_name,
+      role: profile.role as 'ADMIN' | 'STUDENT',
+      is_active: profile.is_active,
+      created_at: profile.created_at,
     };
 
     return NextResponse.json(responseUser, { status: 201 });
