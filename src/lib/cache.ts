@@ -76,38 +76,6 @@ function getGlobalCache(): SimpleCache {
 }
 
 /**
- * Cache wrapper for async functions
- * @param key - Cache key
- * @param ttlMs - Time to live in milliseconds
- * @param fn - Async function to execute
- * @returns Cached or fresh data
- */
-export async function withCache<T>(
-  key: string,
-  ttlMs: number,
-  fn: () => Promise<T>
-): Promise<T> {
-  const cache = getGlobalCache();
-
-  // Try to get from cache
-  const cached = cache.get<T>(key);
-  if (cached !== null) {
-    console.log(`[Cache HIT] ${key}`);
-    return cached;
-  }
-
-  console.log(`[Cache MISS] ${key}`);
-
-  // Cache miss - execute function
-  const data = await fn();
-
-  // Store in cache
-  cache.set(key, data, ttlMs);
-
-  return data;
-}
-
-/**
  * Clear cache for a specific pattern (e.g., 'course:*')
  */
 export function clearCachePattern(pattern: string): void {
@@ -122,22 +90,3 @@ export function clearCachePattern(pattern: string): void {
     }
   }
 }
-
-/**
- * Clear all cache
- */
-export function clearAllCache(): void {
-  const cache = getGlobalCache();
-  cache.clearAll();
-}
-
-export const CACHE_TTL = {
-  // Course structure (courses, modules, lessons) - changes infrequently
-  COURSE_STRUCTURE: 1 * 60 * 60 * 1000, // 1 hour
-
-  // User progress - changes frequently, shorter TTL
-  USER_PROGRESS: 5 * 60 * 1000, // 5 minutes
-
-  // Admin data - can be cached longer
-  ADMIN_DATA: 30 * 60 * 1000, // 30 minutes
-};
