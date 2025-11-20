@@ -16,7 +16,7 @@ export default async function Navbar() {
   if (!currentUser) {
     // Not logged in
     return (
-      <nav className="sticky top-0 z-50" style={{
+      <nav className="w-full" style={{
         background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9))',
         backdropFilter: 'blur(10px)',
         borderBottom: '1px solid var(--border-light)'
@@ -56,7 +56,7 @@ export default async function Navbar() {
   const isAdmin = profile.role === "ADMIN";
 
   return (
-    <nav className="sticky top-0 z-50" style={{
+    <nav className="w-full" style={{
       background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9))',
       backdropFilter: 'blur(10px)',
       borderBottom: '1px solid var(--border-light)'
