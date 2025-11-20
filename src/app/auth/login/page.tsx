@@ -61,12 +61,11 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loading}
-                className="w-full px-4 py-2 rounded-lg border transition-colors focus:outline-none focus:ring-2 disabled:opacity-60"
+                className="w-full px-4 py-2 rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--golden)] disabled:opacity-60"
                 style={{
                   borderColor: 'var(--border-light)',
                   backgroundColor: '#f9fafb',
                   color: 'var(--text-primary)',
-                  focusRingColor: 'var(--golden)',
                 }}
                 required
               />
@@ -83,12 +82,11 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={loading}
-                className="w-full px-4 py-2 rounded-lg border transition-colors focus:outline-none focus:ring-2 disabled:opacity-60"
+                className="w-full px-4 py-2 rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--golden)] disabled:opacity-60"
                 style={{
                   borderColor: 'var(--border-light)',
                   backgroundColor: '#f9fafb',
                   color: 'var(--text-primary)',
-                  focusRingColor: 'var(--golden)',
                 }}
                 required
               />
