@@ -203,7 +203,7 @@ export async function POST(request: NextRequest) {
     // Use lowercase role for database storage
     const role = requestedRole;
 
-    // Create auth user with metadata that trigger will use
+    // Create auth user with metadata for trigger to use
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
       email: body.email,
       password: body.password,
@@ -236,65 +236,56 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create profile directly using database insert with retry logic
-    let profile = null;
-    let insertError = null;
+    // Insert profile directly into database (trigger will also attempt to create)
+    const { data: profile, error: profileError } = await supabase
+      .from('users_profile')
+      .insert({
+        id: authData.user.id,
+        full_name: body.full_name,
+        role,
+        is_active: true,
+      })
+      .select()
+      .single();
 
-    for (let attempt = 0; attempt < 3; attempt++) {
-      const { data: profileData, error: profileError } = await supabase
-        .from('users_profile')
-        .insert({
-          id: authData.user.id,
-          full_name: body.full_name,
-          role,
-          is_active: true,
-        })
-        .select()
-        .single();
-
-      if (!profileError) {
-        profile = profileData;
-        break;
-      }
-
-      insertError = profileError;
-      // Wait before retrying
-      if (attempt < 2) {
-        await new Promise(resolve => setTimeout(resolve, 200 * (attempt + 1)));
-      }
-    }
-
-    if (insertError || !profile) {
-      console.warn('Profile insert via REST API failed, waiting for trigger:', {
+    if (profileError) {
+      console.warn('Profile creation via REST API failed:', {
         userId: authData.user.id,
         email: authData.user.email,
-        error: insertError?.message
+        error: profileError?.message
       });
 
-      // Wait for the PostgreSQL trigger to create the profile
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Try a direct SQL insert as fallback
+      try {
+        await supabase.rpc('insert_user_profile_direct', {
+          p_user_id: authData.user.id,
+          p_full_name: body.full_name,
+          p_role: role,
+        });
 
-      // Try to fetch the profile created by trigger
-      const { data: triggerProfile, error: triggerError } = await supabase
-        .from('users_profile')
-        .select('*')
-        .eq('id', authData.user.id)
-        .single();
+        // If SQL insert worked, fetch and return the profile
+        const { data: createdProfile } = await supabase
+          .from('users_profile')
+          .select('*')
+          .eq('id', authData.user.id)
+          .single();
 
-      if (triggerProfile) {
-        const responseUser: AdminUserDto = {
-          id: authData.user.id,
-          email: authData.user.email || null,
-          full_name: triggerProfile.full_name,
-          role: triggerProfile.role as 'ADMIN' | 'STUDENT',
-          is_active: triggerProfile.is_active,
-          created_at: triggerProfile.created_at,
-        };
-        return NextResponse.json(responseUser, { status: 201 });
+        if (createdProfile) {
+          const responseUser: AdminUserDto = {
+            id: authData.user.id,
+            email: authData.user.email || null,
+            full_name: createdProfile.full_name,
+            role: createdProfile.role as 'ADMIN' | 'STUDENT',
+            is_active: createdProfile.is_active,
+            created_at: createdProfile.created_at,
+          };
+          return NextResponse.json(responseUser, { status: 201 });
+        }
+      } catch (e) {
+        console.warn('RPC insert also failed:', e);
       }
 
-      // If trigger profile also failed, return auth user data
-      console.warn('Trigger also failed to create profile:', triggerError?.message);
+      // Final fallback: return auth user (profile may be created by trigger later)
       return NextResponse.json({
         id: authData.user.id,
         email: authData.user.email || null,
