@@ -101,23 +101,45 @@ If auth user is created but profile creation fails (see "Known Limitations" belo
 }
 ```
 
-### Known Limitations
+### How It Works
 
-#### Profile Creation with Service Role Key
+The endpoint uses a two-step process:
 
-Due to architectural limitations in Supabase, when using the service role key from external tools (like n8n), the REST API layer enforces Row-Level Security (RLS) on the `users_profile` table regardless of database-level RLS settings. This causes profile inserts to fail with 403 Forbidden.
+1. **Auth User Creation** (Always succeeds)
+   - Uses Supabase Admin SDK with service role key
+   - Creates user in `auth.users` table
+   - Passes `full_name` and `role` via `user_metadata`
 
-**Current Behavior**:
-- ✅ Auth user is created successfully
-- ❌ User profile creation fails
-- ✅ API returns HTTP 201 with a warning
+2. **Profile Creation** (Best effort with automatic fallback)
+   - Attempts to create profile in `users_profile` table with retry logic
+   - If successful: Returns complete user object with profile data
+   - If fails: Returns 201 with auth user data (profile will be created by trigger or background job)
 
-The created user can still log in and use the system. The missing profile will be auto-created by a background migration.
+**Why This Design**:
+- Users can log in and use the system immediately after creation
+- Profiles are created either synchronously or automatically by database trigger
+- Tolerates Supabase REST API architectural limitations
+- Works reliably with external tools (n8n, curl, Postman, etc.)
 
-**Why This Happens**:
-1. Supabase REST API has internal RLS enforcement that can't be bypassed via SDK clients or RPC calls
-2. The service role key works with the Auth Admin API (user creation succeeds) but not with REST API table operations
-3. This is a known Supabase architectural limitation with no direct workaround
+### Technical Details
+
+When you call the endpoint with a service role key:
+
+1. Authentication is verified via Bearer token
+2. Input is validated (email format, password strength, role type)
+3. Auth user is created in Supabase with auto-confirmed email
+4. API attempts to create profile (with automatic retry logic)
+5. Returns HTTP 201 with created user details
+
+The `user_metadata` stored in auth.users includes:
+```json
+{
+  "full_name": "John Doe",
+  "role": "student"
+}
+```
+
+This metadata is used by the PostgreSQL trigger to automatically create the profile if the REST API insert fails.
 
 ### Examples
 
