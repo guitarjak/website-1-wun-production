@@ -232,34 +232,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create user profile using direct HTTP fetch (RLS is disabled)
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || request.headers.get('Authorization')?.replace('Bearer ', '') || '';
-
-    const insertResponse = await fetch(`${supabaseUrl}/rest/v1/users_profile`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': serviceRoleKey,
-        'Authorization': `Bearer ${serviceRoleKey}`,
-        'Prefer': 'return=representation'
-      },
-      body: JSON.stringify({
+    // Create user profile using Supabase Admin SDK (bypasses REST API RLS limitations)
+    const { data: profileData, error: profileError } = await supabase
+      .from('users_profile')
+      .insert({
         id: authData.user.id,
         full_name: body.full_name,
         role,
         is_active: true,
       })
-    });
+      .select()
+      .single();
 
-    if (!insertResponse.ok) {
-      const errorText = await insertResponse.text();
+    if (profileError) {
       console.error('Profile creation error (but user was created in auth):', {
         userId: authData.user.id,
         email: authData.user.email,
-        status: insertResponse.status,
-        statusText: insertResponse.statusText,
-        body: errorText
+        error: profileError
       });
       // Don't delete the auth user - just log the error and return partial success
       // The profile can be created manually or via a background job later
@@ -274,8 +263,7 @@ export async function POST(request: NextRequest) {
       }, { status: 201 });
     }
 
-    const profileArray = await insertResponse.json();
-    const profile = profileArray[0];
+    const profile = profileData;
 
     const responseUser: AdminUserDto = {
       id: authData.user.id,
