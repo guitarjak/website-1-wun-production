@@ -268,10 +268,18 @@ export async function POST(request: NextRequest) {
       .eq('id', authData.user.id)
       .single();
 
+    // Determine the full_name to return
+    // If profile has correct full_name (not email prefix), use it
+    // Otherwise use the requested full_name
+    const emailPrefix = body.email.split('@')[0];
+    const actualFullName = profile?.full_name && profile.full_name !== emailPrefix
+      ? profile.full_name
+      : body.full_name;
+
     const responseUser: AdminUserDto = {
       id: authData.user.id,
       email: authData.user.email || null,
-      full_name: profile?.full_name || body.full_name,
+      full_name: actualFullName,
       role: (profile?.role || role) as 'ADMIN' | 'STUDENT',
       is_active: profile?.is_active !== undefined ? profile.is_active : true,
       created_at: profile?.created_at || new Date().toISOString(),
