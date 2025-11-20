@@ -14,7 +14,7 @@ export default async function PublicCertificatePage({
     user_id: string;
     course_id: string;
     // Supabase returns related records as arrays by default
-    users: { full_name: string | null }[] | null;
+    users_profile: { full_name: string | null }[] | null;
     courses: { title: string | null }[] | null;
   };
   // Unwrap the params promise
@@ -36,10 +36,10 @@ export default async function PublicCertificatePage({
       issued_at,
       user_id,
       course_id,
-      users:user_id (
+      users_profile:users_profile!certificates_user_id_fkey (
         full_name
       ),
-      courses:course_id (
+      courses:courses!certificates_course_id_fkey (
         title
       )
     `
@@ -71,7 +71,7 @@ export default async function PublicCertificatePage({
   }
 
   const certificate = certificates as CertificateData;
-  const userName = certificate.users?.[0]?.full_name || 'Unknown';
+  const userName = certificate.users_profile?.[0]?.full_name || 'Unknown';
   const courseTitle = certificate.courses?.[0]?.title || 'Unknown Course';
 
   return (

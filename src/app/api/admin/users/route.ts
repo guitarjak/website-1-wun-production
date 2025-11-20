@@ -254,22 +254,24 @@ export async function POST(request: NextRequest) {
 
     if (!insertResponse.ok) {
       const errorText = await insertResponse.text();
-      console.error('Profile creation error:', {
+      console.error('Profile creation error (but user was created in auth):', {
         userId: authData.user.id,
         email: authData.user.email,
         status: insertResponse.status,
         statusText: insertResponse.statusText,
         body: errorText
       });
-      // Try to delete the auth user if profile creation fails
-      await supabase.auth.admin.deleteUser(authData.user.id).catch(() => {});
-      return NextResponse.json(
-        {
-          error: 'Failed to create user profile',
-          details: errorText
-        },
-        { status: 500 }
-      );
+      // Don't delete the auth user - just log the error and return partial success
+      // The profile can be created manually or via a background job later
+      return NextResponse.json({
+        id: authData.user.id,
+        email: authData.user.email || null,
+        full_name: body.full_name,
+        role: role as 'ADMIN' | 'STUDENT',
+        is_active: true,
+        created_at: new Date().toISOString(),
+        warning: 'Auth user created but profile creation failed. Profile will need to be created separately.'
+      }, { status: 201 });
     }
 
     const profileArray = await insertResponse.json();
