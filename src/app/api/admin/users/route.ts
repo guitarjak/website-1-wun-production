@@ -178,10 +178,10 @@ export async function POST(request: NextRequest): Promise<NextResponse<SuccessRe
     const userId = authData.user.id;
     console.log(`✅ Auth user created: ${userId}`);
 
-    // 5. Insert profile into profiles table
+    // 5. Insert profile into users_profile table
     console.log(`📝 Creating profile for: ${userId}`);
     const { error: profileError } = await supabase
-      .from('profiles')
+      .from('users_profile')
       .insert({
         id: userId,
         full_name,
