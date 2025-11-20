@@ -107,7 +107,7 @@ export async function GET(request: NextRequest) {
 
     // Create a map of user IDs to emails
     const emailMap = new Map(
-      authUsers.users.map((u) => [u.id, u.email])
+      authUsers.users.map((u: any) => [u.id, u.email])
     );
 
     // Combine data
