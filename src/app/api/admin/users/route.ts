@@ -236,56 +236,48 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Insert profile directly into database (trigger will also attempt to create)
-    const { data: profile, error: profileError } = await supabase
-      .from('users_profile')
-      .insert({
-        id: authData.user.id,
-        full_name: body.full_name,
-        role,
-        is_active: true,
-      })
-      .select()
-      .single();
-
-    if (profileError) {
-      console.warn('Profile creation via REST API failed:', {
-        userId: authData.user.id,
-        email: authData.user.email,
-        error: profileError?.message
-      });
-
-      // Try a direct SQL insert as fallback
-      try {
-        await supabase.rpc('insert_user_profile_direct', {
+    // Create profile using RPC function (bypasses REST API RLS)
+    try {
+      const { data: profileData, error: profileError } = await supabase.rpc(
+        'create_user_profile',
+        {
           p_user_id: authData.user.id,
           p_full_name: body.full_name,
           p_role: role,
-        });
-
-        // If SQL insert worked, fetch and return the profile
-        const { data: createdProfile } = await supabase
-          .from('users_profile')
-          .select('*')
-          .eq('id', authData.user.id)
-          .single();
-
-        if (createdProfile) {
-          const responseUser: AdminUserDto = {
-            id: authData.user.id,
-            email: authData.user.email || null,
-            full_name: createdProfile.full_name,
-            role: createdProfile.role as 'ADMIN' | 'STUDENT',
-            is_active: createdProfile.is_active,
-            created_at: createdProfile.created_at,
-          };
-          return NextResponse.json(responseUser, { status: 201 });
         }
-      } catch (e) {
-        console.warn('RPC insert also failed:', e);
+      );
+
+      if (profileError) {
+        console.warn('RPC profile creation failed:', profileError);
+        // Return auth user data if profile creation fails
+        return NextResponse.json({
+          id: authData.user.id,
+          email: authData.user.email || null,
+          full_name: body.full_name,
+          role: role as 'ADMIN' | 'STUDENT',
+          is_active: true,
+          created_at: new Date().toISOString(),
+        }, { status: 201 });
       }
 
-      // Final fallback: return auth user (profile may be created by trigger later)
+      // Parse the profile data from RPC response
+      const profileObj = typeof profileData === 'string'
+        ? JSON.parse(profileData)
+        : profileData;
+
+      const responseUser: AdminUserDto = {
+        id: authData.user.id,
+        email: authData.user.email || null,
+        full_name: profileObj.full_name || body.full_name,
+        role: (profileObj.role || role) as 'ADMIN' | 'STUDENT',
+        is_active: profileObj.is_active !== undefined ? profileObj.is_active : true,
+        created_at: profileObj.created_at || new Date().toISOString(),
+      };
+
+      return NextResponse.json(responseUser, { status: 201 });
+    } catch (e) {
+      console.error('Error creating profile:', e);
+      // Return auth user data if there's an error
       return NextResponse.json({
         id: authData.user.id,
         email: authData.user.email || null,
@@ -295,17 +287,6 @@ export async function POST(request: NextRequest) {
         created_at: new Date().toISOString(),
       }, { status: 201 });
     }
-
-    const responseUser: AdminUserDto = {
-      id: authData.user.id,
-      email: authData.user.email || null,
-      full_name: profile.full_name,
-      role: profile.role as 'ADMIN' | 'STUDENT',
-      is_active: profile.is_active,
-      created_at: profile.created_at,
-    };
-
-    return NextResponse.json(responseUser, { status: 201 });
   } catch (error) {
     console.error('Error creating user:', error);
     return NextResponse.json(
