@@ -1,324 +1,272 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import { createSupabaseServerClient } from '@/lib/supabaseServer';
-import { getCurrentUserWithProfile } from '@/lib/auth';
-import { Pool } from 'pg';
+import { createClient } from '@supabase/supabase-js';
 
 // Type definitions
-type AdminUserDto = {
-  id: string;
-  email: string | null;
-  full_name: string | null;
-  role: 'ADMIN' | 'STUDENT';
-  is_active?: boolean;
-  created_at: string;
-};
-
-type CreateUserRequest = {
+interface CreateUserRequest {
   email: string;
   password: string;
   full_name: string;
-  role?: 'ADMIN' | 'STUDENT';
-};
-
-// Create user profile using direct PostgreSQL connection (bypasses REST API RLS)
-async function createProfileDirectPostgres(
-  userId: string,
-  fullName: string,
-  role: string,
-  email: string
-): Promise<{ success: boolean; error?: string }> {
-  const dbUrl = process.env.DATABASE_URL;
-  if (!dbUrl) {
-    console.warn('DATABASE_URL not set, skipping direct PostgreSQL insert');
-    return { success: false, error: 'DATABASE_URL not configured' };
-  }
-
-  let pool: Pool | null = null;
-  try {
-    pool = new Pool({
-      connectionString: dbUrl,
-      ssl: { rejectUnauthorized: false },
-    });
-
-    const client = await pool.connect();
-    try {
-      await client.query(
-        `INSERT INTO public.users_profile (id, full_name, role, is_active, created_at)
-         VALUES ($1, $2, $3, true, NOW())
-         ON CONFLICT (id) DO UPDATE SET
-           full_name = EXCLUDED.full_name,
-           role = EXCLUDED.role,
-           is_active = true`,
-        [userId, fullName, role]
-      );
-      console.log(`✅ Profile created via direct PostgreSQL for ${email}`);
-      return { success: true };
-    } finally {
-      client.release();
-    }
-  } catch (error) {
-    console.error('❌ Direct PostgreSQL profile creation failed:', error);
-    return { success: false, error: String(error) };
-  } finally {
-    if (pool) {
-      await pool.end();
-    }
-  }
+  role: string;
 }
 
-// Helper function to check admin authorization and get Supabase client
-type AdminSupabaseClient = SupabaseClient;
+interface ValidationError {
+  [key: string]: string;
+}
 
-async function getAdminSupabaseClient(request: NextRequest): Promise<{ isAdmin: boolean; supabase: AdminSupabaseClient }> {
-  // Check for API key first (for external tools like n8n)
-  const apiKey = request.headers.get('Authorization')?.replace('Bearer ', '');
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+interface SuccessResponse {
+  id: string;
+  email: string;
+  full_name: string;
+  role: string;
+}
 
-  if (apiKey && serviceRoleKey && apiKey === serviceRoleKey) {
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      serviceRoleKey
-    );
-    return { isAdmin: true, supabase };
+interface ErrorResponse {
+  error: string;
+  details?: ValidationError;
+}
+
+// Helper: Validate email format
+function isValidEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+// Helper: Validate request body
+function validateInput(body: unknown): { valid: boolean; errors?: ValidationError; data?: CreateUserRequest } {
+  if (!body || typeof body !== 'object') {
+    return { valid: false, errors: { body: 'Request body must be valid JSON' } };
   }
 
-  // Check if Authorization header is present but SUPABASE_SERVICE_ROLE_KEY not set
-  // In this case, assume it's an external service trying to use the API key
-  if (apiKey && !serviceRoleKey) {
-    // Create client with the provided API key (assume it's the service role key)
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      apiKey
-    );
-    return { isAdmin: true, supabase };
+  const input = body as Record<string, unknown>;
+  const errors: ValidationError = {};
+
+  // Email validation
+  if (!input.email || typeof input.email !== 'string' || !isValidEmail(input.email)) {
+    errors.email = 'Email is required and must be a valid email address';
   }
 
-  // Fall back to Supabase session auth
-  const user = await getCurrentUserWithProfile();
-  const supabase = await createSupabaseServerClient();
+  // Password validation (at least 8 characters)
+  if (!input.password || typeof input.password !== 'string' || input.password.length < 8) {
+    errors.password = 'Password is required and must be at least 8 characters';
+  }
+
+  // Full name validation
+  if (!input.full_name || typeof input.full_name !== 'string' || input.full_name.trim().length === 0) {
+    errors.full_name = 'Full name is required and cannot be empty';
+  }
+
+  // Role validation
+  if (!input.role || typeof input.role !== 'string' || input.role.trim().length === 0) {
+    errors.role = 'Role is required and cannot be empty';
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { valid: false, errors };
+  }
+
   return {
-    isAdmin: !!(user && user.profile.role === 'ADMIN'),
-    supabase
+    valid: true,
+    data: {
+      email: (input.email as string).toLowerCase(),
+      password: input.password as string,
+      full_name: (input.full_name as string).trim(),
+      role: (input.role as string).toUpperCase().trim(),
+    },
   };
 }
 
-// GET /api/admin/users - List all users
-export async function GET(request: NextRequest) {
-  try {
-    // Check admin authorization and get appropriate Supabase client
-    const { isAdmin, supabase } = await getAdminSupabaseClient(request);
-    if (!isAdmin) {
-      return NextResponse.json(
-        { error: 'Unauthorized: Admin access required' },
-        { status: 403 }
-      );
-    }
+// Helper: Verify bearer token
+function verifyBearerToken(authHeader: string | null): boolean {
+  if (!authHeader) return false;
 
-    // Parse query parameters
-    const searchParams = request.nextUrl.searchParams;
-    const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 500); // Max 500
-    const offset = parseInt(searchParams.get('offset') || '0');
-
-    // Fetch users from users_profile table
-    const { data: profiles, error: profileError, count } = await supabase
-      .from('users_profile')
-      .select(
-        `
-        id,
-        full_name,
-        role,
-        is_active,
-        created_at
-        `,
-        { count: 'exact' }
-      )
-      .range(offset, offset + limit - 1)
-      .order('created_at', { ascending: false });
-
-    if (profileError) {
-      console.error('Profile fetch error:', profileError);
-      return NextResponse.json(
-        { error: 'Failed to fetch users' },
-        { status: 500 }
-      );
-    }
-
-    // If no profiles, return empty array
-    if (!profiles || profiles.length === 0) {
-      return NextResponse.json({
-        data: [],
-        pagination: {
-          limit,
-          offset,
-          total: 0,
-        },
-      });
-    }
-
-    // Get user emails from auth.users
-    const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
-
-    if (authError) {
-      console.error('Auth users fetch error:', authError);
-      return NextResponse.json(
-        { error: 'Failed to fetch user emails' },
-        { status: 500 }
-      );
-    }
-
-    // Create a map of user IDs to emails
-    const emailMap = new Map(
-      authUsers.users.map((u: { id: string; email?: string }) => [u.id, u.email])
-    );
-
-    // Combine data
-    const users: AdminUserDto[] = (profiles as Array<{ id: string; full_name: string | null; role: string; is_active: boolean | null; created_at: string }>).map((profile) => ({
-      id: profile.id,
-      email: emailMap.get(profile.id) || null,
-      full_name: profile.full_name,
-      role: profile.role as 'ADMIN' | 'STUDENT',
-      ...(profile.is_active !== null && { is_active: profile.is_active }),
-      created_at: profile.created_at,
-    }));
-
-    return NextResponse.json({
-      data: users,
-      pagination: {
-        limit,
-        offset,
-        total: count,
-      },
-    });
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+  const expectedToken = process.env.ADMIN_BEARER_TOKEN;
+  if (!expectedToken) {
+    console.warn('⚠️ ADMIN_BEARER_TOKEN not configured');
+    return false;
   }
+
+  const parts = authHeader.split(' ');
+  if (parts.length !== 2 || parts[0] !== 'Bearer') {
+    return false;
+  }
+
+  const token = parts[1];
+  return token === expectedToken;
 }
 
-// POST /api/admin/users - Create a new user
-export async function POST(request: NextRequest) {
+// Main POST handler
+export async function POST(request: NextRequest): Promise<NextResponse<SuccessResponse | ErrorResponse>> {
   try {
-    // Check admin authorization and get appropriate Supabase client
-    const { isAdmin, supabase } = await getAdminSupabaseClient(request);
-    if (!isAdmin) {
+    // 1. Check authorization
+    const authHeader = request.headers.get('Authorization');
+    if (!verifyBearerToken(authHeader)) {
       return NextResponse.json(
-        { error: 'Unauthorized: Admin access required' },
-        { status: 403 }
+        { error: 'Unauthorized' },
+        { status: 401 }
       );
     }
 
-    const body: CreateUserRequest = await request.json();
-
-    // Validate required fields
-    if (!body.email || !body.password || !body.full_name) {
+    // 2. Parse and validate request body
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
       return NextResponse.json(
-        { error: 'Missing required fields: email, password, full_name' },
+        { error: 'Invalid input', details: { body: 'Request body must be valid JSON' } },
         { status: 400 }
       );
     }
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(body.email)) {
+    const validation = validateInput(body);
+    if (!validation.valid) {
       return NextResponse.json(
-        { error: 'Invalid email format' },
+        { error: 'Invalid input', details: validation.errors },
         { status: 400 }
       );
     }
 
-    // Validate password length
-    if (body.password.length < 6) {
+    const { email, password, full_name, role } = validation.data!;
+
+    // 3. Create Supabase admin client
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!supabaseUrl || !serviceRoleKey) {
+      console.error('❌ Missing Supabase environment variables');
       return NextResponse.json(
-        { error: 'Password must be at least 6 characters' },
-        { status: 400 }
+        { error: 'Internal server error' },
+        { status: 500 }
       );
     }
 
-    // Accept both uppercase and lowercase role values
-    const requestedRole = (body.role || 'student').toLowerCase();
-    if (!['admin', 'student', 'instructor'].includes(requestedRole)) {
-      return NextResponse.json(
-        { error: 'Invalid role. Must be admin, student, or instructor' },
-        { status: 400 }
-      );
-    }
-
-    // Use lowercase role for database storage
-    const role = requestedRole;
-
-    // Store the full_name before creating auth user
-    // This allows the trigger to look it up later
-    await supabase.rpc('store_user_full_name', {
-      p_email: body.email,
-      p_full_name: body.full_name,
-    }).catch(err => {
-      console.warn('Failed to pre-store full_name:', err);
-      // Continue anyway - trigger will use email prefix fallback
+    const supabase = createClient(supabaseUrl, serviceRoleKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
     });
 
-    // Create auth user
+    // 4. Create auth user with metadata
+    console.log(`📝 Creating auth user for: ${email}`);
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
-      email: body.email,
-      password: body.password,
-      email_confirm: true, // Auto-confirm email
+      email,
+      password,
+      email_confirm: true, // Auto-confirm so they can log in immediately
+      user_metadata: {
+        full_name,
+        role,
+      },
     });
 
-    if (authError) {
-      console.error('Auth user creation error:', authError);
-      // Return specific error messages
-      if (authError.message.includes('already registered')) {
+    if (authError || !authData.user) {
+      console.error('❌ Auth user creation failed:', authError?.message);
+
+      // Handle specific error: user already exists
+      if (authError?.message?.includes('already exists') || authError?.message?.includes('already registered')) {
         return NextResponse.json(
-          { error: 'User with this email already exists' },
+          { error: 'Email already exists' },
           { status: 409 }
         );
       }
+
       return NextResponse.json(
         { error: 'Failed to create user' },
         { status: 500 }
       );
     }
 
-    if (!authData.user) {
+    const userId = authData.user.id;
+    console.log(`✅ Auth user created: ${userId}`);
+
+    // 5. Insert profile into profiles table
+    console.log(`📝 Creating profile for: ${userId}`);
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .insert({
+        id: userId,
+        full_name,
+        role,
+      });
+
+    if (profileError) {
+      console.error('❌ Profile creation failed:', profileError.message);
+
+      // Try to clean up: delete the auth user we just created
+      // (Optional - you can remove this if you prefer to leave orphaned users)
+      console.log(`🧹 Attempting to delete orphaned auth user: ${userId}`);
+      await supabase.auth.admin.deleteUser(userId).catch(deleteError => {
+        console.warn('⚠️ Failed to delete orphaned user:', deleteError.message);
+      });
+
       return NextResponse.json(
-        { error: 'Failed to create user' },
+        { error: 'Failed to create user profile' },
         { status: 500 }
       );
     }
 
-    // Create profile using direct PostgreSQL connection (bypasses REST API RLS)
-    const pgResult = await createProfileDirectPostgres(
-      authData.user.id,
-      body.full_name,
+    console.log(`✅ Profile created: ${userId}`);
+
+    // 6. Return success response
+    const response: SuccessResponse = {
+      id: userId,
+      email,
+      full_name,
       role,
-      body.email
-    );
-
-    if (!pgResult.success) {
-      console.warn('Direct PostgreSQL insertion failed, will fall back to trigger:', pgResult.error);
-      // Wait for trigger to create profile with email prefix fallback
-      await new Promise(resolve => setTimeout(resolve, 150));
-    }
-
-    // Return successful response with user data
-    const responseUser: AdminUserDto = {
-      id: authData.user.id,
-      email: authData.user.email || null,
-      full_name: body.full_name, // Return the requested full_name
-      role: (role) as 'ADMIN' | 'STUDENT',
-      is_active: true,
-      created_at: new Date().toISOString(),
     };
 
-    return NextResponse.json(responseUser, { status: 201 });
+    return NextResponse.json(response, { status: 201 });
   } catch (error) {
-    console.error('Error creating user:', error);
+    console.error('❌ Unexpected error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
     );
   }
 }
+
+/**
+ * EXAMPLE n8n HTTP Request Node Configuration
+ *
+ * Method: POST
+ * URL: https://www.website1wun.com/api/admin/users
+ *
+ * Headers:
+ * - Authorization: Bearer {{ $env.ADMIN_BEARER_TOKEN }}
+ * - Content-Type: application/json
+ *
+ * Body (JSON):
+ * {
+ *   "email": "{{ $json.email }}",
+ *   "password": "{{ $json.password }}",
+ *   "full_name": "{{ $json.full_name }}",
+ *   "role": "{{ $json.role }}"
+ * }
+ *
+ * Expected Response (201):
+ * {
+ *   "id": "550e8400-e29b-41d4-a716-446655440000",
+ *   "email": "user@example.com",
+ *   "full_name": "John Doe",
+ *   "role": "STUDENT"
+ * }
+ *
+ * Error Response Examples:
+ *
+ * 401 Unauthorized:
+ * { "error": "Unauthorized" }
+ *
+ * 400 Bad Request:
+ * {
+ *   "error": "Invalid input",
+ *   "details": {
+ *     "email": "Email is required and must be a valid email address",
+ *     "password": "Password is required and must be at least 8 characters"
+ *   }
+ * }
+ *
+ * 409 Conflict (email exists):
+ * { "error": "Email already exists" }
+ *
+ * 500 Server Error:
+ * { "error": "Failed to create user profile" }
+ */
