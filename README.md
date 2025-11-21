@@ -249,26 +249,57 @@ All admin API endpoints require authentication. You can authenticate with:
 
 #### List All Users
 ```
-GET /api/admin/users?limit=20&offset=0
+GET /api/admin/users?limit=10&offset=0
+Authorization: Bearer YOUR_SERVICE_ROLE_KEY
 ```
 
-**Query Parameters:**
-- `limit` (optional, default: 20, max: 500) - Number of results
-- `offset` (optional, default: 0) - Pagination offset
+**Query Parameters (all optional):**
+- `limit` (default: 10, max: 100) - Results per page
+- `offset` (default: 0) - Pagination offset
+- `role` - Filter by role: `admin`, `student`, `instructor`
+- `is_active` - Filter by status: `true` or `false`
+- `search` - Search by email or full_name (partial match)
+- `sort_by` - Sort field: `created_at`, `email`, `full_name` (default: `created_at`)
+- `sort_order` - Sort direction: `asc` or `desc` (default: `desc`)
 
 **Response:**
 ```json
-[
-  {
-    "id": "uuid-here",
-    "email": "student@example.com",
-    "full_name": "John Doe",
-    "role": "student",
-    "created_at": "2024-01-15T10:30:00Z",
-    "is_active": true
+{
+  "data": [
+    {
+      "id": "uuid-here",
+      "email": "student@example.com",
+      "full_name": "John Doe",
+      "role": "student",
+      "created_at": "2024-01-15T10:30:00Z",
+      "is_active": true
+    }
+  ],
+  "pagination": {
+    "total": 150,
+    "limit": 10,
+    "offset": 0,
+    "has_more": true
   }
-]
+}
 ```
+
+**Examples:**
+```bash
+# Get first 10 users sorted by creation date
+GET /api/admin/users?limit=10&offset=0
+
+# Get all students
+GET /api/admin/users?role=student&limit=100
+
+# Search by email
+GET /api/admin/users?search=john@example.com
+
+# Get active admins sorted by name
+GET /api/admin/users?role=admin&is_active=true&sort_by=full_name&sort_order=asc
+```
+
+For detailed usage examples and n8n integration, see [GET_USERS_API_GUIDE.md](./GET_USERS_API_GUIDE.md)
 
 #### Create a New User
 ```
