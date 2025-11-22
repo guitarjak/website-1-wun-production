@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -62,14 +61,14 @@ html {
 body {
   background-color: #efe3d4;
   color: var(--text-primary);
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   position: relative;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-weight: 700;
   line-height: 1.2;
   color: var(--text-primary);
@@ -166,7 +165,7 @@ a[className*="bg-"]:hover, a.inline-block:hover {
 
 /* Button Base Styling */
 button, [role="button"] {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-weight: 600;
   transition: all 0.3s ease;
   border: none;
@@ -225,7 +224,7 @@ input, textarea, select {
   border: 1px solid var(--border-color);
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   color: var(--text-primary);
   transition: all 0.2s ease;
 }

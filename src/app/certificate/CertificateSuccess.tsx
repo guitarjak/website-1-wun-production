@@ -352,7 +352,7 @@ export function CertificateSuccess({
         <div className="text-center slide-up" style={{ animationDelay: '0.6s' }}>
           <Link
             href="/course"
-            className="inline-block px-8 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
+            className="inline-block px-8 py-3 rounded-lg font-semibold transition-all hover:opacity-90 text-white"
             style={{
               backgroundColor: '#1a1a1a',
               color: '#ffffff !important',
