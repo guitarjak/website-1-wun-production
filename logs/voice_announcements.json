@@ -1,12 +1,5 @@
 [
   {
-    "timestamp": "2025-11-21T21:45:12.655089",
-    "tool": "Edit",
-    "summary": "Updated certificate-template.html",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
     "timestamp": "2025-11-21T21:45:20.359644",
     "tool": "Edit",
     "summary": "Updated certificate-template.html",
@@ -346,6 +339,13 @@
     "timestamp": "2025-11-22T10:22:34.867029",
     "tool": "BashOutput",
     "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:38:47.800073",
+    "tool": "Edit",
+    "summary": "Updated certificate-examples.ts",
     "ai_generated": false,
     "tts_method": "macos-fallback"
   }

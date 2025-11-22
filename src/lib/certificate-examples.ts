@@ -2,6 +2,7 @@
  * MarkUpGo Certificate Generation Examples
  * Copy and adapt these examples for your use cases
  */
+import React from 'react';
 
 /**
  * Example 1: Generate certificate from course completion
