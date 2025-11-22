@@ -1,26 +1,5 @@
 [
   {
-    "timestamp": "2025-11-22T08:56:10.648411",
-    "tool": "BashOutput",
-    "summary": "BashOutput completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T08:57:56.159434",
-    "tool": "mcp__playwright__browser_navigate",
-    "summary": "mcp__playwright__browser_navigate completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T08:58:02.543534",
-    "tool": "mcp__playwright__browser_take_screenshot",
-    "summary": "mcp__playwright__browser_take_screenshot completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
     "timestamp": "2025-11-22T08:59:04.586604",
     "tool": "Edit",
     "summary": "Updated certificate-template.html",
@@ -346,6 +325,27 @@
     "timestamp": "2025-11-22T14:31:55.234983",
     "tool": "Edit",
     "summary": "Updated Navbar.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T14:37:11.874491",
+    "tool": "Edit",
+    "summary": "Updated tsconfig.json",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T14:37:20.087570",
+    "tool": "Edit",
+    "summary": "Updated next.config.ts",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T14:37:36.299164",
+    "tool": "Edit",
+    "summary": "Updated next.config.ts",
     "ai_generated": false,
     "tts_method": "macos-fallback"
   }
