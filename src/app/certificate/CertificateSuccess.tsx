@@ -18,17 +18,17 @@ export function CertificateSuccess({
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#efe3d4' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&display=swap');
+        /* Optimized animations: use transform-only to avoid forced reflows */
 
         .success-container {
-          animation: fadeInScale 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+          animation: fadeInScale 0.6s ease-out forwards;
+          will-change: opacity, transform;
         }
 
         @keyframes fadeInScale {
           from {
             opacity: 0;
-            transform: scale(0.9);
+            transform: scale(0.95);
           }
           to {
             opacity: 1;
@@ -36,24 +36,9 @@ export function CertificateSuccess({
           }
         }
 
-        .confetti {
-          position: fixed;
-          pointer-events: none;
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          animation: confetti-fall 3s linear forwards;
-        }
-
-        @keyframes confetti-fall {
-          to {
-            opacity: 0;
-            transform: translateY(100vh) rotateZ(360deg);
-          }
-        }
-
         .pulse-golden {
-          animation: pulseGolden 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          animation: pulseGolden 2s ease-in-out infinite;
+          will-change: opacity;
         }
 
         @keyframes pulseGolden {
@@ -66,13 +51,14 @@ export function CertificateSuccess({
         }
 
         .slide-up {
-          animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+          animation: slideUp 0.5s ease-out forwards;
+          will-change: opacity, transform;
         }
 
         @keyframes slideUp {
           from {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(20px);
           }
           to {
             opacity: 1;
@@ -80,33 +66,7 @@ export function CertificateSuccess({
           }
         }
 
-        .btn-shine {
-          position: relative;
-          overflow: hidden;
-        }
-
-        .btn-shine::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-          animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-          0% {
-            left: -100%;
-          }
-          50% {
-            left: 100%;
-          }
-          100% {
-            left: 100%;
-          }
-        }
+        /* Removed btn-shine to reduce animation overhead */
       `}</style>
 
       <div className="max-w-2xl mx-auto success-container">

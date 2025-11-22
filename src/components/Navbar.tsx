@@ -28,7 +28,6 @@ export default async function Navbar() {
               width={98}
               height={49}
               priority
-              style={{ width: 'auto', height: 'auto' }}
             />
           </Link>
           <div className="flex gap-3 items-center">
@@ -65,7 +64,6 @@ export default async function Navbar() {
             width={98}
             height={49}
             priority
-            style={{ width: 'auto', height: 'auto' }}
           />
         </Link>
 

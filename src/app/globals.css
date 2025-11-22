@@ -91,7 +91,7 @@ h3 {
   font-weight: 700;
 }
 
-/* Animations */
+/* Animations - Optimized with will-change to prevent forced reflows */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -103,6 +103,10 @@ h3 {
   }
 }
 
+.animate-fadeInUp {
+  will-change: opacity, transform;
+}
+
 @keyframes slideInRight {
   from {
     opacity: 0;
@@ -112,6 +116,10 @@ h3 {
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+.animate-slideInRight {
+  will-change: opacity, transform;
 }
 
 /* Scrollbar */
