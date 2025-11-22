@@ -5,11 +5,10 @@ import UserMenu from "./UserMenu";
 
 /**
  * Global navbar component shown on all pages.
- * Server component that fetches the current user and displays different nav items based on role.
- * This component does not cache so it always shows the latest user state.
+ * Server component that fetches the current user.
+ * Removed 'force-dynamic' to allow caching with revalidation.
+ * The page that uses this component may have its own revalidation strategy.
  */
-export const dynamic = 'force-dynamic';
-
 export default async function Navbar() {
   const currentUser = await getCurrentUserWithProfile();
 
@@ -46,6 +45,7 @@ export default async function Navbar() {
     );
   }
 
+  // Logged in
   const { profile, user } = currentUser;
   const displayName = profile.full_name || user.email || "User";
   const isAdmin = profile.role === "ADMIN";

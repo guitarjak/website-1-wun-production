@@ -1,54 +1,5 @@
 [
   {
-    "timestamp": "2025-11-22T08:30:00.257807",
-    "tool": "BashOutput",
-    "summary": "BashOutput completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T08:50:12.835731",
-    "tool": "Task",
-    "summary": "Search for MarkUpGo API v1 PDF endpoint documentation, specifically completed 1. The correct parameter name/...",
-    "ai_generated": false,
-    "tts_method": "none"
-  },
-  {
-    "timestamp": "2025-11-22T08:50:19.536942",
-    "tool": "Edit",
-    "summary": "Updated route.ts",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T08:50:27.357400",
-    "tool": "Edit",
-    "summary": "Updated certificate-template.html",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T08:50:34.245550",
-    "tool": "BashOutput",
-    "summary": "BashOutput completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T08:55:58.557105",
-    "tool": "Edit",
-    "summary": "Updated route.ts",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T08:56:06.181386",
-    "tool": "Edit",
-    "summary": "Updated certificate-template.html",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
     "timestamp": "2025-11-22T08:56:10.648411",
     "tool": "BashOutput",
     "summary": "BashOutput completed",
@@ -346,6 +297,55 @@
     "timestamp": "2025-11-22T11:04:00.995915",
     "tool": "Edit",
     "summary": "Updated globals.css",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T11:25:04.734944",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T14:30:39.870110",
+    "tool": "Edit",
+    "summary": "Updated Navbar.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T14:30:54.153672",
+    "tool": "Edit",
+    "summary": "Updated Navbar.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T14:31:13.659665",
+    "tool": "Edit",
+    "summary": "Updated Navbar.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T14:31:23.932646",
+    "tool": "Edit",
+    "summary": "Updated Navbar.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T14:31:39.224417",
+    "tool": "Edit",
+    "summary": "Updated Navbar.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T14:31:55.234983",
+    "tool": "Edit",
+    "summary": "Updated Navbar.tsx",
     "ai_generated": false,
     "tts_method": "macos-fallback"
   }
