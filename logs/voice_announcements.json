@@ -1,0 +1,352 @@
+[
+  {
+    "timestamp": "2025-11-21T21:45:12.655089",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-21T21:45:20.359644",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-21T21:45:30.368219",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-21T21:45:38.182182",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-21T21:45:49.661487",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-21T21:46:04.312975",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:29:26.566296",
+    "tool": "Task",
+    "summary": "I need you to research two things completed 1. **MarkUpGo API Documentatio...",
+    "ai_generated": false,
+    "tts_method": "none"
+  },
+  {
+    "timestamp": "2025-11-22T08:29:34.215094",
+    "tool": "Edit",
+    "summary": "Updated route.ts",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:29:41.082047",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:29:47.837205",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:30:00.257807",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:50:12.835731",
+    "tool": "Task",
+    "summary": "Search for MarkUpGo API v1 PDF endpoint documentation, specifically completed 1. The correct parameter name/...",
+    "ai_generated": false,
+    "tts_method": "none"
+  },
+  {
+    "timestamp": "2025-11-22T08:50:19.536942",
+    "tool": "Edit",
+    "summary": "Updated route.ts",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:50:27.357400",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:50:34.245550",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:55:58.557105",
+    "tool": "Edit",
+    "summary": "Updated route.ts",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:56:06.181386",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:56:10.648411",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:57:56.159434",
+    "tool": "mcp__playwright__browser_navigate",
+    "summary": "mcp__playwright__browser_navigate completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:58:02.543534",
+    "tool": "mcp__playwright__browser_take_screenshot",
+    "summary": "mcp__playwright__browser_take_screenshot completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:59:04.586604",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:59:17.240769",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:59:28.453053",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:59:35.053511",
+    "tool": "Edit",
+    "summary": "Updated route.ts",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T08:59:39.767972",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T09:01:49.610531",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T09:02:02.444045",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T09:02:14.635348",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T09:02:19.744075",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T09:04:58.042694",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T09:05:13.096303",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T09:05:23.801322",
+    "tool": "Edit",
+    "summary": "Updated certificate-template.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T09:05:29.778626",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:01:15.519867",
+    "tool": "Task",
+    "summary": "Find and analyze the /certificate page component. Look for completed 1. The file location and struc...",
+    "ai_generated": false,
+    "tts_method": "none"
+  },
+  {
+    "timestamp": "2025-11-22T10:02:28.937205",
+    "tool": "Skill",
+    "summary": "Skill completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:02:56.798866",
+    "tool": "Write",
+    "summary": "Created CertificateSuccess.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:03:08.787799",
+    "tool": "Edit",
+    "summary": "Updated page.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:03:23.732162",
+    "tool": "Edit",
+    "summary": "Updated page.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:03:29.631811",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:03:43.927112",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:04:00.478936",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:04:10.837952",
+    "tool": "KillShell",
+    "summary": "KillShell completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:04:21.220857",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:04:34.982181",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:09:03.070887",
+    "tool": "Edit",
+    "summary": "Updated CertificateSuccess.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:09:16.013372",
+    "tool": "Edit",
+    "summary": "Updated CertificateSuccess.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:09:23.260685",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:21:23.234695",
+    "tool": "Edit",
+    "summary": "Updated CertificateSuccess.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:22:30.694349",
+    "tool": "mcp__supabase__list_projects",
+    "summary": "mcp__supabase__list_projects completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-22T10:22:34.867029",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  }
+]
