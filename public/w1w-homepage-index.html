@@ -1,0 +1,2208 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website 1 วัน Challenge - สร้างเว็บไซต์ส่วนตัวของคุณใน 7 วัน</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Primary Colors from Design Guidelines */
+            --golden: #febf00;
+            --golden-light: #fcd34d;
+            --golden-lighter: #fef3c7;
+
+            /* Cream/Off-white */
+            --cream: #efe3d4;
+            --cream-light: #f5f0e8;
+            --cream-lighter: #faf8f5;
+
+            /* Blue */
+            --blue: #4a71f6;
+            --blue-dark: #3b5fd4;
+            --blue-light: #6b8eff;
+
+            /* Dark */
+            --dark: #000001;
+            --dark-80: #1a1a1a;
+            --dark-60: #4d4d4d;
+            --dark-40: #808080;
+
+            /* Grays */
+            --gray-200: #e8e2d5;
+            --gray-300: #d4cbc0;
+            --gray-400: #bfb6a8;
+
+            /* Semantics */
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+
+            /* Backgrounds */
+            --bg-primary: #faf8f5;
+            --bg-secondary: #f5f0e8;
+            --bg-tertiary: #efe3d4;
+
+            /* Text */
+            --text-primary: #000001;
+            --text-secondary: #4d4d4d;
+            --text-tertiary: #808080;
+
+            --border-color: #d4cbc0;
+            --border-light: #e8e2d5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Prompt', 'IBM Plex Sans Thai', sans-serif;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--golden);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #fcc200;
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--golden);
+            color: var(--dark);
+        }
+
+        ::-moz-selection {
+            background: var(--golden);
+            color: var(--dark);
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Prompt', 'IBM Plex Sans Thai', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 3.5rem;
+                line-height: 1.1;
+            }
+
+            h2 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+
+            h3 {
+                font-size: 1.75rem;
+                line-height: 1.3;
+            }
+
+            h4 {
+                font-size: 1.35rem;
+            }
+
+            p {
+                font-size: 1.05rem;
+            }
+        }
+
+        a {
+            color: var(--blue);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--blue-dark);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+        }
+
+        /* Buttons */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        @media (min-width: 768px) {
+            .btn {
+                display: inline-block;
+                width: auto;
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+        }
+
+        .btn-primary {
+            background: var(--golden);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            background: #fcc200;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(254, 191, 0, 0.25);
+        }
+
+        .btn-secondary {
+            background: var(--blue);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: var(--blue-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(74, 113, 246, 0.25);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--blue);
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 1rem;
+            border: 1px solid var(--border-light);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 1, 0.05);
+        }
+
+        .card:hover {
+            box-shadow: 0 16px 32px rgba(0, 0, 1, 0.1);
+            transform: translateY(-6px);
+            border-color: var(--golden);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-right: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .badge-gold {
+            background: var(--golden-lighter);
+            color: #8b6600;
+        }
+
+        .badge-blue {
+            background: rgba(74, 113, 246, 0.1);
+            color: var(--blue-dark);
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        /* Lists */
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        /* ==================== SECTIONS ==================== */
+
+        /* Header/Navigation */
+        header {
+            background: var(--bg-primary);
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background-color: rgba(250, 248, 245, 0.95);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .logo-accent {
+            color: var(--golden);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: var(--blue);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        .hero {
+            padding: 2rem 0;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(254, 191, 0, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero .container {
+            display: flex;
+            justify-content: center;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            margin-bottom: 1rem;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .hero-title {
+            margin-top: 5rem;
+            margin-bottom: 5rem;
+        }
+
+        .brand-underline {
+            text-decoration: underline;
+            text-decoration-color: var(--golden);
+            text-decoration-thickness: 0.2rem;
+            text-underline-offset: 0.25rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            animation: slideInUp 0.8s ease-out 0.1s both;
+            line-height: 1.7;
+            max-width: 600px;
+        }
+
+        @media (min-width: 768px) {
+            .hero {
+                padding: 5rem 0;
+            }
+
+            .hero::before {
+                top: -50%;
+                right: -10%;
+                width: 500px;
+                height: 500px;
+            }
+
+            .hero-content {
+                max-width: 900px;
+            }
+
+            .hero h1 {
+                font-size: 4rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.5rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-benefits {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            animation: slideInUp 0.8s ease-out 0.2s both;
+        }
+
+        .benefit-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            text-align: center;
+            align-items: center;
+        }
+
+        .benefit-item:hover {
+            border-color: var(--golden);
+            box-shadow: 0 8px 16px rgba(254, 191, 0, 0.1);
+        }
+
+        .benefit-icon {
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .benefit-text h4 {
+            margin-bottom: 0.25rem;
+            font-size: 1rem;
+        }
+
+        .benefit-text p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            animation: slideInUp 0.8s ease-out 0.3s both;
+            align-items: center;
+            max-width: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .hero-benefits {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+                margin: 2.5rem auto;
+                max-width: 1000px;
+            }
+
+            .benefit-item {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1.25rem;
+            }
+
+            .benefit-icon {
+                font-size: 1.75rem;
+            }
+
+            .benefit-text h4 {
+                font-size: 1.1rem;
+            }
+
+            .benefit-text p {
+                font-size: 0.95rem;
+            }
+
+            .hero-cta {
+                flex-direction: row;
+                margin-top: 2rem;
+                justify-content: center;
+                max-width: none;
+            }
+        }
+
+        /* ==================== SECTION BASE ==================== */
+        section {
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .section-header {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-header h2 {
+            margin-bottom: 0.75rem;
+            width: 100%;
+        }
+
+        .section-header p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            section {
+                padding: 5rem 0;
+            }
+
+            .section-header {
+                margin-bottom: 3rem;
+            }
+
+            .section-header h2 {
+                margin-bottom: 1rem;
+            }
+
+            .section-header p {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* ==================== PROBLEM SECTION ==================== */
+        .problem {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (min-width: 768px) {
+            .problem-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+        }
+
+        .problem-item {
+            padding: 1.25rem;
+            background: white;
+            border-radius: 0.75rem;
+            border-left: 4px solid var(--error);
+            box-shadow: 0 4px 12px rgba(0, 0, 1, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .problem-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 1, 0.1);
+        }
+
+        .problem-item h4 {
+            color: var(--error);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .problem-item p {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        @media (min-width: 768px) {
+            .problem-item {
+                padding: 2rem;
+                border-radius: 1rem;
+            }
+
+            .problem-item h4 {
+                margin-bottom: 0.75rem;
+                font-size: 1.1rem;
+            }
+
+            .problem-item p {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ==================== BENEFITS SECTION ==================== */
+        .benefits {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .use-cases {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .use-case {
+            padding: 1.25rem;
+            background: white;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .use-case:hover {
+            border-color: var(--blue);
+            box-shadow: 0 12px 32px rgba(74, 113, 246, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .use-case h4 {
+            color: var(--blue);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .use-case p {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        @media (min-width: 768px) {
+            .use-cases {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+
+            .use-case {
+                padding: 2rem;
+                border-radius: 1rem;
+            }
+
+            .use-case h4 {
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+            }
+
+            .use-case p {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ==================== WHAT IS STATIC ==================== */
+        .static-website {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+
+        .static-features {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 1.25rem;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 1, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            box-shadow: 0 12px 24px rgba(254, 191, 0, 0.15);
+            transform: translateY(-4px);
+            border: 1px solid var(--golden);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .feature p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        @media (min-width: 768px) {
+            .static-features {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .feature {
+                padding: 1.5rem;
+                border-radius: 1rem;
+            }
+
+            .feature-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .feature h4 {
+                font-size: 1.1rem;
+            }
+
+            .feature p {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ==================== OFFER SECTION ==================== */
+        .offer {
+            background: linear-gradient(135deg, #fef9e7 0%, #fffbf0 100%);
+            position: relative;
+        }
+
+        .offer::after {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(254, 191, 0, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .offer-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .offer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .offer-item {
+            padding: 1.25rem;
+            background: white;
+            border-radius: 0.75rem;
+            border: 2px solid var(--border-light);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .offer-item:hover {
+            border-color: var(--golden);
+            background: rgba(254, 191, 0, 0.02);
+            transform: translateY(-4px);
+        }
+
+        .offer-item h4 {
+            color: var(--blue);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .offer-item p {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        @media (min-width: 768px) {
+            .offer-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+
+            .offer-item {
+                padding: 1.75rem;
+                border-radius: 1rem;
+                text-align: left;
+            }
+
+            .offer-item h4 {
+                margin-bottom: 0.75rem;
+                font-size: 1.1rem;
+            }
+
+            .offer-item p {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ==================== EMOTIONAL SECTION ==================== */
+        .why-free {
+            background: linear-gradient(135deg, var(--dark-80) 0%, var(--dark) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-free::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(254, 191, 0, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .why-free .container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .why-free-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .why-free h2 {
+            color: var(--golden);
+            margin-bottom: 1rem;
+        }
+
+        .why-free p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .reasons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin: 1.5rem auto;
+            max-width: 700px;
+        }
+
+        @media (min-width: 768px) {
+            .why-free-content {
+                max-width: 900px;
+            }
+
+            .why-free h2 {
+                margin-bottom: 2rem;
+            }
+
+            .why-free p {
+                font-size: 1.2rem;
+                line-height: 2;
+                margin-bottom: 1.5rem;
+            }
+
+            .reasons {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                margin: 3rem auto;
+                max-width: 700px;
+            }
+        }
+
+        .reason {
+            padding: 0.9rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(254, 191, 0, 0.2);
+            border-radius: 0.6rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .reason:hover {
+            background: rgba(254, 191, 0, 0.1);
+            border-color: var(--golden);
+            transform: translateY(-4px);
+        }
+
+        .reason h4 {
+            color: var(--golden);
+            margin-bottom: 0.6rem;
+            font-size: 1.2rem;
+        }
+
+        .reason p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        @media (min-width: 768px) {
+            .reason {
+                padding: 1.4rem;
+                border-radius: 0.7rem;
+                text-align: left;
+            }
+
+            .reason h4 {
+                margin-bottom: 1rem;
+                font-size: 1.5rem;
+            }
+
+            .reason p {
+                font-size: 1.05rem;
+                line-height: 1.8;
+            }
+        }
+
+        /* ==================== HOW IT WORKS ==================== */
+        .how-it-works {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            position: relative;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (min-width: 768px) {
+            .steps {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+                margin-top: 3rem;
+            }
+
+            .steps::before {
+                content: '';
+                position: absolute;
+                top: 50px;
+                left: 10%;
+                right: 10%;
+                height: 3px;
+                background: linear-gradient(90deg, var(--golden) 0%, transparent 100%);
+                z-index: 0;
+            }
+        }
+
+        .step {
+            position: relative;
+            z-index: 1;
+            padding: 1.25rem 1.25rem 1.25rem 3rem;
+            background: white;
+            border-radius: 0.75rem;
+            border: 2px solid var(--border-light);
+            text-align: left;
+            transition: all 0.3s ease;
+            counter-increment: step-counter;
+        }
+
+        .step::before {
+            content: counter(step-counter);
+            position: absolute;
+            top: 50%;
+            left: 0.75rem;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--golden);
+            color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 12px rgba(254, 191, 0, 0.25);
+        }
+
+        .step:hover {
+            border-color: var(--golden);
+            box-shadow: 0 12px 32px rgba(254, 191, 0, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .step h4 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: var(--blue);
+            font-size: 1rem;
+        }
+
+        .step p {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        @media (min-width: 768px) {
+            .step {
+                padding: 2rem;
+                border-radius: 1rem;
+                text-align: center;
+            }
+
+            .step::before {
+                position: absolute;
+                top: -20px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .step:hover {
+                transform: translateY(-8px);
+            }
+
+            .step h4 {
+                margin-top: 1rem;
+                font-size: 1.1rem;
+            }
+
+            .step p {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ==================== SOCIAL PROOF ==================== */
+        .social-proof {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+
+        .proof-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .proof-card {
+            padding: 1.25rem;
+            background: white;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 4px 12px rgba(0, 0, 1, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .proof-card:hover {
+            box-shadow: 0 12px 32px rgba(0, 0, 1, 0.1);
+            transform: translateY(-4px);
+        }
+
+        @media (min-width: 768px) {
+            .proof-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+                margin-top: 3rem;
+            }
+
+            .proof-card {
+                padding: 2rem;
+                border-radius: 1rem;
+            }
+        }
+
+        .proof-header {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .proof-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .proof-info h4 {
+            margin: 0 0 0.25rem 0;
+            font-size: 0.95rem;
+        }
+
+        .proof-info p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .stars {
+            color: var(--golden);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .proof-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+            font-size: 0.85rem;
+        }
+
+        @media (min-width: 768px) {
+            .proof-header {
+                gap: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .proof-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .proof-info h4 {
+                font-size: 1.1rem;
+            }
+
+            .proof-info p {
+                font-size: 0.9rem;
+            }
+
+            .stars {
+                margin-bottom: 1rem;
+                font-size: 1.2rem;
+            }
+
+            .proof-text {
+                line-height: 1.8;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ==================== PRICING ==================== */
+        .pricing {
+            background: linear-gradient(135deg, #fffbf0 0%, #fef9e7 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing::before {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(254, 191, 0, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .pricing-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .pricing-card {
+            max-width: 100%;
+            margin: 1.5rem auto;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 1rem;
+            border: 3px solid var(--golden);
+            box-shadow: 0 20px 40px rgba(254, 191, 0, 0.15);
+        }
+
+        .price-highlight {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--golden);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .includes-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .includes-item {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            padding: 0.75rem;
+            background: var(--bg-primary);
+            border-radius: 0.5rem;
+        }
+
+        .includes-icon {
+            font-size: 1.25rem;
+            min-width: 25px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .includes-item strong {
+            font-size: 0.95rem;
+        }
+
+        .includes-item p {
+            font-size: 0.8rem;
+            margin: 0;
+        }
+
+        @media (min-width: 768px) {
+            .pricing-card {
+                max-width: 700px;
+                margin: 3rem auto;
+                padding: 3rem;
+                border-radius: 1.5rem;
+            }
+
+            .price-amount {
+                font-size: 3.5rem;
+            }
+
+            .price-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .includes-list {
+                gap: 1rem;
+                margin: 2rem 0;
+            }
+
+            .includes-item {
+                gap: 1rem;
+                padding: 1rem;
+                border-radius: 0.75rem;
+            }
+
+            .includes-icon {
+                font-size: 1.5rem;
+                min-width: 30px;
+            }
+
+            .includes-item strong {
+                font-size: 1rem;
+            }
+
+            .includes-item p {
+                font-size: 0.9rem;
+            }
+        }
+
+        .pricing-cta {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        /* ==================== FAQ ==================== */
+        .faq {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .faq-item {
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--blue);
+            box-shadow: 0 8px 24px rgba(74, 113, 246, 0.1);
+        }
+
+        .faq-question {
+            padding: 1rem;
+            background: var(--bg-secondary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .faq-question:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .faq-toggle {
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            display: none;
+            font-size: 0.85rem;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .faq-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                margin-top: 2rem;
+                max-width: 700px;
+            }
+
+            .faq-item {
+                border-radius: 1rem;
+            }
+
+            .faq-question {
+                padding: 1.5rem;
+                font-size: 1rem;
+            }
+
+            .faq-toggle {
+                font-size: 1.5rem;
+            }
+
+            .faq-answer {
+                padding: 1.5rem;
+                line-height: 1.8;
+                font-size: 0.95rem;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==================== CTA SECTION ==================== */
+        .final-cta {
+            background: linear-gradient(135deg, var(--dark-80) 0%, var(--dark) 100%);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(254, 191, 0, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .final-cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .final-cta h2 {
+            color: var(--golden);
+            margin-bottom: 1rem;
+        }
+
+        .final-cta p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        @media (min-width: 768px) {
+            .final-cta {
+                padding: 4rem 0;
+            }
+
+            .final-cta::before {
+                top: -50%;
+                right: -20%;
+                width: 600px;
+                height: 600px;
+            }
+
+            .final-cta-content {
+                max-width: 800px;
+            }
+
+            .final-cta h2 {
+                margin-bottom: 1.5rem;
+            }
+
+            .final-cta p {
+                font-size: 1.3rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(254, 191, 0, 0.1);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: var(--golden);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .mini-separator {
+            width: 90px;
+            height: 4px;
+            background: var(--golden);
+            margin: 1.5rem auto;
+            border-radius: 9999px;
+        }
+
+        @media (min-width: 768px) {
+            footer {
+                padding: 3rem 0;
+            }
+
+            .footer-links {
+                flex-direction: row;
+                gap: 2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .footer-links a {
+                font-size: 1rem;
+            }
+
+            .footer-text {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ==================== UTILITY CLASSES ==================== */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-large {
+            margin-top: 3rem;
+        }
+
+        .counter {
+            counter-reset: step-counter;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            h3 {
+                font-size: 1.4rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            section {
+                padding: 3rem 0;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .price-amount {
+                font-size: 2.5rem;
+            }
+
+            .final-cta p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    Website 1 <span class="logo-accent">วัน</span>
+                </div>
+                <nav></nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">สร้างเว็บส่วนตัว<br>ภายใน <span class="brand-underline">1 วัน</span><br>ด้วยเงิน 0 บาท!</h1>
+                <p class="hero-subtitle">
+                    ผมจะพาคุณไปตะลุยเอง ไม่ต้องมีพื้นฐาน อธิบายแบบเข้าใจง่าย แถมไม่มีค่าใช้จ่าย (ช่ายย "ฟรี") อีกต่างหาก เย้ๆ ถ้าพร้อมแล้ว เริ่มกันเลยมั้ยย?
+                </p>
+
+                <div class="hero-cta">
+                    <button class="btn btn-primary" onclick="document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' })">
+                        เข้าร่วม Challenge เลย
+                    </button>
+                </div>
+
+                <div class="hero-benefits">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">⭐</div>
+                        <div class="benefit-text">
+                            <h4>ดูโปรกว่าคนทั่วไป</h4>
+                            <p>มีเว็บ = เกรดดี จริงจัง ดูแพง ในสายตาลูกค้า</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">💼</div>
+                        <div class="benefit-text">
+                            <h4>เรซูเม่ออนไลน์</h4>
+                            <p>เพิ่มโอกาสการได้งาน/ขึ้นเงินเดือน</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">💰</div>
+                        <div class="benefit-text">
+                            <h4>ขายสินค้า / รับงาน</h4>
+                            <p>เหมือนมีเซลล์ช่วยขายของ 24ชม จ๊าบ</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🔐</div>
+                        <div class="benefit-text">
+                            <h4>ของเรา 100%</h4>
+                            <p>ไม่ต้องกลัวหาย ไม่มีใครสามารถลบได้</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🆓</div>
+                        <div class="benefit-text">
+                            <h4>ไม่มีค่ารายเดือน</h4>
+                            <p>ใช้ฟรีตลอดชีพ สบายกระเป๋าสุดด</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🎯</div>
+                        <div class="benefit-text">
+                            <h4>ไม่มีพื้นฐานก็ทำได้</h4>
+                            <p>สอนกันจาก 0 เลย ไม่ต้องกลัวค้าบ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem" id="benefits">
+        <div class="container">
+            <div class="section-header">
+                <h2>ทุกอย่างอยู่บนโซเชียล… <br>แต่คุณไม่ได้เป็นเจ้าของจริง ๆ</h2>
+                <p>ถ้าแพลตฟอร์มล่ม ปิดตัว หรือคุณถูกแบน ทุกอย่างของเราก็จะหายวับไปกับตา</p>
+            </div>
+
+            <div class="problem-grid">
+                <div class="problem-item">
+                    <h4>❌ โซเชียลล่ม = ทุกอย่างหาย</h4>
+                    <p>ถ้าไม่ได้ก๊อปปี้หรือเซฟไว้ที่อื่น จบเลยนะ งานเขียนหรือคอนเทนต์ต่างๆ ที่เราอุตส่าห์ตั้งใจทำ หายวับไปกับตา</p>
+                </div>
+
+                <div class="problem-item">
+                    <h4>❌ โพสต์หาไม่เจอ</h4>
+                    <p>โพสต์เก่าๆ ของเราต้องไถกลับไปน๊านๆ กว่าจะเจอ ถ้ามีเว็บเสิร์ชเอาได้เลย หาง่ายสุดๆ</p>
+                </div>
+
+                <div class="problem-item">
+                    <h4>❌ ไม่มีพื้นที่ของตัวเอง</h4>
+                    <p>เว็บเราคือบ้านเรา บ้านเรากฎเรา เราควบคุมทุกอย่าง ที่นี่พี่คุมเองง เย้ๆ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="container">
+            <div class="section-header">
+                <h2>แล้วเราจะมีเว็บไซต์ไปทำไม?</h2>
+                <p>เว็บไซต์ไม่ใช่สำหรับบริษัทใหญ่ๆ อีกต่อไป แต่กลายเป็นเครื่องมือของคนธรรมดาแบบเราแล้ว</p>
+            </div>
+
+            <div class="use-cases">
+                <div class="use-case">
+                    <h4>💼 พนักงานประจำ</h4>
+                    <p>ใช้เว็บเป็นเรซูเม่ออนไลน์ แสดงตัวว่าคุณคืออะไร คุณสนใจด้านไหน เพิ่มโอกาสการได้งาน ขึ้นเงินเดือน เจองานที่เข้ากับเราอีกมากมายจริงๆ</p>
+                </div>
+
+                <div class="use-case">
+                    <h4>🎨 ฟรีแลนซ์ / ดีไซเนอร์</h4>
+                    <p>ใช้เป็นหน้าแสดงผลงาน ดึงงานได้เร็วขึ้น ราคาได้ดีขึ้น ลูกค้าเก็ทและตัดสินใจเลือกเราได้เร็วขึ้น ไม่ต้องมานั่งส่ง Portfolio ทุกครั้งอยู่</p>
+                </div>
+
+                <div class="use-case">
+                    <h4>🏪 เจ้าของร้านเล็กๆ</h4>
+                    <p>สร้างหน้าขายสินค้าของเราแบบง่ายๆ อย่างที่บอก บ้านเรา กฎเรา ไม่ต้องเสียค่าธรรมเนียมให้ platform หักอยู่ ทักหาเราตรงได้เลย</p>
+                </div>
+
+                <div class="use-case">
+                    <h4>📚 นักเรียน / นักศึกษา</h4>
+                    <p>เหมาะเลย เราสามารถสร้างหน้าประสบการณ์และบันทึกสิ่งที่เราเคยทำไปได้เรื่อยๆ เรียนจบหางานสบายย เด่นกว่าคนอื่นแบบชัดเจน</p>
+                </div>
+
+                <div class="use-case">
+                    <h4>🎬 คอนเทนต์ครีเอเตอร์</h4>
+                    <p>รวมผลงานทั้งหมด YouTube/TikTok/IG ไว้ที่เดียว สะดวก แฟนคลับติดตามได้ง่าย ไว้ขายสินค้าของเราก็ยังได้</p>
+                </div>
+
+                <div class="use-case">
+                    <h4>🎓 โค้ชเชอร์ / ผู้สอน</h4>
+                    <p>สร้างหน้าแนะนำตัว + ราคา + วิธีติดต่อ ผลงานที่เคยทำ และเรื่องต่างๆ ที่อยากใส่ ครบเครื่องในเว็บเดียว</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Static Website Section -->
+    <section class="static-website">
+        <div class="container">
+            <div class="section-header">
+                <h2>ผมไม่ได้พูดถึงเว็บสำเร็จรูปนะ</h2>
+                <p>ผมพูดถึง Website ที่เราจะ "เขียน" ขึ้นมาเอง (แบบไม่ต้องเขียนเอง) เย้ย55555</p>
+            </div>
+
+            <div class="static-features">
+                <div class="feature">
+                    <div class="feature-icon">💰</div>
+                    <h4>ใช้ฟรี</h4>
+                    <p>ไม่มีค่าเซิร์ฟเวอร์ ไม่มีค่ารายเดือน ไม่ต้องต่ออายุ ✓</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h4>โหลดเร็ว</h4>
+                    <p>ไม่มี Database ไม่ต้องประมวลผล<br>กดปุ๊ปมาปั๊ป ฟื้บฟ๊าบๆ เลย</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h4>ปลอดภัย</h4>
+                    <p>ไม่มี Login ไม่มี Database ไม่ต้องกลัวเว็บล่มหรือโดนโจมตี</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🔧</div>
+                    <h4>ไม่ต้องอัปเดต</h4>
+                    <p>ไม่มีปลั๊กอิน ไม่มี Bug ต้องซ่อมให้กวนใจ สร้างเสร็จปล่อยไว้ได้เลย</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h4>เหมาะมือใหม่</h4>
+                    <p>เพียงแค่ HTML CSS ไม่ต้องทำ Backend (รับรองว่าไม่ยากจริงๆ)</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <h4>รันได้ทุกอุปกรณ์</h4>
+                    <p>Responsive Design ใช้บนมือถือ แท็บเลต คอมพิวเตอร์ได้หมด จัดมา</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offer Section -->
+    <section class="offer">
+        <div class="container">
+            <div class="section-header">
+                <h2>Website 1 วัน Challenge</h2>
+                <p>เรียนรู้ทีละโมดูล ตั้งแต่ Mindset จนขึ้นออนไลน์พร้อมโดเมน</p>
+            </div>
+
+            <div class="offer-grid">
+                <div class="offer-item">
+                    <h4>Module 1: Mindset & Overview</h4>
+                    <p>• ทำไมเราต้องมีเว็บไซต์? (โดยเฉพาะคนธรรมดา)
+                    <br>• การทำเว็บไซต์สมัยก่อน (และในสมัยนี้)
+                    <br>• สิ่งที่เราจะสร้างกัน (ฉบับรวบรัด)
+                    <br>• ภาพรวมของเครื่องมือที่ต้องใช้</p>
+                </div>
+
+                <div class="offer-item">
+                    <h4>Module 2: Setting up our playground</h4>
+                    <p>• การลง Node.js / Gemini CLI / Qwen CLI
+                    <br>• การใช้ Terminal หรือ Command Prompt เบื้องต้น
+                    <br>• การสร้าง Website "Hello World" ของเรา!</p>
+                </div>
+
+                <div class="offer-item">
+                    <h4>Module 3: Customizing locally</h4>
+                    <p>• โครงสร้างของไฟล์เมื่อสร้าง Website (แบบง่ายๆ)
+                    <br>• การใช้เครื่องมือช่วยออกแบบ (Stitch)
+                    <br>• การแก้ไข ภาพ ข้อความ ลิงก์ หน้าต่างๆ</p>
+                </div>
+
+                <div class="offer-item">
+                    <h4>Module 4: Hosting with Github Pages</h4>
+                    <p>• สร้างรหัส Github ของเรากัน
+                    <br>• การติดตั้ง Github Desktop
+                    <br>• การสร้าง Repo ของเรา
+                    <br>• เอาไปโชว์ชาวบ้านกันเถ๊อะะ</p>
+                </div>
+
+                <div class="offer-item">
+                    <h4>Module 5: Custom Domain</h4>
+                    <p>• โดเมนคืออะไร (ฉบับเด็ก 5 ขวด)
+                    <br>• การซื้อโดเมน (Namecheap / Hostinger)
+                    <br>• การเชื่อมต่อ DNS กับ Github Page
+                    <br>• อย่าลืมเปิด SSH ด้วยละ</p>
+                </div>
+
+                <div class="offer-item">
+                    <h4>Module 6: Bonus</h4>
+                    <p>• การทำให้ดีไซน์คงที่ด้วย guideline.html
+                    <br>• การเพิ่ม Form เพื่อรับข้อมูล
+                    <br>• การตั้งชื่อไฟล์เบื้องต้น
+                    <br>• การสำรองข้อมูลเว็บไซต์ของเรา</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Free Section -->
+    <section class="why-free">
+        <div class="container">
+            <div class="why-free-content">
+                <h2>ฟรีจริงหรอ? ทำไมถึงฟรี?</h2>
+                <p>เฮ้ย กีตาร์มีอะไรแอบแฝงหรือป่าว ทำไมฟรีแล้วต้องเก็บ 990 บาท?<br>จะเก็บแล้วไม่คืนเงินแน่ๆ เลย?</p>
+                <p>คืองี้ครับ...</p>
+                <p style="font-size: 1.1rem; line-height: 2;">
+                    ผมตั้งราคาเข้าร่วมแค่ <strong>990 บาท</strong> เพื่อให้เราลงมือทำจริง<br> ไม่ใช่แค่เปิดดูวิดีโอแล้วลืม (แถมไม่ได้ทำอีก)<br>
+                    บางครั้งผมรู้สึกว่าถ้าเราได้อะไรฟรีๆ เราก็จะไม่เห็นค่าของมัน
+                    <br><br>
+                    และ
+                    <br>
+                    <strong>ถ้าคุณทำเว็บเสร็จและส่งให้ผมตรวจภายใน 7 วัน<br>(336 ชั่วโมงนับจากเวลาที่เข้าร่วม Challenge)</strong>
+                    <br>
+                    <br>→ คุณจะได้คืนเงินเต็มจำนวน (100%)
+                    <br><underline>เท่ากับว่าเรียนฟรีเลยย</underline>
+                    <br><br>
+                    <strong>ถ้าคุณทำไม่เสร็จ</strong>
+                    <br>ไม่เป็นไรเลยฮะ...คิดซะว่าเป็นการสนับสนุนการพัฒนาโปรเจกต์นี้<br>คุณคือส่วนสำคัญที่ช่วยสนับสนุนการขับเคลื่อน Movement เล็กๆ ของเรา (เย้)
+                    <div class="mini-separator"></div>
+                    <h2 style="margin-top: 1rem;">แล้วผมได้อะไร?</h2>
+                </p>
+
+                <div class="reasons">
+                    <div class="reason">
+                        <h4>1️⃣ ได้ความสนุก</h4>
+                        <p>ผมชอบเว็บ ชอบลองเล่นนู่นนี่ ชอบแชร์อยู่แล้ว ผมทำเพราะอยากรู้ว่าคนธรรมดา 1 คนที่ไม่ได้จบสายนี้เลยจะสามารถสร้างอะไรแบบนี้ได้ไหมนะ พูดง่ายๆ คือเป็น Passion Project แหละ ชอบ สั้นๆ เลย</p>
+                    </div>
+
+                    <div class="reason">
+                        <h4>2️⃣ ได้ Feedback</h4>
+                        <p>ผมอยากได้คำติชม เพื่อแก้ไขและพัฒนาคอร์สนี้ให้ดีที่สุด ตอนนี้มันอาจจะฟรี แต่เมื่อคนเข้ามาเยอะขึ้นๆ โปรเกจต์นี้คงมีค่าใช้จ่าย และผมอยากทำให้มันอยู่ได้ด้วยตัวเอง ทำหน้าที่ส่งต่อเป้าหมายของผมไปเรื่อยๆ</p>
+                    </div>
+
+                    <div class="reason">
+                        <h4>3️⃣ ได้ความสุขทางใจ</h4>
+                        <p>ชีวิตผมเปลี่ยนเพราะเว็บไซต์เลย มันสร้างรายได้เสริม มันเป็นหน้าร้านออนไลน์ให้ผมจนทำให้มีรายได้แซงงานประจำ 4-5 เท่า ผมว่ามันน่าจะดีนะ ถ้าทุกคนสามารถมีพื้นที่เล็กๆ ของตัวเองได้ (โดยไม่ต้องกลัวเรื่องค่าใช้จ่าย) เหมือนกัน</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+                        พร้อมหรือยังค้าบ?
+                    </p>
+                    <button class="btn btn-primary" onclick="document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' })">
+                        พร้อมสุดๆ แล้วว
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof">
+        <div class="container">
+            <div class="section-header">
+                <h2>🎉 เว็บจากผู้เข้าร่วมแชลเลนจ์</h2>
+                <p>ก็อยากจะให้เว็บของพวกเรามาแปะตรงนี้แหละ<br>ไอผมเองก็ไม่ค่อยมีเซนส์เรื่องดีไซน์ซักเท่าไหร่เลย555</p>
+            </div>
+
+            <div class="proof-grid">
+                <div class="proof-card">
+                    <div class="proof-header">
+                        <div class="proof-avatar">ส</div>
+                        <div class="proof-info">
+                            <h4>สมหญิง ปาณะ</h4>
+                            <p>Freelance Designer</p>
+                        </div>
+                    </div>
+                    <div class="stars">★★★★★</div>
+                    <p class="proof-text">
+                        "ทำเว็บจริง ๆ ได้ภายในวันนึง ตอนแรกคิดว่าจะยุ่งมาก แต่ Template ช่วยได้เยอะ ตอนนี้ดึงงาน Design ได้มากขึ้น แล้วเว็บของผมก็ดูมืออาชีพ"
+                    </p>
+                </div>
+
+                <div class="proof-card">
+                    <div class="proof-header">
+                        <div class="proof-avatar" style="background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue) 100%);">ว</div>
+                        <div class="proof-info">
+                            <h4>วงศ์พล อิ่มจิตต์</h4>
+                            <p>Software Developer</p>
+                        </div>
+                    </div>
+                    <div class="stars">★★★★★</div>
+                    <p class="proof-text">
+                        "ก่อนหน้านี้มี GitHub Profile แต่ไม่มี Portfolio เว็บ ตอนนี้เว็บทำเสร็จแล้ว ส่งให้ HR สมัครงาน ได้คำตอบเร็วขึ้น คิดว่าเพราะเว็บดูมืออาชีพ"
+                    </p>
+                </div>
+
+                <div class="proof-card">
+                    <div class="proof-header">
+                        <div class="proof-avatar" style="background: linear-gradient(135deg, var(--golden) 0%, var(--golden-light) 100%);">อ</div>
+                        <div class="proof-info">
+                            <h4>อารีย์ สิทธิจักร์</h4>
+                            <p>Content Creator</p>
+                        </div>
+                    </div>
+                    <div class="stars">★★★★★</div>
+                    <p class="proof-text">
+                        "มีคลิป YouTube/TikTok มากมาย แต่ไม่รู้จัดไว้ที่ไหน ตอนนี้มีเว็บแล้ว ลิงก์ที่เดียวตัวจริง แล้วก็ได้คืนเงินตามสัญญา จริง ๆ เรียนฟรี!"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="pricing-content">
+                <div class="section-header text-center" style="margin-left: auto; margin-right: auto;">
+                    <h2>เข้าร่วมแชลเลนจ์ Website 1 Wun</h2>
+                    <p>คืนเงิน <strong>100%</strong> ถ้าส่งการบ้านภายใน 7 วัน</p>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="price-highlight">
+                        <div class="price-amount">990฿</div>
+                        <div class="price-subtitle">เข้าร่วม 7 วัน Challenge</div>
+                    </div>
+
+                    <div class="includes-list">
+                        <div class="includes-item">
+                            <div class="includes-icon">✅</div>
+                            <div>
+                                <strong>เนื้อเน้นๆ ไม่มีน้ำ!</strong>
+                                <p style="margin: 0; font-size: 0.9rem; color: var(--text-tertiary);">สั้น กระชับ ไม่ออกทะเล จบภายใน 3 ชั่วโมง เรียนเช้า บ่ายทำได้เสร็จเลย เย้</p>
+                            </div>
+                        </div>
+
+                        <div class="includes-item">
+                            <div class="includes-icon">✅</div>
+                            <div>
+                                <strong>เทคนิคแบบไม่เทคนิค</strong>
+                                <p style="margin: 0; font-size: 0.9rem; color: var(--text-tertiary);">ผมไม่ใช่สายคอม ผมมั่นใจว่าอธิบายให้คุณเข้าใจได้แน่ๆ ชัวร์ป๊าบบ</p>
+                            </div>
+                        </div>
+
+                        <div class="includes-item">
+                            <div class="includes-icon">✅</div>
+                            <div>
+                                <strong>ออกแบบเว็บสวบด้วย AI</strong>
+                                <p style="margin: 0; font-size: 0.9rem; color: var(--text-tertiary);">ออกแบบไม่เก่งไม่ใช่ปัญหา เราใช้ AI ช่วยด้ายย</p>
+                            </div>
+                        </div>
+
+                        <div class="includes-item">
+                            <div class="includes-icon">✅</div>
+                            <div>
+                                <strong>ฟรี 100% ตลอดชีฟ</strong>
+                                <p style="margin: 0; font-size: 0.9rem; color: var(--text-tertiary);">ไม่มีค่าใช้จ่ายจริงๆ ตั้งแต่การสร้าง และการเอาขึ้นอินเตอร์เน็ต ฟรีฟรี๊ฟรี</p>
+                            </div>
+                        </div>
+
+                        
+
+                    <div class="pricing-cta">
+                        <button class="btn btn-primary" style="width: 100%; padding: 1.25rem;">
+                            เข้าร่วม Challenge เลย
+                        </button>
+                        <p style="margin-top: 1.5rem; color: var(--text-tertiary); font-size: 0.95rem;">
+                            รับ Refund 100% ถ้าทำเว็บเสร็จตามเงื่อนไข
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>❓ คำถามที่พบบ่อย</h2>
+                <p>ถ้ามีคำถาม คลิกอ่านดูได้เลย</p>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>ไม่มีพื้นฐานโค้ดทำได้ไหม?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        ได้ค้าบ คอร์สสั้น Website 1 Wun สร้างสำหรับมือใหม่กริ้บๆ เลย ผมอยากให้คอร์สนี้คุณสามารถสร้างเว็บไซต์แบบใช้โค้ดได้โดยไม่ต้องเขียนโค้ด ถ้าคุณเป็นมือใหม่ ก็ใช่เลยย
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>ต้องเสียค่าโฮสต์รายเดือนหรือไม่?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        ไม่ต้องเลย ผมไม่ได้พูดถึงเว็บสำเร็จรูปที่คุณแก้ได้นิดหน่อยและต้องเสียค่าใช้จ่ายรายเดือน ไหนจะกลัวเว็บล่มอะไรอีก อันนี้ฟรี 100% ตลอดชีพจนกว่าโลกนี้จะไม่มีอินเตอร์เน็ต (แง้)
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>ใช้มือถือแก้ไขได้ไหม?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        ไม่แนะนำเลยค้าบ ถ้าอยากลง Challenge Website 1 Wun ผมแนะนำว่าให้ใช้คอมพิวเตอร์ดีกว่าครับ เพราะเราจะใช้ AI ช่วยเขียนโค้ดเว็บเรา และในการใช้เขา เราจะใช้บนคอมพิวเตอร์ของเราครับ
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>ถ้าไม่เสร็จทันมีอะไรเสียไหม?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        ไม่มีอะไรเสีย ถ้าไม่เสร็จตามเวลา เงินที่จ่ายไปก็ฝากไว้ เป็นการสนับสนุนให้พัฒนาคอร์สนี้ต่อ คุณยังได้แนวทาง ได้ความรู้อยู่ดี และได้สนับสนุน Movement ของพวกเราด้วยค้าบ
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>เว็บจะนำไปใช้อะไรได้บ้าง?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        เยอะมาก ใช้เป็นเรซูเม่ส่วนตัว Portfolio ขายสินค้า รับจ้างงาน ส่งประกวด Resume ต่องาน โชว์ผลงาน Blog ของตัวเอง Link ในไบโอ IG/TikTok Link ใน Email ส่งให้ HR ส่งให้ลูกค้า เขียนไม่หมดฮ่าๆ
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta">
+        <div class="final-cta-content">
+            <h2>เลื่อนลงมามากเกินไปแล้ว</h2>
+            <p>มาไกลขนาดนี้แสดงว่าคุณสนใจจริงๆ แหละ ถ้าไม่มีอะไรจะเสียแล้วรออะไรค้าบ</p>
+            <button class="btn btn-primary" onclick="document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' })">
+                เข้าร่วม Website 1 Wun เลยย
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-text">Website 1 วัน Challenge © 2024 — ช่วยให้คนไทยมีเว็บไซต์ส่วนตัว</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll behavior for buttons
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // FAQ toggle (click + keyboard)
+        document.querySelectorAll('.faq-question').forEach(question => {
+            const item = question.closest('.faq-item');
+            const toggle = () => {
+                const isActive = item.classList.toggle('active');
+                question.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+            };
+
+            question.setAttribute('role', 'button');
+            question.setAttribute('tabindex', '0');
+            question.setAttribute('aria-expanded', 'false');
+
+            question.addEventListener('click', toggle);
+            question.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggle();
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.animation = 'slideInUp 0.6s ease-out';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards
+        document.querySelectorAll('.card, .use-case, .problem-item, .step, .proof-card, .offer-item, .reason, .feature').forEach(el => {
+            el.style.opacity = '0';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

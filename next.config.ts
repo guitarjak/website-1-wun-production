@@ -10,6 +10,15 @@ const nextConfig: NextConfig = {
 
   // Remove X-Powered-By header for security
   poweredByHeader: false,
+
+  async rewrites() {
+    return [
+      {
+        source: '/',
+        destination: '/w1w-homepage-index.html',
+      },
+    ];
+  },
 };
 
 export default nextConfig;
