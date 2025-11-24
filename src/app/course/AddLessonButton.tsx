@@ -18,6 +18,14 @@ export default function AddLessonButton({
   const [description, setDescription] = useState('');
   const [content, setContent] = useState('');
 
+  const closeModal = () => {
+    setIsOpen(false);
+    setError(null);
+    setTitle('');
+    setDescription('');
+    setContent('');
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -63,13 +71,27 @@ export default function AddLessonButton({
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="px-6 py-4 border-b border-gray-200 sticky top-0 bg-white">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={closeModal}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[85vh] flex flex-col overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white">
               <h2 className="text-lg font-bold text-gray-900">เพิ่มบทเรียนใหม่</h2>
+              <button
+                type="button"
+                onClick={closeModal}
+                className="text-gray-500 hover:text-gray-800 transition-colors"
+                aria-label="ปิดหน้าต่างเพิ่มบทเรียน"
+              >
+                ✕
+              </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+            <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto">
               {error && (
                 <div className="p-3 bg-red-50 border border-red-200 rounded text-red-800 text-sm">
                   {error}
@@ -119,7 +141,7 @@ export default function AddLessonButton({
               <div className="flex gap-3 justify-end pt-4 border-t border-gray-200">
                 <button
                   type="button"
-                  onClick={() => setIsOpen(false)}
+                  onClick={closeModal}
                   disabled={isLoading}
                   className="px-4 py-2 text-gray-700 font-semibold rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-50"
                 >
