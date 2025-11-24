@@ -151,6 +151,13 @@ h3 {
   color: var(--dark);
 }
 
+/* Surface overrides to keep interior containers aligned with homepage palette */
+.bg-white,
+.bg-slate-50,
+.bg-gray-50 {
+  background-color: var(--bg-primary) !important;
+}
+
 /* Link Styling */
 a {
   color: var(--blue);
