@@ -321,34 +321,52 @@
             align-items: center;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--dark);
+        .logo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .logo-accent {
-            color: var(--golden);
+        .logo-img {
+            height: 56px;
+            width: auto;
         }
 
         nav {
             display: flex;
-            gap: 2rem;
+            gap: 1rem;
+            align-items: center;
         }
 
-        nav a {
-            font-weight: 600;
-            color: var(--text-primary);
-            transition: color 0.2s ease;
+        .login-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.65rem 1.25rem;
+            border-radius: 999px;
+            background: var(--golden);
+            color: var(--dark);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            box-shadow: 0 10px 25px rgba(254, 191, 0, 0.25);
+            transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
         }
 
-        nav a:hover {
-            color: var(--blue);
+        .login-btn:hover {
+            background: var(--golden-light);
+            transform: translateY(-1px);
+            box-shadow: 0 12px 28px rgba(254, 191, 0, 0.35);
         }
 
         @media (max-width: 768px) {
             nav {
-                display: none;
+                display: flex;
+                gap: 0.75rem;
+            }
+
+            .login-btn {
+                padding: 0.55rem 1.05rem;
+                font-size: 0.95rem;
             }
         }
 
@@ -1644,10 +1662,12 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">
-                    Website 1 <span class="logo-accent">วัน</span>
-                </div>
-                <nav></nav>
+                <a class="logo-link" href="/">
+                    <img class="logo-img" src="/w1w-logo.png" alt="Website 1 วัน (จริงๆ) logo">
+                </a>
+                <nav>
+                    <a class="login-btn" href="/auth/login">login</a>
+                </nav>
             </div>
         </div>
     </header>
