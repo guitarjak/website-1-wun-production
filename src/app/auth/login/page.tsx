@@ -125,8 +125,8 @@ export default function LoginPage() {
           <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: 'var(--border-light)' }}>
             <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
               ยังไม่มีบัญชี?{' '}
-              <a href="/auth/register" className="font-semibold hover:underline" style={{ color: 'var(--golden)' }}>
-                สมัครสมาชิก
+              <a href="/" className="font-semibold hover:underline" style={{ color: 'var(--golden)' }}>
+                สมัครเข้าร่วม Challenge
               </a>
             </p>
           </div>

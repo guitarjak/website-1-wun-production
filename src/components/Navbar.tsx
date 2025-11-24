@@ -16,7 +16,7 @@ export default async function Navbar() {
     // Not logged in
     return (
       <nav className="relative z-40 w-full" style={{
-        background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9))',
+        background: 'rgba(250, 248, 245, 0.95)',
         backdropFilter: 'blur(10px)',
         borderBottom: '1px solid var(--border-light)'
       }}>
@@ -51,7 +51,7 @@ export default async function Navbar() {
 
   return (
     <nav className="relative z-40 w-full" style={{
-      background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9))',
+      background: 'rgba(250, 248, 245, 0.95)',
       backdropFilter: 'blur(10px)',
       borderBottom: '1px solid var(--border-light)'
     }}>

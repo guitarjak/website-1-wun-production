@@ -32,9 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased bg-slate-50 text-slate-900`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}>
         <div className="min-h-screen flex flex-col">
           <Navbar />
           <main className="flex-1">

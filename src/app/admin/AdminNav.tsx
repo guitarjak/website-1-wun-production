@@ -40,7 +40,7 @@ export default function AdminNav() {
   return (
     <>
       {/* Top Navigation Bar */}
-      <nav style={{ backgroundColor: '#efe3d4', borderColor: 'var(--border-light)' }} className="border-b">
+      <nav style={{ backgroundColor: 'rgba(250, 248, 245, 0.95)', borderColor: 'var(--border-light)' }} className="border-b backdrop-blur">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col gap-4 py-4 md:flex-row md:items-center md:justify-between">
             {/* Logo */}
