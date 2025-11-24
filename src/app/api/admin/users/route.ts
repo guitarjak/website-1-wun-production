@@ -371,7 +371,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<SuccessRe
       }
 
       return NextResponse.json(
-        { error: 'Failed to create user', details: authError?.message },
+        { error: 'Failed to create user' },
         { status: 500 }
       );
     }
