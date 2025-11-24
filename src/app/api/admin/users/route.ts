@@ -360,6 +360,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<SuccessRe
 
     if (authError || !authData.user) {
       console.error('❌ Auth user creation failed:', authError?.message);
+      console.error('Auth error details:', JSON.stringify(authError, null, 2));
 
       // Handle specific error: user already exists
       if (authError?.message?.includes('already exists') || authError?.message?.includes('already registered')) {
@@ -370,7 +371,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<SuccessRe
       }
 
       return NextResponse.json(
-        { error: 'Failed to create user' },
+        { error: 'Failed to create user', details: authError?.message },
         { status: 500 }
       );
     }
@@ -389,6 +390,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<SuccessRe
 
     if (profileError) {
       console.error('❌ Profile creation failed:', profileError.message);
+      console.error('Profile error details:', JSON.stringify(profileError, null, 2));
 
       // Try to clean up: delete the auth user we just created
       console.log(`🧹 Attempting to delete orphaned auth user: ${userId}`);
@@ -397,7 +399,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<SuccessRe
       });
 
       return NextResponse.json(
-        { error: 'Failed to create user profile' },
+        { error: 'Failed to create user profile', details: profileError.message },
         { status: 500 }
       );
     }
