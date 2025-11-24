@@ -133,7 +133,6 @@ export default function LessonTitleDescriptionEditor({
     <div className="flex items-start justify-between gap-4">
       <div className="flex-1">
         <h1 className="text-4xl font-bold text-gray-900 mb-2">{title}</h1>
-        <p className="text-gray-600 text-lg mb-4">บท 1: พื้นฐาน TypeScript</p>
         {description && (
           <p className="text-gray-700 text-base leading-relaxed">{description}</p>
         )}
