@@ -1,19 +1,5 @@
 [
   {
-    "timestamp": "2025-11-22T10:04:10.837952",
-    "tool": "KillShell",
-    "summary": "KillShell completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T10:04:21.220857",
-    "tool": "BashOutput",
-    "summary": "BashOutput completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
     "timestamp": "2025-11-22T10:04:34.982181",
     "tool": "BashOutput",
     "summary": "BashOutput completed",
@@ -346,6 +332,20 @@
     "timestamp": "2025-11-24T21:05:30.107543",
     "tool": "Edit",
     "summary": "Updated w1w-homepage-index.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T21:09:14.370404",
+    "tool": "Edit",
+    "summary": "Updated route.ts",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T21:09:48.325182",
+    "tool": "mcp__vercel__deploy_to_vercel",
+    "summary": "mcp__vercel__deploy_to_vercel completed",
     "ai_generated": false,
     "tts_method": "macos-fallback"
   }

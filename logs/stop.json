@@ -350,5 +350,13 @@
     "permission_mode": "bypassPermissions",
     "hook_event_name": "Stop",
     "stop_hook_active": false
+  },
+  {
+    "session_id": "6249afd9-c94e-4795-b2bd-87415553a1dd",
+    "transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/6249afd9-c94e-4795-b2bd-87415553a1dd.jsonl",
+    "cwd": "/Users/guitar/Desktop/website-1-wun-production",
+    "permission_mode": "bypassPermissions",
+    "hook_event_name": "Stop",
+    "stop_hook_active": false
   }
 ]
