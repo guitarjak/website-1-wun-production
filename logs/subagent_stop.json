@@ -108,5 +108,75 @@
     "stop_hook_active": false,
     "agent_id": "7dd8ddd6",
     "agent_transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/agent-7dd8ddd6.jsonl"
+  },
+  {
+    "session_id": "be77d97a-b469-45be-884b-26b157bd0b2d",
+    "transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/be77d97a-b469-45be-884b-26b157bd0b2d.jsonl",
+    "cwd": "/Users/guitar/Desktop/website-1-wun-production",
+    "permission_mode": "default",
+    "hook_event_name": "SubagentStop",
+    "stop_hook_active": false,
+    "agent_id": "90110acf",
+    "agent_transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/agent-90110acf.jsonl"
+  },
+  {
+    "session_id": "be77d97a-b469-45be-884b-26b157bd0b2d",
+    "transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/be77d97a-b469-45be-884b-26b157bd0b2d.jsonl",
+    "cwd": "/Users/guitar/Desktop/website-1-wun-production",
+    "permission_mode": "default",
+    "hook_event_name": "SubagentStop",
+    "stop_hook_active": false,
+    "agent_id": "11afe7b7",
+    "agent_transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/agent-11afe7b7.jsonl"
+  },
+  {
+    "session_id": "be77d97a-b469-45be-884b-26b157bd0b2d",
+    "transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/be77d97a-b469-45be-884b-26b157bd0b2d.jsonl",
+    "cwd": "/Users/guitar/Desktop/website-1-wun-production",
+    "permission_mode": "bypassPermissions",
+    "hook_event_name": "SubagentStop",
+    "stop_hook_active": false,
+    "agent_id": "8e65d221",
+    "agent_transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/agent-8e65d221.jsonl"
+  },
+  {
+    "session_id": "be77d97a-b469-45be-884b-26b157bd0b2d",
+    "transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/be77d97a-b469-45be-884b-26b157bd0b2d.jsonl",
+    "cwd": "/Users/guitar/Desktop/website-1-wun-production",
+    "permission_mode": "default",
+    "hook_event_name": "SubagentStop",
+    "stop_hook_active": false,
+    "agent_id": "a6f19897",
+    "agent_transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/agent-a6f19897.jsonl"
+  },
+  {
+    "session_id": "be77d97a-b469-45be-884b-26b157bd0b2d",
+    "transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/be77d97a-b469-45be-884b-26b157bd0b2d.jsonl",
+    "cwd": "/Users/guitar/Desktop/website-1-wun-production",
+    "permission_mode": "default",
+    "hook_event_name": "SubagentStop",
+    "stop_hook_active": false,
+    "agent_id": "361c0bbf",
+    "agent_transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/agent-361c0bbf.jsonl"
+  },
+  {
+    "session_id": "be77d97a-b469-45be-884b-26b157bd0b2d",
+    "transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/be77d97a-b469-45be-884b-26b157bd0b2d.jsonl",
+    "cwd": "/Users/guitar/Desktop/website-1-wun-production",
+    "permission_mode": "default",
+    "hook_event_name": "SubagentStop",
+    "stop_hook_active": false,
+    "agent_id": "1581e72b",
+    "agent_transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/agent-1581e72b.jsonl"
+  },
+  {
+    "session_id": "be77d97a-b469-45be-884b-26b157bd0b2d",
+    "transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/be77d97a-b469-45be-884b-26b157bd0b2d.jsonl",
+    "cwd": "/Users/guitar/Desktop/website-1-wun-production",
+    "permission_mode": "default",
+    "hook_event_name": "SubagentStop",
+    "stop_hook_active": false,
+    "agent_id": "6e117b81",
+    "agent_transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/agent-6e117b81.jsonl"
   }
 ]
