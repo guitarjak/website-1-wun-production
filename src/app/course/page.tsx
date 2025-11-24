@@ -232,7 +232,10 @@ export default async function CoursePage() {
   if (!course.modules || course.modules.length === 0) {
     return (
       <div>
-        <div className="bg-white/70 backdrop-blur rounded-2xl shadow-lg p-6 sm:p-8 mb-8 border" style={{ borderColor: 'var(--border-light)' }}>
+        <div
+          className="backdrop-blur rounded-2xl shadow-lg p-6 sm:p-8 mb-8 border"
+          style={{ borderColor: 'var(--border-light)', background: 'var(--bg-primary)' }}
+        >
           <h1 className="text-2xl sm:text-3xl font-bold mb-2 break-words" style={{ color: 'var(--text-primary)' }}>
             {course.title}
           </h1>
@@ -265,7 +268,10 @@ export default async function CoursePage() {
   return (
     <div>
       {/* Course Header */}
-      <div className="bg-white/70 backdrop-blur rounded-2xl shadow-lg p-6 sm:p-8 mb-8 border" style={{ borderColor: 'var(--border-light)' }}>
+      <div
+        className="backdrop-blur rounded-2xl shadow-lg p-6 sm:p-8 mb-8 border"
+        style={{ borderColor: 'var(--border-light)', background: 'var(--bg-primary)' }}
+      >
         {isAdmin ? (
           <CourseEditButton
             courseId={course.id}
@@ -326,7 +332,8 @@ export default async function CoursePage() {
         {course.modules.map((module, moduleIndex) => (
           <div
             key={module.id}
-            className="bg-white/70 backdrop-blur rounded-2xl shadow-lg overflow-hidden border border-slate-100 hover:shadow-xl transition-shadow"
+            className="backdrop-blur rounded-2xl shadow-lg overflow-hidden border border-slate-100 hover:shadow-xl transition-shadow"
+            style={{ background: 'var(--bg-primary)' }}
           >
             {/* Module Header */}
             <div className="bg-slate-50 border-l-4 px-4 sm:px-6 py-4 sm:py-5" style={{ borderLeftColor: 'var(--accent)' }}>

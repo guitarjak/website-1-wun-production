@@ -9,7 +9,10 @@ export default async function CourseLayout({
   await requireUser();
 
   return (
-    <div className="min-h-screen py-12" style={{ backgroundColor: '#efe3d4' }}>
+    <div
+      className="min-h-screen py-12"
+      style={{ background: 'linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)' }}
+    >
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {children}

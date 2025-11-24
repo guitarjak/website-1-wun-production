@@ -41,9 +41,15 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen py-12 px-4" style={{ backgroundColor: '#efe3d4' }}>
+    <div
+      className="min-h-screen py-12 px-4"
+      style={{ background: 'linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)' }}
+    >
       <div className="max-w-md mx-auto">
-        <div className="bg-white rounded-2xl shadow-lg p-8" style={{ borderColor: 'var(--border-light)' }}>
+        <div
+          className="rounded-2xl shadow-lg p-8"
+          style={{ borderColor: 'var(--border-light)', background: 'var(--bg-primary)' }}
+        >
           {/* Header */}
           <div className="mb-8 text-center">
             <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>

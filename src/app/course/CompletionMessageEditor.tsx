@@ -65,7 +65,10 @@ export default function CompletionMessageEditor({
 
   if (!isAdmin) {
     return (
-      <div className="mt-8 bg-white/70 backdrop-blur border border-slate-200 rounded-2xl p-6 sm:p-8 text-center shadow-lg">
+      <div
+        className="mt-8 backdrop-blur border border-slate-200 rounded-2xl p-6 sm:p-8 text-center shadow-lg"
+        style={{ background: 'var(--bg-primary)' }}
+      >
         <div className="text-5xl sm:text-6xl mb-4 animate-bounce">🎉</div>
         <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
           {title}
@@ -153,7 +156,10 @@ export default function CompletionMessageEditor({
   }
 
   return (
-    <div className="mt-8 bg-white/70 backdrop-blur border border-slate-200 rounded-2xl p-6 sm:p-8 text-center shadow-lg relative group">
+    <div
+      className="mt-8 backdrop-blur border border-slate-200 rounded-2xl p-6 sm:p-8 text-center shadow-lg relative group"
+      style={{ background: 'var(--bg-primary)' }}
+    >
       <div className="text-5xl sm:text-6xl mb-4 animate-bounce">🎉</div>
       <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
         {title}

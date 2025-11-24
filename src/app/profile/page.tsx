@@ -9,7 +9,10 @@ export default async function ProfilePage() {
   const roleDisplay = user.profile.role === 'ADMIN' ? 'ผู้ดูแลระบบ' : 'นักเรียน';
 
   return (
-    <div className="min-h-screen py-12 px-4" style={{ backgroundColor: '#efe3d4' }}>
+    <div
+      className="min-h-screen py-12 px-4"
+      style={{ background: 'linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)' }}
+    >
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-8" style={{ borderColor: 'var(--border-light)' }}>
           {/* Header */}

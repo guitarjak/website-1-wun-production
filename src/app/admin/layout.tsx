@@ -9,7 +9,10 @@ export default async function AdminLayout({
   await requireAdmin();
 
   return (
-    <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#efe3d4' }}>
+    <div
+      className="flex flex-col min-h-screen"
+      style={{ background: 'linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)' }}
+    >
       {/* Navigation */}
       <AdminNav />
 

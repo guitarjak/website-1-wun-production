@@ -152,7 +152,10 @@ export default async function ModulePage({
 
   if (error || !module || !course) {
     return (
-      <div className="min-h-screen py-12 px-4" style={{ backgroundColor: '#efe3d4' }}>
+      <div
+        className="min-h-screen py-12 px-4"
+        style={{ background: 'linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)' }}
+      >
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-2xl shadow-lg p-8 text-center" style={{ borderColor: 'var(--border-light)' }}>
             <div className="text-6xl mb-4">❌</div>
@@ -197,7 +200,10 @@ export default async function ModulePage({
     lessons.length > 0 ? Math.round((completedLessons / lessons.length) * 100) : 0;
 
   return (
-    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#efe3d4' }}>
+    <div
+      className="min-h-screen py-8 px-4 sm:px-6 lg:px-8"
+      style={{ background: 'linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)' }}
+    >
       <div className="max-w-4xl mx-auto">
         {/* Breadcrumb */}
         <nav className="mb-6 flex items-center gap-2 text-sm" style={{ color: 'var(--text-secondary)' }}>

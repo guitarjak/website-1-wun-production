@@ -72,7 +72,10 @@ export default async function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen py-8 sm:py-12 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#efe3d4' }}>
+    <div
+      className="min-h-screen py-8 sm:py-12 px-4 sm:px-6 lg:px-8"
+      style={{ background: 'linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)' }}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12">

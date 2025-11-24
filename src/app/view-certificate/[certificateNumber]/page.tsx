@@ -50,7 +50,10 @@ export default async function ViewCertificatePage({
 
   if (error || !certificates) {
     return (
-      <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#efe3d4' }}>
+      <div
+        className="min-h-screen py-12 px-4 sm:px-6 lg:px-8"
+        style={{ background: 'linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)' }}
+      >
         <div className="max-w-2xl mx-auto text-center">
           <h1 className="text-3xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
             Certificate Not Found
@@ -75,7 +78,10 @@ export default async function ViewCertificatePage({
   const courseTitle = certificate.courses?.[0]?.title || 'Unknown Course';
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#efe3d4' }}>
+    <div
+      className="min-h-screen py-12 px-4 sm:px-6 lg:px-8"
+      style={{ background: 'linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)' }}
+    >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 

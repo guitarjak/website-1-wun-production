@@ -22,7 +22,10 @@ export default async function CertificatePage() {
     console.log('Certificate eligibility:', eligibility);
 
     return (
-      <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#efe3d4' }}>
+      <div
+        className="min-h-screen py-12 px-4 sm:px-6 lg:px-8"
+        style={{ background: 'linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)' }}
+      >
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
