@@ -399,7 +399,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<SuccessRe
       });
 
       return NextResponse.json(
-        { error: 'Failed to create user profile', details: profileError.message },
+        { error: 'Failed to create user profile', details: { profile: profileError.message } },
         { status: 500 }
       );
     }
