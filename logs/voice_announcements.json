@@ -1,208 +1,5 @@
 [
   {
-    "timestamp": "2025-11-22T10:04:34.982181",
-    "tool": "BashOutput",
-    "summary": "BashOutput completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T10:09:03.070887",
-    "tool": "Edit",
-    "summary": "Updated CertificateSuccess.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T10:09:16.013372",
-    "tool": "Edit",
-    "summary": "Updated CertificateSuccess.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T10:09:23.260685",
-    "tool": "BashOutput",
-    "summary": "BashOutput completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T10:21:23.234695",
-    "tool": "Edit",
-    "summary": "Updated CertificateSuccess.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T10:22:30.694349",
-    "tool": "mcp__supabase__list_projects",
-    "summary": "mcp__supabase__list_projects completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T10:22:34.867029",
-    "tool": "BashOutput",
-    "summary": "BashOutput completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T10:38:47.800073",
-    "tool": "Edit",
-    "summary": "Updated certificate-examples.ts",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T10:52:18.003450",
-    "tool": "Edit",
-    "summary": "Updated CertificateSuccess.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T10:56:03.992122",
-    "tool": "Task",
-    "summary": "Analyze the Next.js project structure and identify potential performance issues. Look for completed 1. Unoptimized images or missi...",
-    "ai_generated": false,
-    "tts_method": "none"
-  },
-  {
-    "timestamp": "2025-11-22T11:03:15.620160",
-    "tool": "Edit",
-    "summary": "Updated layout.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T11:03:21.614749",
-    "tool": "Edit",
-    "summary": "Updated layout.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T11:03:27.006071",
-    "tool": "Edit",
-    "summary": "Updated globals.css",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T11:03:38.323771",
-    "tool": "Edit",
-    "summary": "Updated globals.css",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T11:03:44.036966",
-    "tool": "Edit",
-    "summary": "Updated globals.css",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T11:03:52.332154",
-    "tool": "Edit",
-    "summary": "Updated globals.css",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T11:04:00.995915",
-    "tool": "Edit",
-    "summary": "Updated globals.css",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T11:25:04.734944",
-    "tool": "BashOutput",
-    "summary": "BashOutput completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T14:30:39.870110",
-    "tool": "Edit",
-    "summary": "Updated Navbar.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T14:30:54.153672",
-    "tool": "Edit",
-    "summary": "Updated Navbar.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T14:31:13.659665",
-    "tool": "Edit",
-    "summary": "Updated Navbar.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T14:31:23.932646",
-    "tool": "Edit",
-    "summary": "Updated Navbar.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T14:31:39.224417",
-    "tool": "Edit",
-    "summary": "Updated Navbar.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T14:31:55.234983",
-    "tool": "Edit",
-    "summary": "Updated Navbar.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T14:37:11.874491",
-    "tool": "Edit",
-    "summary": "Updated tsconfig.json",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T14:37:20.087570",
-    "tool": "Edit",
-    "summary": "Updated next.config.ts",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T14:37:36.299164",
-    "tool": "Edit",
-    "summary": "Updated next.config.ts",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T14:40:25.730467",
-    "tool": "Edit",
-    "summary": "Updated CertificateSuccess.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T14:40:41.080439",
-    "tool": "Edit",
-    "summary": "Updated globals.css",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
     "timestamp": "2025-11-22T14:40:51.822708",
     "tool": "Edit",
     "summary": "Updated Navbar.tsx",
@@ -346,6 +143,209 @@
     "timestamp": "2025-11-24T21:09:48.325182",
     "tool": "mcp__vercel__deploy_to_vercel",
     "summary": "mcp__vercel__deploy_to_vercel completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T22:55:38.084348",
+    "tool": "ListMcpResourcesTool",
+    "summary": "ListMcpResourcesTool completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T22:56:11.188964",
+    "tool": "Edit",
+    "summary": "Updated .mcp.json",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T22:56:28.797572",
+    "tool": "ListMcpResourcesTool",
+    "summary": "ListMcpResourcesTool completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:02:10.235521",
+    "tool": "mcp__plugin_titanium-toolkit_pypi__get_package_info",
+    "summary": "mcp__plugin_titanium-toolkit_pypi__get_package_info completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:03:34.437174",
+    "tool": "Task",
+    "summary": "Research the n8n-mcp package to understand completed 1. What is the correct command...",
+    "ai_generated": false,
+    "tts_method": "none"
+  },
+  {
+    "timestamp": "2025-11-24T23:09:09.367696",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:09:14.462622",
+    "tool": "KillShell",
+    "summary": "KillShell completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:09:27.248452",
+    "tool": "BashOutput",
+    "summary": "BashOutput completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:09:55.034220",
+    "tool": "Edit",
+    "summary": "Updated .mcp.json",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:12:09.509939",
+    "tool": "Edit",
+    "summary": "Updated .mcp.json",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:14:27.741423",
+    "tool": "ListMcpResourcesTool",
+    "summary": "ListMcpResourcesTool completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:15:41.622331",
+    "tool": "Task",
+    "summary": "Explore this codebase to understand completed 1. What is the project structu...",
+    "ai_generated": false,
+    "tts_method": "none"
+  },
+  {
+    "timestamp": "2025-11-24T23:15:54.994469",
+    "tool": "mcp__vercel__list_teams",
+    "summary": "mcp__vercel__list_teams completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:16:01.316428",
+    "tool": "mcp__vercel__list_projects",
+    "summary": "mcp__vercel__list_projects completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:16:07.752811",
+    "tool": "mcp__vercel__list_deployments",
+    "summary": "mcp__vercel__list_deployments completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:16:17.257279",
+    "tool": "mcp__vercel__get_deployment_build_logs",
+    "summary": "mcp__vercel__get_deployment_build_logs completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:23:09.927252",
+    "tool": "mcp__vercel__get_deployment_build_logs",
+    "summary": "mcp__vercel__get_deployment_build_logs completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:54:08.778587",
+    "tool": "Edit",
+    "summary": "Updated w1w-homepage-index.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:54:16.070061",
+    "tool": "Edit",
+    "summary": "Updated w1w-homepage-index.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:54:25.744965",
+    "tool": "Edit",
+    "summary": "Updated w1w-homepage-index.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:54:33.678191",
+    "tool": "Edit",
+    "summary": "Updated w1w-homepage-index.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:54:41.571367",
+    "tool": "Edit",
+    "summary": "Updated w1w-homepage-index.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:54:50.595469",
+    "tool": "Edit",
+    "summary": "Updated w1w-homepage-index.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:55:00.917626",
+    "tool": "Edit",
+    "summary": "Updated w1w-homepage-index.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:55:11.275197",
+    "tool": "Edit",
+    "summary": "Updated w1w-homepage-index.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:55:21.011812",
+    "tool": "Edit",
+    "summary": "Updated w1w-homepage-index.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:55:31.856382",
+    "tool": "Edit",
+    "summary": "Updated w1w-homepage-index.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:55:51.655861",
+    "tool": "Edit",
+    "summary": "Updated w1w-homepage-index.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-24T23:55:59.477209",
+    "tool": "Edit",
+    "summary": "Updated w1w-homepage-index.html",
     "ai_generated": false,
     "tts_method": "macos-fallback"
   }
