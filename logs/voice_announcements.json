@@ -1,103 +1,5 @@
 [
   {
-    "timestamp": "2025-11-22T14:40:51.822708",
-    "tool": "Edit",
-    "summary": "Updated Navbar.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-22T14:41:11.998910",
-    "tool": "Edit",
-    "summary": "Updated Navbar.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T20:21:25.736415",
-    "tool": "Task",
-    "summary": "Agent task completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T20:26:35.593542",
-    "tool": "mcp__n8n-mcp__n8n_list_workflows",
-    "summary": "mcp__n8n-mcp__n8n_list_workflows completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T20:26:43.188089",
-    "tool": "mcp__n8n-mcp__n8n_get_workflow",
-    "summary": "mcp__n8n-mcp__n8n_get_workflow completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T20:26:50.727329",
-    "tool": "mcp__n8n-mcp__n8n_validate_workflow",
-    "summary": "mcp__n8n-mcp__n8n_validate_workflow completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T20:26:58.552442",
-    "tool": "mcp__n8n-mcp__n8n_list_executions",
-    "summary": "mcp__n8n-mcp__n8n_list_executions completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T20:27:19.549746",
-    "tool": "mcp__n8n-mcp__n8n_update_partial_workflow",
-    "summary": "mcp__n8n-mcp__n8n_update_partial_workflow completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T20:27:30.206368",
-    "tool": "mcp__n8n-mcp__n8n_update_partial_workflow",
-    "summary": "mcp__n8n-mcp__n8n_update_partial_workflow completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T20:30:31.318296",
-    "tool": "mcp__vercel__list_teams",
-    "summary": "mcp__vercel__list_teams completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T20:30:32.693781",
-    "tool": "mcp__vercel__search_vercel_documentation",
-    "summary": "mcp__vercel__search_vercel_documentation completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T20:30:39.930952",
-    "tool": "mcp__vercel__list_projects",
-    "summary": "mcp__vercel__list_projects completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T20:30:46.967748",
-    "tool": "mcp__vercel__get_project",
-    "summary": "mcp__vercel__get_project completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T20:34:48.824522",
-    "tool": "Edit",
-    "summary": "Updated route.ts",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
     "timestamp": "2025-11-24T20:34:55.257768",
     "tool": "Edit",
     "summary": "Updated route.ts",
@@ -346,6 +248,104 @@
     "timestamp": "2025-11-24T23:55:59.477209",
     "tool": "Edit",
     "summary": "Updated w1w-homepage-index.html",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T19:55:25.023160",
+    "tool": "Task",
+    "summary": "Search the codebase for how modules are unlocked. Look for completed 1. How the system checks if a ...",
+    "ai_generated": false,
+    "tts_method": "none"
+  },
+  {
+    "timestamp": "2025-11-25T19:57:49.916995",
+    "tool": "mcp__plugin_titanium-toolkit_pypi__get_package_info",
+    "summary": "mcp__plugin_titanium-toolkit_pypi__get_package_info completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T19:58:23.118019",
+    "tool": "Write",
+    "summary": "Created route.ts",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T19:59:14.813355",
+    "tool": "ListMcpResourcesTool",
+    "summary": "ListMcpResourcesTool completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T19:59:36.199156",
+    "tool": "Write",
+    "summary": "Created check-progress.js",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T19:59:53.811919",
+    "tool": "Edit",
+    "summary": "Updated check-progress.js",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T19:59:58.933249",
+    "tool": "Edit",
+    "summary": "Updated check-progress.js",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T20:00:20.451301",
+    "tool": "Write",
+    "summary": "Created check-all-students.js",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T20:00:42.761197",
+    "tool": "Write",
+    "summary": "Created fix-lesson-orders.js",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T20:00:59.679842",
+    "tool": "Edit",
+    "summary": "Updated fix-lesson-orders.js",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T20:01:05.612917",
+    "tool": "Edit",
+    "summary": "Updated fix-lesson-orders.js",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T20:01:11.652473",
+    "tool": "Edit",
+    "summary": "Updated fix-lesson-orders.js",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T20:01:18.319488",
+    "tool": "Edit",
+    "summary": "Updated fix-lesson-orders.js",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T20:01:41.950818",
+    "tool": "Write",
+    "summary": "Created fix-all-lesson-orders.js",
     "ai_generated": false,
     "tts_method": "macos-fallback"
   }
