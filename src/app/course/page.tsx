@@ -170,7 +170,8 @@ function isLessonLocked(
   lessonIndex: number,
   moduleIndex: number,
   completedLessonIds: Set<string>,
-  modules: Module[]
+  modules: Module[],
+  modulesWithHomework: Set<string>
 ): boolean {
   // First module, first lesson is always available
   if (moduleIndex === 0 && lessonIndex === 0) {
@@ -186,12 +187,15 @@ function isLessonLocked(
   }
 
   // Check if this is first lesson of a module and all lessons of previous module are completed
+  // AND homework for previous module has been submitted
   if (lessonIndex === 0 && moduleIndex > 0) {
     const previousModule = modules[moduleIndex - 1];
     const allPreviousLessonsCompleted = previousModule.lessons.every(
       (lesson) => completedLessonIds.has(lesson.id)
     );
-    if (allPreviousLessonsCompleted) {
+    const previousHomeworkSubmitted = modulesWithHomework.has(previousModule.id);
+
+    if (allPreviousLessonsCompleted && previousHomeworkSubmitted) {
       return false;
     }
   }
@@ -419,7 +423,8 @@ export default async function CoursePage() {
                     lessonIndex,
                     moduleIndex,
                     completedLessonIds,
-                    course.modules
+                    course.modules,
+                    modulesWithHomework
                   );
 
                   return (

@@ -1,19 +1,5 @@
 [
   {
-    "timestamp": "2025-11-24T20:34:55.257768",
-    "tool": "Edit",
-    "summary": "Updated route.ts",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T20:35:26.443319",
-    "tool": "mcp__vercel__list_deployments",
-    "summary": "mcp__vercel__list_deployments completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
     "timestamp": "2025-11-24T20:41:45.370733",
     "tool": "ListMcpResourcesTool",
     "summary": "ListMcpResourcesTool completed",
@@ -346,6 +332,20 @@
     "timestamp": "2025-11-25T20:01:41.950818",
     "tool": "Write",
     "summary": "Created fix-all-lesson-orders.js",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T20:06:31.321078",
+    "tool": "Edit",
+    "summary": "Updated page.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-25T20:06:39.402659",
+    "tool": "Edit",
+    "summary": "Updated page.tsx",
     "ai_generated": false,
     "tts_method": "macos-fallback"
   }
