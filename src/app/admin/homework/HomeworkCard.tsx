@@ -123,13 +123,13 @@ export default function HomeworkCard({
             </p>
           </div>
 
-          {/* Lesson */}
+          {/* Module */}
           <div>
             <p className="text-xs font-semibold text-gray-500 uppercase mb-1">
               โมดูล
             </p>
             <p className="text-sm text-gray-800">
-              {submission.lesson_title}
+              {submission.module_title}
             </p>
           </div>
 

@@ -14,6 +14,7 @@ export type Submission = {
   full_name: string | null;
   email: string | null;
   lesson_title: string;
+  module_title: string;
 };
 
 async function fetchSubmissions(lessonFilter?: string, statusFilter?: string): Promise<Submission[]> {
@@ -31,7 +32,7 @@ async function fetchSubmissions(lessonFilter?: string, statusFilter?: string): P
        feedback,
        status,
        users_profile!homework_submissions_user_id_fkey(full_name, email),
-       lessons!homework_submissions_lesson_id_fkey(id, title)`
+       lessons!homework_submissions_lesson_id_fkey(id, title, modules(id, title))`
     )
     .order('submitted_at', { ascending: false });
 
@@ -64,11 +65,12 @@ async function fetchSubmissions(lessonFilter?: string, statusFilter?: string): P
     feedback: string | null;
     status: string;
     users_profile?: { full_name: string | null; email: string | null }[] | null;
-    lessons?: { id: string; title: string }[] | null;
+    lessons?: { id: string; title: string; modules?: { id: string; title: string }[] | null }[] | null;
   };
   const submissions: Submission[] = (data as SubmissionData[]).map((item) => {
     const userProfile = item.users_profile?.[0];
     const lesson = item.lessons?.[0];
+    const module = lesson?.modules?.[0];
 
     return {
       id: item.id,
@@ -81,6 +83,7 @@ async function fetchSubmissions(lessonFilter?: string, statusFilter?: string): P
       full_name: userProfile?.full_name ?? null,
       email: userProfile?.email ?? null,
       lesson_title: lesson?.title || 'Unknown Lesson',
+      module_title: module?.title || 'Unknown Module',
     };
   });
 
