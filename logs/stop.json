@@ -550,5 +550,21 @@
     "permission_mode": "bypassPermissions",
     "hook_event_name": "Stop",
     "stop_hook_active": false
+  },
+  {
+    "session_id": "17a75be2-9d5d-4381-ab58-a40013e1447b",
+    "transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/17a75be2-9d5d-4381-ab58-a40013e1447b.jsonl",
+    "cwd": "/Users/guitar/Desktop/website-1-wun-production",
+    "permission_mode": "bypassPermissions",
+    "hook_event_name": "Stop",
+    "stop_hook_active": false
+  },
+  {
+    "session_id": "17a75be2-9d5d-4381-ab58-a40013e1447b",
+    "transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/17a75be2-9d5d-4381-ab58-a40013e1447b.jsonl",
+    "cwd": "/Users/guitar/Desktop/website-1-wun-production",
+    "permission_mode": "bypassPermissions",
+    "hook_event_name": "Stop",
+    "stop_hook_active": false
   }
 ]
