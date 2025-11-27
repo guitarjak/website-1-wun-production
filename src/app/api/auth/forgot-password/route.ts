@@ -15,8 +15,11 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createSupabaseServerClient();
 
-    // Get the redirect URL from environment or construct it
-    const redirectUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/auth/reset-password`;
+    // Build redirect URL: prefer explicit env, then Vercel host, then localhost for dev
+    const host =
+      process.env.NEXT_PUBLIC_APP_URL ||
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+    const redirectUrl = `${host}/auth/reset-password`;
 
     // Send password reset email using Supabase
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
