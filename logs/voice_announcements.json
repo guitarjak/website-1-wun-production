@@ -1,40 +1,5 @@
 [
   {
-    "timestamp": "2025-11-24T22:55:38.084348",
-    "tool": "ListMcpResourcesTool",
-    "summary": "ListMcpResourcesTool completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T22:56:11.188964",
-    "tool": "Edit",
-    "summary": "Updated .mcp.json",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T22:56:28.797572",
-    "tool": "ListMcpResourcesTool",
-    "summary": "ListMcpResourcesTool completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T23:02:10.235521",
-    "tool": "mcp__plugin_titanium-toolkit_pypi__get_package_info",
-    "summary": "mcp__plugin_titanium-toolkit_pypi__get_package_info completed",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-24T23:03:34.437174",
-    "tool": "Task",
-    "summary": "Research the n8n-mcp package to understand completed 1. What is the correct command...",
-    "ai_generated": false,
-    "tts_method": "none"
-  },
-  {
     "timestamp": "2025-11-24T23:09:09.367696",
     "tool": "BashOutput",
     "summary": "BashOutput completed",
@@ -346,6 +311,41 @@
     "timestamp": "2025-11-26T12:55:35.045035",
     "tool": "Edit",
     "summary": "Updated HomeworkCard.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-27T20:53:12.990380",
+    "tool": "Write",
+    "summary": "Created page.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-27T20:53:32.767993",
+    "tool": "Write",
+    "summary": "Created page.tsx",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-27T20:53:45.431949",
+    "tool": "Write",
+    "summary": "Created route.ts",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-27T20:53:57.709569",
+    "tool": "Write",
+    "summary": "Created route.ts",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-11-27T20:54:10.082187",
+    "tool": "Edit",
+    "summary": "Updated page.tsx",
     "ai_generated": false,
     "tts_method": "macos-fallback"
   }

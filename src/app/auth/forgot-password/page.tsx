@@ -1,35 +1,39 @@
 'use client';
 
 import { useState } from 'react';
-import { loginAction } from './actions';
+import Link from 'next/link';
 
-export default function LoginPage() {
+export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setMessage('');
     setLoading(true);
 
     try {
-      const result = await loginAction(email, password);
+      const response = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
 
-      // If login failed, show error and don't redirect
-      if (!result.success) {
-        setError(result.error || 'เกิดข้อผิดพลาด');
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || 'เกิดข้อผิดพลาด');
         setLoading(false);
         return;
       }
 
-      // If successful, loginAction will redirect automatically
-    } catch (err: unknown) {
-      // Check if this is a redirect error (which means success)
-      if (err instanceof Error && err.message.includes('NEXT_REDIRECT')) {
-        return;
-      }
+      setMessage(data.message || 'ส่งลิงค์รีเซ็ตรหัสผ่านไปยังอีเมลของคุณแล้ว');
+      setEmail('');
+      setLoading(false);
+    } catch (err) {
       setError('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
       setLoading(false);
     }
@@ -48,10 +52,10 @@ export default function LoginPage() {
           {/* Header */}
           <div className="mb-8 text-center">
             <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
-              เข้าสู่ระบบ
+              ลืมรหัสผ่าน?
             </h1>
             <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
-              กรุณาใส่ข้อมูลเข้าสู่ระบบของคุณ
+              ใส่อีเมลของคุณและเราจะส่งลิงค์รีเซ็ตรหัสผ่านให้คุณ
             </p>
           </div>
 
@@ -66,32 +70,6 @@ export default function LoginPage() {
                 placeholder="ใส่อีเมลของคุณ"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                disabled={loading}
-                className="w-full px-4 py-2 rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--golden)] disabled:opacity-60"
-                style={{
-                  borderColor: 'var(--border-light)',
-                  backgroundColor: '#f9fafb',
-                  color: 'var(--text-primary)',
-                }}
-                required
-              />
-            </div>
-
-            {/* Password Field */}
-            <div>
-              <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
-                  รหัสผ่าน
-                </label>
-                <a href="/auth/forgot-password" className="text-xs font-semibold hover:underline" style={{ color: 'var(--golden)' }}>
-                  ลืมรหัสผ่าน?
-                </a>
-              </div>
-              <input
-                type="password"
-                placeholder="ใส่รหัสผ่านของคุณ"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 disabled={loading}
                 className="w-full px-4 py-2 rounded-lg border transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--golden)] disabled:opacity-60"
                 style={{
@@ -118,6 +96,21 @@ export default function LoginPage() {
               </div>
             )}
 
+            {/* Success Message */}
+            {message && (
+              <div
+                className="p-4 rounded-lg"
+                style={{
+                  background: 'rgba(34, 197, 94, 0.1)',
+                  borderLeft: '4px solid #22c55e',
+                }}
+              >
+                <p style={{ color: '#22c55e' }} className="text-sm">
+                  <span className="font-semibold">✓ สำเร็จ:</span> {message}
+                </p>
+              </div>
+            )}
+
             {/* Submit Button */}
             <button
               type="submit"
@@ -128,17 +121,17 @@ export default function LoginPage() {
                 color: 'white',
               }}
             >
-              {loading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
+              {loading ? 'กำลังส่ง...' : 'ส่งลิงค์รีเซ็ต'}
             </button>
           </form>
 
           {/* Footer */}
           <div className="mt-6 pt-6 border-t text-center" style={{ borderColor: 'var(--border-light)' }}>
             <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
-              ยังไม่มีบัญชี?{' '}
-              <a href="/" className="font-semibold hover:underline" style={{ color: 'var(--golden)' }}>
-                สมัครเข้าร่วม Challenge
-              </a>
+              จำรหัสผ่านได้แล้ว?{' '}
+              <Link href="/auth/login" className="font-semibold hover:underline" style={{ color: 'var(--golden)' }}>
+                เข้าสู่ระบบ
+              </Link>
             </p>
           </div>
         </div>
