@@ -1132,22 +1132,47 @@
         }
 
         .proof-grid {
-            display: grid;
-            grid-template-columns: 1fr;
+            display: flex;
             gap: 1rem;
             margin-top: 1.5rem;
             max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 1rem;
+            position: relative;
+        }
+
+        .proof-grid::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .proof-grid::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+
+        .proof-grid::-webkit-scrollbar-thumb {
+            background: var(--golden);
+            border-radius: 10px;
+        }
+
+        .proof-grid::-webkit-scrollbar-thumb:hover {
+            background: #fcc200;
         }
 
         .proof-card {
+            flex: 0 0 calc(100% - 1rem);
+            min-width: 280px;
             padding: 1.25rem;
             background: white;
             border-radius: 0.75rem;
             border: 1px solid var(--border-light);
             box-shadow: 0 4px 12px rgba(0, 0, 1, 0.05);
             transition: all 0.3s ease;
+            scroll-snap-align: start;
         }
 
         .proof-card:hover {
@@ -1155,16 +1180,70 @@
             transform: translateY(-4px);
         }
 
+        .carousel-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .carousel-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--golden);
+            color: var(--dark);
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(254, 191, 0, 0.25);
+        }
+
+        .carousel-btn:hover {
+            background: #fcc200;
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(254, 191, 0, 0.35);
+        }
+
+        .carousel-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
         @media (min-width: 768px) {
             .proof-grid {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
                 gap: 2rem;
                 margin-top: 3rem;
+                padding-bottom: 1.5rem;
             }
 
             .proof-card {
+                flex: 0 0 calc(33.333% - 1.35rem);
+                min-width: 300px;
                 padding: 2rem;
                 border-radius: 1rem;
+            }
+
+            .carousel-controls {
+                margin-top: 2rem;
+            }
+
+            .carousel-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .proof-card {
+                flex: 0 0 calc(100% - 1rem);
+                min-width: 280px;
             }
         }
 
@@ -2414,48 +2493,67 @@
                 <p>ก็อยากจะให้เว็บของพวกเรามาแปะตรงนี้แหละ<br>ไอผมเองก็ไม่ค่อยมีเซนส์เรื่องดีไซน์ซักเท่าไหร่เลย555</p>
             </div>
 
-            <div class="proof-grid">
+            <div class="proof-grid" id="proofCarousel">
                 <div class="proof-card">
                     <div class="proof-header">
-                        <div class="proof-avatar">ส</div>
+                        <div class="proof-avatar">ท</div>
                         <div class="proof-info">
-                            <h4>สมหญิง ปาณะ</h4>
-                            <p>Freelance Designer</p>
+                            <h4>K.Thitipong</h4>
+                            <p><a href="https://tpromson.github.io/lookjeabweb/" target="_blank" style="color: var(--blue); text-decoration: underline;">View Website</a></p>
                         </div>
                     </div>
                     <div class="stars">★★★★★</div>
                     <p class="proof-text">
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
+                        "สอนเข้าใจครับ ทำตามได้ง่ายเลย ติดตรงเซ็ตอัพ ตอนลงพวก ai cli ในเครื่อง พอดีmacOSเก่า เลยไม่เหมือนกับที่สอน ต้องถามgeminiเพิ่ม แต่ก็ท้าทายดีครับ นอกจากนั้นก็ได้เรียนรู้อะไรใหม่ๆเยอะเลย รู้จัก qwen ai ครั้งแรก หลังติดlimit gemini 555+ ขึ้นgithubครั้งแรก ได้ไอเดียต่อยอดอะไรเพิ่ม หลากหลายเลยครับ ขอบคุณครับ"
                     </p>
                 </div>
 
                 <div class="proof-card">
                     <div class="proof-header">
-                        <div class="proof-avatar" style="background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue) 100%);">ว</div>
+                        <div class="proof-avatar" style="background: linear-gradient(135deg, var(--golden) 0%, var(--golden-light) 100%);">ว</div>
                         <div class="proof-info">
-                            <h4>วงศ์พล อิ่มจิตต์</h4>
-                            <p>Software Developer</p>
+                            <h4>K.Wicha</h4>
+                            <p><a href="https://wicha113.github.io/paeyimtax-website/index.html" target="_blank" style="color: var(--blue); text-decoration: underline;">View Website</a></p>
                         </div>
                     </div>
                     <div class="stars">★★★★★</div>
                     <p class="proof-text">
-                        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+                        "ชอบที่สอนแบบทำตามได้เลย ไม่ต้องเขียนโค้ดอะไรให้วุ่นวาย สอนแบบเหมือนจับมือทำ ถ้าละเอียดกว่านี้คือทำให้แล้ววว ปวดหัว สอนใช้เครื่องมือครบ และเอาไปต่อยอดใช้งานจริงได้ แค่นี้ก็มีบ้านเป็นของตัวเองแล้ว เย้ๆ ขอบคุณที่เปิดคลาสสอนครับเปิดโลก"
                     </p>
                 </div>
 
                 <div class="proof-card">
                     <div class="proof-header">
-                        <div class="proof-avatar" style="background: linear-gradient(135deg, var(--golden) 0%, var(--golden-light) 100%);">อ</div>
+                        <div class="proof-avatar" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">ว</div>
                         <div class="proof-info">
-                            <h4>อารีย์ สิทธิจักร์</h4>
-                            <p>Content Creator</p>
+                            <h4>K.Weerawan</h4>
+                            <p><a href="https://weerawan.github.io/MyStaticWebsite/" target="_blank" style="color: var(--blue); text-decoration: underline;">View Website</a></p>
                         </div>
                     </div>
                     <div class="stars">★★★★★</div>
                     <p class="proof-text">
-                        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore."
+                        "ชอบที่ให้ลงมือทำตาม ได้ลงมือใช้ AI ที่ช่วยงานเราได้จริง ได้รู้จังตัวช่วยอื่นๆ อย่าง stich หรือ Google AI studio ถ้าพอมีพื้นฐานอยู่บ้างแล้ว ใช้เวลาไม่นานเลยค่ะ"
                     </p>
                 </div>
+
+                <div class="proof-card">
+                    <div class="proof-header">
+                        <div class="proof-avatar" style="background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue) 100%);">ต</div>
+                        <div class="proof-info">
+                            <h4>K.Tamrongsak</h4>
+                            <p><a href="https://mustarthur.github.io/SampleLandingPage/" target="_blank" style="color: var(--blue); text-decoration: underline;">View Website</a></p>
+                        </div>
+                    </div>
+                    <div class="stars">★★★★★</div>
+                    <p class="proof-text">
+                        "ก่อนอื่นเลย อยากจะขอขอบคุณ คุณกีต้าร์ ที่ตั้งใจทำสื่อการสอน ดีๆแบบนี้นะครับ ผมติดตามมาตั้งแต่ ebook n8n แล้วครับ ชื่นชอบการถ่ายทอด เรื่องยากให้เข้าใจง่ายของคุณกีต้าร์ รอบนี้เลยตั้งใจเรียนเลย ผมกำลังสนใจเรื่อง vibe coding และได้ทดลองใช้ Google Antigravity ทำ WebApp ใช้งานเองได้แล้วครับ"
+                    </p>
+                </div>
+            </div>
+
+            <div class="carousel-controls">
+                <button class="carousel-btn" id="prevBtn" aria-label="Previous testimonial">←</button>
+                <button class="carousel-btn" id="nextBtn" aria-label="Next testimonial">→</button>
             </div>
         </div>
     </section>
@@ -2661,6 +2759,42 @@
             el.style.opacity = '0';
             observer.observe(el);
         });
+
+        // Carousel functionality
+        const carousel = document.getElementById('proofCarousel');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const cards = document.querySelectorAll('.proof-card');
+        const cardWidth = 350; // Width of one card including gap
+        let currentScroll = 0;
+
+        function updateButtonStates() {
+            prevBtn.disabled = carousel.scrollLeft <= 0;
+            const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+            nextBtn.disabled = carousel.scrollLeft >= maxScroll - 10;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            carousel.scrollBy({
+                left: -cardWidth,
+                behavior: 'smooth'
+            });
+            setTimeout(updateButtonStates, 300);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            carousel.scrollBy({
+                left: cardWidth,
+                behavior: 'smooth'
+            });
+            setTimeout(updateButtonStates, 300);
+        });
+
+        // Update button states on scroll
+        carousel.addEventListener('scroll', updateButtonStates);
+
+        // Initial button state
+        setTimeout(updateButtonStates, 100);
     </script>
 </body>
 </html>

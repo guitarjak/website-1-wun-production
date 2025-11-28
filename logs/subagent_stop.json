@@ -408,5 +408,25 @@
     "stop_hook_active": false,
     "agent_id": "f806b6ba",
     "agent_transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/agent-f806b6ba.jsonl"
+  },
+  {
+    "session_id": "4df7964a-214d-4aa3-903e-82b8c6652cb6",
+    "transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/4df7964a-214d-4aa3-903e-82b8c6652cb6.jsonl",
+    "cwd": "/Users/guitar/Desktop/website-1-wun-production",
+    "permission_mode": "default",
+    "hook_event_name": "SubagentStop",
+    "stop_hook_active": false,
+    "agent_id": "cc59277e",
+    "agent_transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/agent-cc59277e.jsonl"
+  },
+  {
+    "session_id": "4df7964a-214d-4aa3-903e-82b8c6652cb6",
+    "transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/4df7964a-214d-4aa3-903e-82b8c6652cb6.jsonl",
+    "cwd": "/Users/guitar/Desktop/website-1-wun-production",
+    "permission_mode": "default",
+    "hook_event_name": "SubagentStop",
+    "stop_hook_active": false,
+    "agent_id": "49c69b95",
+    "agent_transcript_path": "/Users/guitar/.claude/projects/-Users-guitar-Desktop-website-1-wun-production/agent-49c69b95.jsonl"
   }
 ]
