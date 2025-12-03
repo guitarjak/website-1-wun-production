@@ -197,9 +197,10 @@ export function generateCertificateNumber(): string {
  * - Creates a new certificate if none exists
  *
  * @param userId - The user ID
+ * @param bypassEligibility - If true, bypass eligibility check (for admin demo certificates)
  * @returns Certificate data and course title, or null if not eligible
  */
-export async function getOrCreateCertificateForUser(userId: string): Promise<{
+export async function getOrCreateCertificateForUser(userId: string, bypassEligibility: boolean = false): Promise<{
   certificate: {
     id: string;
     certificate_number: string;
@@ -209,14 +210,16 @@ export async function getOrCreateCertificateForUser(userId: string): Promise<{
 }> {
   const supabase = await createSupabaseServerClient();
 
-  // Check eligibility first
-  const eligibility = await checkCertificateEligibility(userId);
+  // Check eligibility first (unless bypassed)
+  if (!bypassEligibility) {
+    const eligibility = await checkCertificateEligibility(userId);
 
-  if (!eligibility.eligible) {
-    return {
-      certificate: null,
-      courseTitle: null,
-    };
+    if (!eligibility.eligible) {
+      return {
+        certificate: null,
+        courseTitle: null,
+      };
+    }
   }
 
   // Get the first course (main course)

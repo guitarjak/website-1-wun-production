@@ -9,10 +9,19 @@ import { CertificateSuccess } from './CertificateSuccess';
 export default async function CertificatePage() {
   const user = await requireUser();
 
+  // Check if user is admin - admins can download demo certificate without requirements
+  const isAdmin = user.profile.role === 'ADMIN';
+
   // Check eligibility and get or create certificate
-  const { certificate, courseTitle } = await getOrCreateCertificateForUser(
-    user.user.id
-  );
+  let result;
+  if (isAdmin) {
+    // For admins, bypass eligibility and create a demo certificate
+    result = await getOrCreateCertificateForUser(user.user.id, true);
+  } else {
+    result = await getOrCreateCertificateForUser(user.user.id);
+  }
+
+  const { certificate, courseTitle } = result;
   const userName = user.profile.full_name ?? 'ผู้เรียน';
   const safeCourseTitle = courseTitle ?? 'คอร์สเรียนของคุณ';
 
