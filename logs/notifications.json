@@ -1,20 +1,5 @@
 [
   {
-    "timestamp": "2025-11-21T19:57:59.507140",
-    "message": "Claude is waiting for your input",
-    "spoken": "Waiting for your response"
-  },
-  {
-    "timestamp": "2025-11-21T20:25:37.090456",
-    "message": "Claude is waiting for your input",
-    "spoken": "Waiting for your response"
-  },
-  {
-    "timestamp": "2025-11-21T20:56:05.282341",
-    "message": "Claude is waiting for your input",
-    "spoken": "Waiting for your response"
-  },
-  {
     "timestamp": "2025-11-21T21:01:05.930385",
     "message": "Claude is waiting for your input",
     "spoken": "Waiting for your response"
@@ -248,5 +233,20 @@
     "timestamp": "2025-12-06T17:06:27.950068",
     "message": "Claude is waiting for your input",
     "spoken": "Waiting for your response"
+  },
+  {
+    "timestamp": "2025-12-06T17:42:33.055496",
+    "message": "Claude is waiting for your input",
+    "spoken": "Waiting for your response"
+  },
+  {
+    "timestamp": "2025-12-06T17:51:07.231912",
+    "message": "Claude is waiting for your input",
+    "spoken": "Waiting for your response"
+  },
+  {
+    "timestamp": "2025-12-06T17:55:09.313521",
+    "message": "Claude Code needs your attention",
+    "spoken": "Code needs your attention"
   }
 ]
