@@ -1,40 +1,5 @@
 [
   {
-    "timestamp": "2025-11-25T20:01:18.319488",
-    "tool": "Edit",
-    "summary": "Updated fix-lesson-orders.js",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-25T20:01:41.950818",
-    "tool": "Write",
-    "summary": "Created fix-all-lesson-orders.js",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-25T20:06:31.321078",
-    "tool": "Edit",
-    "summary": "Updated page.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-25T20:06:39.402659",
-    "tool": "Edit",
-    "summary": "Updated page.tsx",
-    "ai_generated": false,
-    "tts_method": "macos-fallback"
-  },
-  {
-    "timestamp": "2025-11-26T12:54:37.145778",
-    "tool": "Task",
-    "summary": "Find the page or component that displays the homework submissions table shown in the screenshot. It shows columns for completed - \u0e27\u0e31\u0e19\u0e17\u0e35\u0e48\u0e2a\u0e48\u0e07 (submission date)\n...",
-    "ai_generated": false,
-    "tts_method": "none"
-  },
-  {
     "timestamp": "2025-11-26T12:55:12.648940",
     "tool": "Edit",
     "summary": "Updated page.tsx",
@@ -346,6 +311,41 @@
     "timestamp": "2025-12-06T16:55:05.662162",
     "tool": "Edit",
     "summary": "Updated auth.ts",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-12-06T17:38:47.046657",
+    "tool": "mcp__supabase__get_logs",
+    "summary": "mcp__supabase__get_logs completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-12-06T17:38:47.182148",
+    "tool": "mcp__supabase__get_logs",
+    "summary": "mcp__supabase__get_logs completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-12-06T17:40:03.768445",
+    "tool": "Edit",
+    "summary": "Updated supabaseServer.ts",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-12-06T17:40:29.945863",
+    "tool": "mcp__supabase__execute_sql",
+    "summary": "mcp__supabase__execute_sql completed",
+    "ai_generated": false,
+    "tts_method": "macos-fallback"
+  },
+  {
+    "timestamp": "2025-12-06T17:40:53.326589",
+    "tool": "Edit",
+    "summary": "Updated page.tsx",
     "ai_generated": false,
     "tts_method": "macos-fallback"
   }

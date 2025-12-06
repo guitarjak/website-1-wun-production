@@ -38,69 +38,55 @@ interface Course {
 async function getCourseData(): Promise<Course | null> {
   const supabase = await createSupabaseServerClient();
 
-  // Fetch the first course, ordered by created_at to ensure consistency
-  const { data: courses, error: coursesError } = await supabase
+  // OPTIMIZATION: Single query with nested relationships - fetches course, modules, and lessons in ONE request
+  const { data: courseData, error: courseError } = await supabase
     .from('courses')
-    .select('id, title, description, instructor_id, completion_title, completion_message')
+    .select(`
+      id,
+      title,
+      description,
+      instructor_id,
+      completion_title,
+      completion_message,
+      modules (
+        id,
+        title,
+        description,
+        order,
+        lessons (
+          id,
+          title,
+          description,
+          content,
+          order,
+          module_id
+        )
+      )
+    `)
     .order('created_at', { ascending: true })
     .limit(1)
     .single();
 
-  if (coursesError || !courses) {
+  if (courseError || !courseData) {
     return null;
   }
 
-  // Fetch all modules for this course, ordered by order ASC
-  const { data: modules, error: modulesError } = await supabase
-    .from('modules')
-    .select('id, title, description, order')
-    .eq('course_id', courses.id)
-    .order('order', { ascending: true });
-
-  if (modulesError || !modules) {
-    return { ...courses, modules: [] };
-  }
-
-  // OPTIMIZATION: Fetch ALL lessons in a single batch query instead of per-module
-  const typedModules = modules as Array<{ id: string; title: string; description: string | null; order: number }>;
-  const { data: allLessons, error: lessonsError } = await supabase
-    .from('lessons')
-    .select('id, title, description, content, order, module_id')
-    .in(
-      'module_id',
-      typedModules.map((m) => m.id)
-    )
-    .order('order', { ascending: true });
-
-  if (lessonsError || !allLessons) {
-    return { ...courses, modules: typedModules.map((m) => ({ ...m, lessons: [] })) };
-  }
-
-  // Group lessons by module_id in memory (O(n) operation)
-  const lessonsByModule = new Map<string, Lesson[]>();
-  for (const lesson of allLessons as Array<{ id: string; title: string; description: string | null; content: string | null; order: number; module_id: string }>) {
-    if (!lessonsByModule.has(lesson.module_id)) {
-      lessonsByModule.set(lesson.module_id, []);
-    }
-    lessonsByModule.get(lesson.module_id)!.push({
-      id: lesson.id,
-      title: lesson.title,
-      description: lesson.description,
-      content: lesson.content,
-      order: lesson.order,
-      module_id: lesson.module_id,
-    });
-  }
-
-  // Build modules with lessons
-  const modulesWithLessons: Module[] = typedModules.map((module) => ({
-    ...module,
-    lessons: lessonsByModule.get(module.id) || [],
-  }));
+  // Sort modules by order and lessons within each module by order
+  const sortedModules = (courseData.modules || [])
+    .sort((a: { order: number }, b: { order: number }) => (a.order || 0) - (b.order || 0))
+    .map((module: { id: string; title: string; description: string | null; order: number; lessons: Lesson[] }) => ({
+      ...module,
+      lessons: (module.lessons || []).sort((a: Lesson, b: Lesson) => (a.order || 0) - (b.order || 0)),
+    }));
 
   return {
-    ...courses,
-    modules: modulesWithLessons,
+    id: courseData.id,
+    title: courseData.title,
+    description: courseData.description,
+    instructor_id: courseData.instructor_id,
+    completion_title: courseData.completion_title,
+    completion_message: courseData.completion_message,
+    modules: sortedModules,
   };
 }
 
