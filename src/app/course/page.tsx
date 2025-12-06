@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { unstable_cache } from 'next/cache';
 import { requireUser } from '@/lib/auth';
 import { createSupabaseServerClient } from '@/lib/supabaseServer';
 import CourseEditButton from './CourseEditButton';
@@ -35,7 +36,7 @@ interface Course {
   completion_message?: string | null;
 }
 
-async function getCourseData(): Promise<Course | null> {
+async function fetchCourseData(): Promise<Course | null> {
   const supabase = await createSupabaseServerClient();
 
   // OPTIMIZATION: Single query with nested relationships - fetches course, modules, and lessons in ONE request
@@ -89,6 +90,13 @@ async function getCourseData(): Promise<Course | null> {
     modules: sortedModules,
   };
 }
+
+// OPTIMIZATION: Cache course data for 60 seconds - course structure rarely changes
+const getCourseData = unstable_cache(
+  fetchCourseData,
+  ['course-data'],
+  { revalidate: 60, tags: ['course'] }
+);
 
 async function getUserProgress(userId: string): Promise<Set<string>> {
   const supabase = await createSupabaseServerClient();
