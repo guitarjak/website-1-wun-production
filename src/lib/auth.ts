@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { cache } from 'react';
 import { createSupabaseServerClient } from './supabaseServer';
 
 /**
@@ -19,6 +20,9 @@ export type CurrentUser = {
 /**
  * Retrieves the current authenticated user along with their profile.
  *
+ * OPTIMIZATION: Wrapped with React's cache() to deduplicate calls within the same request.
+ * This means if both layout and page call this function, the DB queries only run once.
+ *
  * @returns {Promise<CurrentUser | null>} The current user with auth and profile data, or null if not authenticated
  * @throws {Error} If profile row doesn't exist for the authenticated user
  *
@@ -31,7 +35,7 @@ export type CurrentUser = {
  * console.log(currentUser.user.email, currentUser.profile.role);
  * ```
  */
-export async function getCurrentUserWithProfile(): Promise<CurrentUser | null> {
+export const getCurrentUserWithProfile = cache(async (): Promise<CurrentUser | null> => {
   const supabase = await createSupabaseServerClient();
 
   // Get the current authenticated user session
@@ -77,7 +81,7 @@ export async function getCurrentUserWithProfile(): Promise<CurrentUser | null> {
       role: normalizedRole,
     },
   };
-}
+});
 
 /**
  * Ensures the user is logged in. Redirects to /auth/login if not authenticated.

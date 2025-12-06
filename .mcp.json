@@ -4,23 +4,16 @@
       "type": "http",
       "url": "https://mcp.supabase.com/mcp"
     },
-    "playwright": {
-      "command": "npx",
-      "args": [
-        "@playwright/mcp@latest"
-      ]
-    },
-    "n8n": {
+    "n8n-mcp": {
       "command": "npx",
       "args": ["n8n-mcp"],
       "env": {
         "MCP_MODE": "stdio",
+        "LOG_LEVEL": "error",
+        "DISABLE_CONSOLE_OUTPUT": "true",
         "N8N_API_URL": "https://atm.guitarjkp.me",
         "N8N_API_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4MGE1ZDQ2My1kNDM0LTQwZTktYTJmMy0yYTEwNWZkNGY4MmMiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzY0MDAwMjgxfQ.qeTUfAd1PB0MeBLOWEE5N05Z6GvheeZb9EPkt41H-vc"
       }
-    },
-    "vercel": {
-      "serverUrl": "https://mcp.vercel.com"
     }
   }
 }

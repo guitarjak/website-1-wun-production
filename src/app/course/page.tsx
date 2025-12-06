@@ -122,31 +122,32 @@ async function getUserProgress(userId: string): Promise<Set<string>> {
 
 async function getUserHomeworkSubmissions(
   userId: string,
-  moduleIds: string[]
+  modules: Module[]
 ): Promise<Set<string>> {
+  if (modules.length === 0) {
+    return new Set();
+  }
+
+  // Build lesson to module map from already-fetched data (no extra DB query!)
+  const lessonToModule = new Map<string, string>();
+  const lessonIds: string[] = [];
+  for (const module of modules) {
+    for (const lesson of module.lessons) {
+      lessonToModule.set(lesson.id, module.id);
+      lessonIds.push(lesson.id);
+    }
+  }
+
+  if (lessonIds.length === 0) {
+    return new Set();
+  }
+
   const supabase = await createSupabaseServerClient();
 
-  if (moduleIds.length === 0) {
-    return new Set();
-  }
-
-  // Get all lessons for these modules
-  const { data: lessons } = await supabase
-    .from('lessons')
-    .select('id, module_id')
-    .in('module_id', moduleIds);
-
-  if (!lessons || lessons.length === 0) {
-    return new Set();
-  }
-
-  const typedLessons = lessons as Array<{ id: string; module_id: string }>;
-  const lessonIds = typedLessons.map((l) => l.id);
-
-  // Get submissions for this user for any of these lessons
+  // Get submissions for this user for any of these lessons (single query)
   const { data: submissions } = await supabase
     .from('homework_submissions')
-    .select('id, lesson_id')
+    .select('lesson_id')
     .eq('user_id', userId)
     .in('lesson_id', lessonIds);
 
@@ -155,9 +156,8 @@ async function getUserHomeworkSubmissions(
   }
 
   // Map lesson_ids back to module_ids
-  const lessonToModule = new Map(typedLessons.map((l) => [l.id, l.module_id]));
   const modulesWithSubmission = new Set(
-    (submissions as Array<{ id: string; lesson_id: string }>).map((s) => lessonToModule.get(s.lesson_id)).filter((m) => m)
+    (submissions as Array<{ lesson_id: string }>).map((s) => lessonToModule.get(s.lesson_id)).filter((m) => m)
   );
 
   return modulesWithSubmission as Set<string>;
@@ -204,13 +204,19 @@ function isLessonLocked(
 }
 
 export default async function CoursePage() {
-  const user = await requireUser();
-  const course = await getCourseData();
-  const completedLessonIds = await getUserProgress(user.user.id);
-  const modulesWithHomework = await getUserHomeworkSubmissions(
-    user.user.id,
-    course?.modules?.map((m) => m.id) || []
-  );
+  // OPTIMIZATION: Run user auth and course data fetch in parallel
+  // These don't depend on each other, so we can fetch both simultaneously
+  const [user, course] = await Promise.all([
+    requireUser(),
+    getCourseData(),
+  ]);
+
+  // OPTIMIZATION: Run progress and homework queries in parallel
+  // Both need user.id but not each other's results
+  const [completedLessonIds, modulesWithHomework] = await Promise.all([
+    getUserProgress(user.user.id),
+    getUserHomeworkSubmissions(user.user.id, course?.modules || []),
+  ]);
 
   // If no course exists
   if (!course) {

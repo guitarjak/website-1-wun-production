@@ -380,6 +380,9 @@ export async function POST(request: NextRequest): Promise<NextResponse<SuccessRe
     console.log(`✅ Auth user created: ${userId}`);
 
     // 5. Create profile using RPC function (bypasses REST API RLS limitations)
+    // Add delay to ensure auth user is fully committed to database before RPC call
+    await new Promise(resolve => setTimeout(resolve, 100));
+
     console.log(`📝 Creating profile for: ${userId}`);
     const { error: profileError, data: profileData } = await supabase
       .rpc('create_user_profile', {
