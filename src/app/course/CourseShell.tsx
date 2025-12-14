@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import CourseEditButton from './CourseEditButton';
 import ModuleControls from './ModuleControls';
 import AddModuleButton from './AddModuleButton';
@@ -81,7 +81,8 @@ export default function CourseShell({ course, isAdmin, initialProgress }: Course
   );
   const [progressLoaded, setProgressLoaded] = useState(!!initialProgress);
 
-  useEffect(() => {
+  // Use layout effect to synchronously set up listener and check for existing data before paint
+  useLayoutEffect(() => {
     // Listen for streamed progress data
     const handleProgress = (event: CustomEvent<UserProgress>) => {
       setCompletedLessonIds(new Set(event.detail.completedLessonIds));
@@ -89,9 +90,10 @@ export default function CourseShell({ course, isAdmin, initialProgress }: Course
       setProgressLoaded(true);
     };
 
+    // Set up listener FIRST
     window.addEventListener('userProgressLoaded', handleProgress as EventListener);
 
-    // Check if progress was already loaded before component mounted
+    // Then check if progress was already loaded before listener was set up
     const existingProgress = (window as unknown as { __userProgress?: UserProgress }).__userProgress;
     if (existingProgress) {
       setCompletedLessonIds(new Set(existingProgress.completedLessonIds));
