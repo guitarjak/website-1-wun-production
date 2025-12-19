@@ -1,7 +1,7 @@
 <script lang="ts">
   import '../app.css';
   import { page } from '$app/stores';
-  import { invalidate, preloadData } from '$app/navigation';
+  import { invalidate, preloadData, goto } from '$app/navigation';
   import { onMount } from 'svelte';
 
   export let data;
@@ -24,13 +24,25 @@
       ];
 
   // Eagerly preload main navigation pages for instant navigation
-  $: if (session && typeof window !== 'undefined') {
+  $: if (typeof window !== 'undefined') {
     // Preload after a short delay to not block initial page load
     setTimeout(() => {
-      preloadData('/course').catch(() => {});
-      preloadData('/profile').catch(() => {});
-      if (profile?.role === 'admin') {
-        preloadData('/admin-dashboard').catch(() => {});
+      // Always preload homepage for instant navigation
+      if (currentPath !== '/') {
+        preloadData('/').catch(() => {});
+      }
+
+      if (session) {
+        preloadData('/course').catch(() => {});
+        preloadData('/profile').catch(() => {});
+        if (profile?.role === 'admin') {
+          preloadData('/admin-dashboard').catch(() => {});
+        }
+      } else {
+        // Preload login page when not authenticated
+        if (currentPath !== '/login') {
+          preloadData('/login').catch(() => {});
+        }
       }
     }, 100);
   }
@@ -68,12 +80,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Preload homepage stylesheet for instant loading -->
+  <link rel="preload" href="/w1w/style.css" as="style">
+  <link rel="stylesheet" href="/w1w/style.css">
 </svelte:head>
 
 <div class="min-h-screen" style="{currentPath === '/' ? '' : 'background-color: var(--cream-light);'}">
-  {#if currentPath !== '/'}
-    <!-- Navigation Bar - Hidden on homepage -->
-    <nav class="sticky top-0 z-40 border-b" style="background: var(--cream-light); border-color: var(--border-light);">
+  <!-- Navigation Bar - Hidden on homepage with CSS -->
+  <nav class="sticky top-0 z-40 border-b navbar-container" class:hidden-nav={currentPath === '/'} style="background: var(--cream-light); border-color: var(--border-light);">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-14 sm:h-16">
           <!-- Logo/Brand -->
@@ -81,6 +95,7 @@
             <a
               href="/"
               data-sveltekit-preload-data="tap"
+              data-sveltekit-noscroll
               class="block transition-opacity hover:opacity-80"
             >
               <img
@@ -96,7 +111,8 @@
             {#each navLinks as link}
               <a
                 href={link.href}
-                data-sveltekit-preload-data="hover"
+                data-sveltekit-preload-data="tap"
+                data-sveltekit-noscroll={link.href === '/'}
                 class="px-3 lg:px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200"
                 style="{currentPath === link.href
                   ? 'background-color: var(--golden); color: var(--dark);'
@@ -156,6 +172,7 @@
                 href={link.href}
                 on:click={closeMobileMenu}
                 data-sveltekit-preload-data="tap"
+                data-sveltekit-noscroll={link.href === '/'}
                 class="block px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors"
                 style="{currentPath === link.href
                   ? 'background-color: var(--golden); color: var(--dark);'
@@ -178,7 +195,6 @@
         {/if}
       </div>
     </nav>
-  {/if}
 
   <!-- Main Content -->
   {#if currentPath === '/'}
@@ -193,3 +209,24 @@
     </main>
   {/if}
 </div>
+
+<style>
+  /* Smooth page transitions */
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent layout shift during navigation */
+  main {
+    min-height: calc(100vh - 4rem);
+  }
+
+  /* Navbar instant hide on homepage - no transition for immediate removal */
+  .navbar-container {
+    display: block;
+  }
+
+  .navbar-container.hidden-nav {
+    display: none;
+  }
+</style>

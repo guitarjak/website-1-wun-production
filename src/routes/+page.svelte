@@ -110,14 +110,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/w1w/style.css">
 </svelte:head>
 
 <header class="site-header">
   <div class="header-container">
     <img src="/w1w/w1w-logo.png" alt="Website 1 Wun" class="site-logo">
     <nav class="main-nav">
-      <a href="/login" class="nav-button">Sign In</a>
+      <a href="/login" data-sveltekit-preload-data="tap" class="nav-button">Sign In</a>
     </nav>
   </div>
 </header>
@@ -608,7 +607,7 @@
       <div class="value-calculation">
         <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; color: white;">
           <strong style="font-size: 2rem; color: #febf00;">.</strong><br>
-          <strong style="font-size: 2rem; color: #febf00;">1,990 บาท</strong><br>
+          <strong style="font-size: 2rem; color: #febf00;">2,490 บาท</strong><br>
           <strong style="font-size: 2rem; color: #febf00;">.</strong><br>
           คือราคาที่ผมตั้งไว้<br>สำหรับ Website 1 Wun<br>
           คุณจะสามารถเอาไปใช้สร้าง<br>เว็บไซต์ของตัวเอง<br>
@@ -746,9 +745,9 @@
           <div class="offer-title">Website 1 Wun</div>
           <div class="offer-description">Complete 1-Day Build System</div>
           <div class="offer-price">
-            <span class="offer-price-original">1,990 THB</span>
+            <span class="offer-price-original">2,490 THB</span>
             <span class="offer-price-amount">1,490 THB</span>
-            <span class="offer-price-note">(ราคาพิเศษ founder price)</span>
+            <span class="offer-price-note">ราคาพิเศษ 100 คนแรก (founder price)</span>
           </div>
         </div>
         <div class="summary-section">
