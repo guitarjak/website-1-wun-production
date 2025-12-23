@@ -34,13 +34,15 @@ export const POST: RequestHandler = async ({ request }) => {
       return json({ error: 'Email and password are required' }, { status: 400 });
     }
 
-    // Create user in Supabase Auth
+    // Create user in Supabase Auth with metadata
+    // The on_auth_user_created trigger will automatically create the profile
     const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
       email,
       password,
       email_confirm: true, // Auto-confirm email
       user_metadata: {
-        full_name: full_name || email
+        full_name: full_name || email,
+        role: role // Include role in metadata so trigger can use it
       }
     });
 
@@ -53,33 +55,31 @@ export const POST: RequestHandler = async ({ request }) => {
       return json({ error: 'Failed to create user' }, { status: 500 });
     }
 
-    // Create user profile in users_profile table
-    const { error: profileError } = await supabaseAdmin
+    // Wait a moment for the trigger to complete and fetch the created profile
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    const { data: profile, error: profileError } = await supabaseAdmin
       .from('users_profile')
-      .insert({
-        id: authData.user.id,
-        email: email,
-        full_name: full_name || email,
-        role: role,
-        is_active: true
-      });
+      .select('id, email, full_name, role')
+      .eq('id', authData.user.id)
+      .single();
 
-    if (profileError) {
-      console.error('Error creating user profile:', profileError);
+    if (profileError || !profile) {
+      console.error('Error fetching user profile:', profileError);
 
-      // Cleanup: delete auth user if profile creation fails
+      // Cleanup: delete auth user if profile wasn't created
       await supabaseAdmin.auth.admin.deleteUser(authData.user.id);
 
-      return json({ error: 'Failed to create user profile: ' + profileError.message }, { status: 500 });
+      return json({ error: 'Failed to create user profile' }, { status: 500 });
     }
 
     return json({
       success: true,
       user: {
-        id: authData.user.id,
-        email: authData.user.email,
-        full_name: full_name || email,
-        role: role
+        id: profile.id,
+        email: profile.email,
+        full_name: profile.full_name,
+        role: profile.role
       }
     }, { status: 201 });
 
