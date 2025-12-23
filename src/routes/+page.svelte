@@ -125,7 +125,7 @@
   <div class="hero-content">
     <div class="hero-label">1 เว็บ 1 วัน การันตี</div>
     <h1 class="hero-headline">
-      สร้างเว็บ <span class="accent-text"> 1 วัน</span><br>แบบไม่ปวดหัว<br/>ด้วยเงิน 0 บาท!
+      สร้างเว็บ <span class="accent-text"> 1 วัน</span><br>แบบไม่ปวดหัว<br/>ใช้ฟรีตลอดชีพ!
     </h1>
     <p class="hero-subheadline">
       (แม้คุณจะไม่เคยสร้าง Website มาก่อน)
