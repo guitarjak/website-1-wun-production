@@ -758,7 +758,7 @@
           </div>
           <p class="summary-question">แฟร์มั้ยครับ?</p>
         </div>
-        <a href="#checkout" class="cta-button cta-primary large">อยากสร้าง Website แล้วว</a>
+        <a href="https://pay.website1wun.com/website1wun" class="cta-button cta-primary large">อยากสร้าง Website แล้วว</a>
       </div>
       <p style="margin-top: 48px; font-size: 14px; color: rgba(255, 255, 255, 0.4); text-align: center;">&copy; 2025 Website 1 Wun. All rights reserved.</p>
     </div>
