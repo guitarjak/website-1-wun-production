@@ -88,3 +88,61 @@ export const POST: RequestHandler = async ({ request }) => {
     return json({ error: 'Internal server error' }, { status: 500 });
   }
 };
+
+export const GET: RequestHandler = async ({ request, url }) => {
+  try {
+    // Validate Bearer token
+    const authHeader = request.headers.get('authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return json({ error: 'Missing or invalid authorization header' }, { status: 401 });
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    if (token !== ADMIN_BEARER_TOKEN) {
+      return json({ error: 'Invalid authorization token' }, { status: 403 });
+    }
+
+    // Get email from query parameters
+    const email = url.searchParams.get('email');
+    if (!email) {
+      return json({ error: 'Email parameter is required' }, { status: 400 });
+    }
+
+    // Check if user exists in users_profile
+    const { data: profile, error: profileError } = await supabaseAdmin
+      .from('users_profile')
+      .select('id, email, full_name, role, is_active, created_at')
+      .eq('email', email)
+      .maybeSingle();
+
+    if (profileError) {
+      console.error('Error checking user profile:', profileError);
+      return json({ error: 'Failed to check user profile' }, { status: 500 });
+    }
+
+    if (profile) {
+      // User exists
+      return json({
+        exists: true,
+        user: {
+          id: profile.id,
+          email: profile.email,
+          full_name: profile.full_name,
+          role: profile.role,
+          is_active: profile.is_active,
+          created_at: profile.created_at
+        }
+      }, { status: 200 });
+    } else {
+      // User does not exist
+      return json({
+        exists: false,
+        user: null
+      }, { status: 200 });
+    }
+
+  } catch (error) {
+    console.error('Unexpected error:', error);
+    return json({ error: 'Internal server error' }, { status: 500 });
+  }
+};
