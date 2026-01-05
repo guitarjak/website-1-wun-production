@@ -1,15 +1,73 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
+  import { invalidate } from '$app/navigation';
   import type { ActionData, PageData } from './$types';
 
-  export let form: ActionData;
   export let data: PageData;
+  export let form: ActionData;
 
   let loading = false;
   let password = '';
   let confirmPassword = '';
   let showPassword = false;
   let showConfirmPassword = false;
+  let checkingAuth = true;
+  let authError = '';
+  let hasValidSession = false;
+
+  onMount(async () => {
+    // Check for error in URL hash
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const error = hashParams.get('error');
+    const errorDescription = hashParams.get('error_description');
+
+    if (error) {
+      authError = errorDescription || 'Invalid or expired reset link';
+      checkingAuth = false;
+      // Redirect to login after showing error
+      setTimeout(() => {
+        goto('/login');
+      }, 3000);
+      return;
+    }
+
+    // Check if hash has auth tokens (access_token or type=recovery)
+    const hasAuthHash = hashParams.has('access_token') || hashParams.get('type') === 'recovery';
+
+    if (hasAuthHash) {
+      // Wait a bit for Supabase to process the hash and set cookies
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Invalidate the session to get fresh data
+      await invalidate('supabase:auth');
+
+      // Check if session was established
+      if (data.session) {
+        hasValidSession = true;
+        checkingAuth = false;
+      } else {
+        // If still no session after processing, there might be an issue
+        authError = 'Failed to establish session. Please try requesting a new reset link.';
+        checkingAuth = false;
+        setTimeout(() => {
+          goto('/login');
+        }, 3000);
+      }
+    } else if (data.session) {
+      // Already have a session (maybe from cookies)
+      hasValidSession = true;
+      checkingAuth = false;
+    } else {
+      // No auth hash and no session - invalid access
+      authError = 'Invalid reset link. Please request a new password reset.';
+      checkingAuth = false;
+      setTimeout(() => {
+        goto('/login');
+      }, 3000);
+    }
+  });
 </script>
 
 <div class="max-w-md mx-auto">
@@ -23,6 +81,21 @@
       </p>
     </div>
 
+    {#if checkingAuth}
+      <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 sm:p-8">
+        <div class="text-center space-y-3">
+          <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+          <p class="text-sm text-gray-600">Verifying your reset link...</p>
+        </div>
+      </div>
+    {:else if authError}
+      <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 sm:p-8">
+        <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl text-sm">
+          {authError}
+        </div>
+        <p class="text-sm text-gray-600 mt-4 text-center">Redirecting to login...</p>
+      </div>
+    {:else if hasValidSession}
     <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 sm:p-8">
       <form
         method="POST"
@@ -113,5 +186,6 @@
         Back to login
       </a>
     </div>
+    {/if}
   </div>
 </div>

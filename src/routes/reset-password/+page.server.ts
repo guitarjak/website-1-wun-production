@@ -1,19 +1,10 @@
 import { redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ url }) => {
-  // Get the token from URL params
-  const token = url.searchParams.get('token');
-  const type = url.searchParams.get('type');
-
-  // Redirect to login if no token or not password recovery
-  if (!token || type !== 'recovery') {
-    throw redirect(303, '/login');
-  }
-
-  return {
-    token
-  };
+export const load: PageServerLoad = async ({ locals }) => {
+  // Don't check session here - let the client handle the auth flow
+  // The session will be established when Supabase processes the hash fragments
+  return {};
 };
 
 export const actions: Actions = {
