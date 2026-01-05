@@ -1,10 +1,15 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import { page } from '$app/stores';
   import type { ActionData } from './$types';
 
   export let form: ActionData;
 
   let loading = false;
+  let showForgotPassword = false;
+  let forgotPasswordEmail = '';
+
+  $: showResetSuccess = $page.url.searchParams.get('reset') === 'success';
 </script>
 
 <div class="max-w-md mx-auto">
@@ -31,6 +36,12 @@
         }}
         class="space-y-5"
       >
+        {#if showResetSuccess}
+          <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-xl text-sm">
+            Password successfully reset! Please sign in with your new password.
+          </div>
+        {/if}
+
         {#if form?.error}
           <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl text-sm">
             {form.error}
@@ -53,9 +64,18 @@
         </div>
 
         <div class="space-y-2">
-          <label for="password" class="block text-sm font-medium text-gray-700">
-            Password
-          </label>
+          <div class="flex items-center justify-between">
+            <label for="password" class="block text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <button
+              type="button"
+              on:click={() => showForgotPassword = true}
+              class="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              Forgot password?
+            </button>
+          </div>
           <input
             type="password"
             id="password"
@@ -82,3 +102,87 @@
     </p>
   </div>
 </div>
+
+<!-- Forgot Password Modal -->
+{#if showForgotPassword}
+  <div
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+    on:click={() => showForgotPassword = false}
+    on:keydown={(e) => e.key === 'Escape' && (showForgotPassword = false)}
+    role="button"
+    tabindex="0"
+  >
+    <div
+      class="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 sm:p-8"
+      on:click|stopPropagation
+      on:keydown|stopPropagation
+      role="dialog"
+      tabindex="-1"
+    >
+      <div class="space-y-4">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900">Reset password</h2>
+          <p class="text-sm text-gray-600 mt-2">
+            Enter your email address and we'll send you a link to reset your password.
+          </p>
+        </div>
+
+        {#if form?.type === 'forgotPassword' && form?.success}
+          <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-xl text-sm">
+            {form.message}
+          </div>
+        {:else if form?.type === 'forgotPassword' && form?.error}
+          <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl text-sm">
+            {form.error}
+          </div>
+        {/if}
+
+        <form
+          method="POST"
+          action="?/forgotPassword"
+          use:enhance={() => {
+            loading = true;
+            return async ({ update }) => {
+              await update();
+              loading = false;
+            };
+          }}
+          class="space-y-4"
+        >
+          <div class="space-y-2">
+            <label for="forgot-email" class="block text-sm font-medium text-gray-700">
+              Email address
+            </label>
+            <input
+              type="email"
+              id="forgot-email"
+              name="email"
+              bind:value={forgotPasswordEmail}
+              required
+              autocomplete="email"
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow text-sm"
+              placeholder="you@example.com"
+            />
+          </div>
+
+          <div class="flex gap-3">
+            <button
+              type="button"
+              on:click={() => showForgotPassword = false}
+              class="flex-1 bg-gray-100 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-gray-200 transition-all duration-200 text-sm"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              class="flex-1 bg-gray-900 text-white py-3 px-4 rounded-xl font-medium hover:bg-black transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md text-sm"
+            >
+              {loading ? 'Sending...' : 'Send reset link'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{/if}
