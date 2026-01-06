@@ -51,6 +51,37 @@ export const actions = {
     }
 
     throw redirect(303, '/course');
+  },
+
+  forgotPassword: async ({ request, locals, url }: import('./$types').RequestEvent) => {
+    const formData = await request.formData();
+    const email = formData.get('email') as string;
+
+    if (!email) {
+      return {
+        type: 'forgotPassword',
+        success: false,
+        error: 'Email is required'
+      };
+    }
+
+    const { error } = await locals.supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${url.origin}/reset-password`
+    });
+
+    if (error) {
+      return {
+        type: 'forgotPassword',
+        success: false,
+        error: error.message
+      };
+    }
+
+    return {
+      type: 'forgotPassword',
+      success: true,
+      message: 'Password reset email sent. Please check your inbox.'
+    };
   }
 };
 ;null as any as Actions;

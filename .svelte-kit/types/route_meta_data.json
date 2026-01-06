@@ -1,5 +1,6 @@
 {
 	"/": [
+		"src/routes/+page.server.ts",
 		"src/routes/+layout.ts",
 		"src/routes/+layout.server.ts",
 		"src/routes/+layout.ts",
@@ -14,6 +15,9 @@
 		"src/routes/admin/course-editor/+page.server.ts",
 		"src/routes/+layout.ts",
 		"src/routes/+layout.server.ts"
+	],
+	"/api/admin/users": [
+		"src/routes/api/admin/users/+server.ts"
 	],
 	"/course": [
 		"src/routes/course/+page.server.ts",
@@ -32,6 +36,11 @@
 	],
 	"/profile": [
 		"src/routes/profile/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/reset-password": [
+		"src/routes/reset-password/+page.server.ts",
 		"src/routes/+layout.ts",
 		"src/routes/+layout.server.ts"
 	]

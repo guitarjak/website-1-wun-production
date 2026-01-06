@@ -35,41 +35,6 @@
     ? allLessons[currentLessonIndex + 1]
     : null;
 
-  // Determine which lessons are unlocked (sequential unlocking)
-  $: unlockedLessonIds = (() => {
-    const unlocked = new Set<string>();
-
-    // Admins can access all lessons
-    if (isAdmin) {
-      allLessons.forEach(lesson => unlocked.add(lesson.id));
-      return unlocked;
-    }
-
-    for (let i = 0; i < allLessons.length; i++) {
-      const lesson = allLessons[i];
-
-      // First lesson is always unlocked
-      if (i === 0) {
-        unlocked.add(lesson.id);
-        continue;
-      }
-
-      // Check if previous lesson is completed
-      const previousLesson = allLessons[i - 1];
-      if (localCompletedLessonIds.includes(previousLesson.id)) {
-        unlocked.add(lesson.id);
-      } else {
-        // If previous lesson not completed, stop unlocking
-        break;
-      }
-    }
-
-    return unlocked;
-  })();
-
-  // Check if next lesson is unlocked
-  $: isNextLessonUnlocked = nextLesson ? unlockedLessonIds.has(nextLesson.id) : false;
-
   // Mobile lesson drawer
   let showLessonDrawer = false;
 
@@ -99,12 +64,6 @@
         newLesson = allLessons[0];
       }
 
-      // Check if the lesson is unlocked, if not, select the first unlocked lesson
-      if (newLesson && !unlockedLessonIds.has(newLesson.id)) {
-        // Find the first unlocked lesson instead
-        newLesson = allLessons.find(l => unlockedLessonIds.has(l.id)) || allLessons[0];
-      }
-
       // Only update if different to avoid unnecessary re-renders
       if (newLesson && newLesson.id !== selectedLesson?.id) {
         selectedLesson = newLesson;
@@ -131,11 +90,6 @@
   });
 
   function selectLesson(lesson: Lesson) {
-    // Prevent selecting locked lessons
-    if (!unlockedLessonIds.has(lesson.id)) {
-      return;
-    }
-
     // Update URL to trigger reactive selection
     const url = new URL($page.url);
     url.searchParams.set('lessonId', lesson.id);
@@ -289,20 +243,16 @@
                   <ul class="space-y-1">
                     {#each module.lessons as lesson}
                       {@const isCompleted = localCompletedLessonIds.includes(lesson.id)}
-                      {@const isUnlocked = unlockedLessonIds.has(lesson.id)}
                       <li>
                         <button
                           type="button"
                           on:click={() => selectLesson(lesson)}
-                          disabled={!isUnlocked}
                           class="w-full text-left px-3 py-2 text-sm rounded-lg transition-all flex items-center gap-2 font-medium"
                           style="{selectedLesson?.id === lesson.id
                             ? 'background-color: var(--blue); color: white;'
-                            : isUnlocked
-                              ? 'color: var(--text-primary);'
-                              : 'color: var(--text-tertiary); cursor: not-allowed; opacity: 0.6;'}"
+                            : 'color: var(--text-primary);'}"
                           on:mouseenter={(e) => {
-                            if (isUnlocked && selectedLesson?.id !== lesson.id) {
+                            if (selectedLesson?.id !== lesson.id) {
                               e.currentTarget.style.backgroundColor = 'var(--bg-secondary)';
                             }
                           }}
@@ -316,10 +266,6 @@
                           {#if isCompleted}
                             <svg class="w-4 h-4 flex-shrink-0" style="color: var(--success);" fill="currentColor" viewBox="0 0 20 20">
                               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                          {:else if !isUnlocked}
-                            <svg class="w-4 h-4 flex-shrink-0" style="color: var(--text-tertiary);" fill="currentColor" viewBox="0 0 20 20">
-                              <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
                             </svg>
                           {/if}
                         </button>
@@ -412,24 +358,16 @@
                         <div class="space-y-1">
                           {#each module.lessons as lesson}
                             {@const isCompleted = localCompletedLessonIds.includes(lesson.id)}
-                            {@const isUnlocked = unlockedLessonIds.has(lesson.id)}
                             <button
                               on:click={() => selectLesson(lesson)}
-                              disabled={!isUnlocked}
                               class="w-full text-left px-4 py-3 rounded-xl transition-all flex items-center gap-3 {selectedLesson?.id === lesson.id
                                 ? 'bg-gray-900 text-white font-medium'
-                                : isUnlocked
-                                  ? 'text-gray-700 hover:bg-gray-100'
-                                  : 'text-gray-400 cursor-not-allowed opacity-60'}"
+                                : 'text-gray-700 hover:bg-gray-100'}"
                             >
                               <span class="flex-1 text-sm">{lesson.title}</span>
                               {#if isCompleted}
                                 <svg class="w-5 h-5 flex-shrink-0 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                </svg>
-                              {:else if !isUnlocked}
-                                <svg class="w-5 h-5 flex-shrink-0 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
                                 </svg>
                               {/if}
                             </button>
@@ -510,7 +448,7 @@
                 </form>
 
                 <!-- Next Lesson Button -->
-                {#if nextLesson && isNextLessonUnlocked}
+                {#if nextLesson}
                   <a
                     href="/course?lessonId={nextLesson.id}"
                     data-sveltekit-preload-data="hover"
@@ -622,7 +560,7 @@
                 </form>
 
                 <!-- Next Lesson Button -->
-                {#if nextLesson && isNextLessonUnlocked}
+                {#if nextLesson}
                   <a
                     href="/course?lessonId={nextLesson.id}"
                     data-sveltekit-preload-data="hover"
