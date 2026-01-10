@@ -64,6 +64,16 @@
   }
 
   onMount(() => {
+    const analyticsSrc = 'https://track.justforr.fun/api/script.js';
+    if (!document.querySelector(`script[src="${analyticsSrc}"]`)) {
+      const analyticsScript = document.createElement('script');
+      analyticsScript.src = analyticsSrc;
+      analyticsScript.async = true;
+      analyticsScript.defer = true;
+      analyticsScript.dataset.siteId = '1';
+      document.head.appendChild(analyticsScript);
+    }
+
     const { data: authData } = data.supabase.auth.onAuthStateChange((event, newSession) => {
       if (newSession?.expires_at !== session?.expires_at) {
         invalidate('supabase:auth');
@@ -71,6 +81,8 @@
     });
 
     return () => {
+      const injectedScript = document.querySelector(`script[src="${analyticsSrc}"]`);
+      injectedScript?.remove();
       authData.subscription.unsubscribe();
     };
   });

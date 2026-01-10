@@ -19,6 +19,11 @@
 	"/api/admin/users": [
 		"src/routes/api/admin/users/+server.ts"
 	],
+	"/build-landing-page": [
+		"src/routes/build-landing-page/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
 	"/course": [
 		"src/routes/course/+page.server.ts",
 		"src/routes/+layout.ts",
