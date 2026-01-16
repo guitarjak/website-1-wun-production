@@ -125,7 +125,7 @@
   <div class="hero-content">
     <div class="hero-label">1 เว็บ 1 วัน การันตี</div>
     <h1 class="hero-headline">
-      สร้างเว็บ <span class="accent-text"> 1 วัน</span><br>แบบไม่ปวดหัว<br/>ใช้ฟรีตลอดชีพ!
+      สร้างเว็บ <span class="accent-text">ใน 1 วัน</span><br>แบบไม่ปวดหัว<br/>ใช้ฟรีตลอดชีพ!
     </h1>
     <p class="hero-subheadline">
       (แม้คุณจะไม่เคยสร้าง Website มาก่อน)
@@ -170,8 +170,8 @@
       </p>
 
       <p class="intro-text" style="font-size: 1.5rem; font-weight: 700; margin-bottom: 3rem;">
-        คุณกำลังเป็น Solopreneur, Freelancer, หรือพนักงานประจำ<br>
-        ที่กำลังพยายามสร้างรายได้เสริม อยู่หรือเปล่าครับ?
+        คุณเป็น Solopreneur, Freelance, หรือคนที่กำลังพยายามสร้างรายได้เสริม<br>
+        อยู่หรือเปล่าครับ?
       </p>
 
       <p class="intro-text" style="font-size: 1.3rem; margin-bottom: 2rem;">แล้วคุณมีปัญหาเหล่านี้รึเปล่า...</p>
@@ -179,16 +179,16 @@
       <div class="problem-result" style="background: rgba(16, 185, 129, 0.08); border: 2px solid rgba(16, 185, 129, 0.2); margin-bottom: 2rem;">
         <p style="font-size: 1.2rem;"><b>คุณมี:</b><br>
           ✓ Skill ที่เก่ง (กว่าค่าเฉลี่ย)<br>
-          ✓ Portfolio ในหัว (หรือในคอม)<br>
+          ✓ ความรู้ที่อยากจะขาย<br>
           ✓ ลูกค้าที่ชอบผลงานคุณ<br>
-          ✓ ความฝันที่อยากทำสิ่งที่ตัวเองชอบ</p>
+          ✓ ความฝันที่อยากทำสิ่งที่ชอบ</p>
       </div>
 
       <div class="problem-result">
         <p style="font-size: 1.2rem;"><b>แต่คุณไม่มี:</b><br>
-          ✗ เว็บไซต์ที่ให้คนเข้ามาดูว่าคุณทำอะไร<br>
-          ✗ หน้า Landing Page ที่ส่งให้ลูกค้าตอนแนะนำตัว<br>
-          ✗ พื้นที่เพื่อจะโชว์ว่าคุณเป็นมืออาชีพจริง</p>
+          ✗ พื้นที่ให้คนเข้ามาดูว่าคุณทำอะไร<br>
+          ✗ พื้นที่ไว้ขายลูกค้าตอนคุณหลับ<br>
+          ✗ พื้นที่เพื่อจะโชว์ว่าคุณคือของจริง</p>
       </div>
 
       <p class="section-transition">ผลคือ...</p>
@@ -202,14 +202,14 @@
 
         <div class="pain-point">
           <div class="pain-header">ทุกครั้งที่มีโอกาสดีๆ เข้ามา</div>
-          <p>คุณดูไม่น่าเชื่อถือพอ<br>
+          <p>คุณดูไม่น่าเชื่อถือเลย<br>
           <span class="pain-detail">(เพราะคนอื่นมีเว็บแต่คุณไม่มี)</span></p>
         </div>
 
         <div class="pain-point">
-          <div class="pain-header">ทุกครั้งที่ลูกค้าสนใจและขอดู</div>
-          <p>คุณอึกอักแล้วบอกว่า...เดี๋ยวส่งให้นะ<br>
-          <span class="pain-detail">(แทนที่จะได้ขายงานเลย)</span></p>
+          <div class="pain-header">ทุกครั้งที่ลูกค้าสนใจและจะซื้อ</div>
+          <p>คุณต้องมานั่งขาย นั่งอธิบายซ้ำๆ<br>
+          <span class="pain-detail">(แทนที่จะได้ขายและเก็บเงินเลย)</span></p>
         </div>
       </div>
 
@@ -217,7 +217,7 @@
         <div class="reveal-question">และที่แย่ที่สุดคืออะไรรู้ไหมครับ?</div>
         <div class="reveal-answer">
           <p>ทุกวันนี้มันไม่ยากอย่างที่คิด ไม่ต้องเขียนโค้ด ไม่ต้องใช้เงินหลักหมื่น</p>
-          <p class="reveal-truth">แค่รู้วิธีที่ถูกต้อง คุณก็มีเว็บได้ภายใน 1 วัน</p>
+          <p class="reveal-truth">แค่รู้วิธีที่ถูกต้อง<br>คุณก็มีเว็บได้ภายใน 1 วันแล้ว</p>
           <p class="reveal-pain">(แต่ไม่มีใครบอกคุณว่าทำยังไง)</p>
         </div>
       </div>
@@ -245,7 +245,7 @@
             <ul class="reality-list">
               <li>ใช้เวลาเป็นอาทิตย์</li>
               <li>แก้ทีนึงต้องรอนาน</li>
-              <li>สุดท้ายเว็บไม่ใช่ของคุณจริงๆ</li>
+              <li>เสียเงินอีกเป็นหมื่น</li>
             </ul>
           </div>
         </div>
@@ -263,9 +263,9 @@
           <div class="choice-reality">
             <span class="reality-label">แต่:</span>
             <ul class="reality-list">
-              <li>วิดีโอยาวกว่ากำแพงเมืองจีน</li>
-              <li>ดูแล้วจบวันก็ยังไม่มีเว็บ</li>
-              <li>ต้องคิดเองว่าจะเอาอะไรมาใช้</li>
+              <li>วิดีโอโคตรยาว เรียนไม่จบ</li>
+              <li>ใช้เวลาน๊านๆ กว่าจะมีเว็บ</li>
+              <li>แถมต้องเสียเงินรายเดือนอีก</li>
             </ul>
           </div>
         </div>
@@ -277,15 +277,15 @@
         <div class="choice-number">3</div>
         <div class="choice-content">
           <div class="choice-title">
-            <h3>ทางเลือกที่ 3: ยังไม่ทำ</h3>
+            <h3>ทางเลือกที่ 3: ลองงมหาวิธีเอง</h3>
             <span class="choice-promise">ไม่เสียเงิน</span>
           </div>
           <div class="choice-reality">
             <span class="reality-label">แต่:</span>
             <ul class="reality-list">
-              <li>ยังไม่มีเว็บเหมือนเดิม</li>
-              <li>ความมั่นใจลดลงเรื่อยๆ</li>
-              <li>โอกาสผ่านไปเฉยๆ</li>
+              <li>เสียเวลาหลายสิบชั่วโมง</li>
+              <li>ไม่รู้จะทำได้ไหม ไม่รู้จะเวิร์คไหม</li>
+              <li>สุดท้ายอาจจะเสียทั้งเงิน ทั้งเวลา</li>
             </ul>
           </div>
         </div>
@@ -308,7 +308,7 @@
                   <circle cx="12" cy="12" r="10" fill="currentColor"/>
                   <path d="M8 12L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                ใช้เวลา 1 วัน
+                ใช้เวลาแค่ 1 วัน
               </li>
               <li>
                 <svg class="benefit-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -322,7 +322,7 @@
                   <circle cx="12" cy="12" r="10" fill="currentColor"/>
                   <path d="M8 12L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                เข้าใจและต่อยอดได้จริง
+                เข้าใจและต่อยอดได้เอง
               </li>
             </ul>
           </div>
