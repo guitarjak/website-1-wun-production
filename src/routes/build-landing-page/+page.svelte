@@ -53,7 +53,7 @@
 
 <header class="site-header">
   <div class="header-container">
-    <img src="/w1w/w1w-logo.png" alt="Website 1 Wun" class="site-logo">
+    <img src="/w1w/w1w-logo.webp" alt="Website 1 Wun" class="site-logo">
     <nav class="main-nav">
       <a href="/login" data-sveltekit-preload-data="tap" class="nav-button">Sign In</a>
     </nav>
@@ -211,16 +211,16 @@
       <h3 class="lp-proof-title">ตัวอย่างหน้าขายที่นักเรียนสร้างไปจริง</h3>
       <div class="lp-proof-grid">
         <div class="lp-proof-item">
-          <img src="/w1w/web-showcase-1.png" alt="Student Landing Page 1" class="lp-proof-image">
+          <img src="/w1w/web-showcase-1.webp" alt="Student Landing Page 1" class="lp-proof-image" loading="lazy">
         </div>
         <div class="lp-proof-item">
-          <img src="/w1w/web-showcase-2.png" alt="Student Landing Page 2" class="lp-proof-image">
+          <img src="/w1w/web-showcase-2.webp" alt="Student Landing Page 2" class="lp-proof-image" loading="lazy">
         </div>
         <div class="lp-proof-item">
-          <img src="/w1w/web-showcase-3.png" alt="Student Landing Page 3" class="lp-proof-image">
+          <img src="/w1w/web-showcase-3.webp" alt="Student Landing Page 3" class="lp-proof-image" loading="lazy">
         </div>
         <div class="lp-proof-item">
-          <img src="/w1w/web-showcase-4.png" alt="Student Landing Page 4" class="lp-proof-image">
+          <img src="/w1w/web-showcase-4.webp" alt="Student Landing Page 4" class="lp-proof-image" loading="lazy">
         </div>
       </div>
       <p class="lp-proof-note">พวกเขาทุกคนไม่เคยเขียนโค้ดมาก่อน แต่มีหน้าขายของตัวเองใน 1 วัน</p>

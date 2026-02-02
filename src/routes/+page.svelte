@@ -114,7 +114,7 @@
 
 <header class="site-header">
   <div class="header-container">
-    <img src="/w1w/w1w-logo.png" alt="Website 1 Wun" class="site-logo">
+    <img src="/w1w/w1w-logo.webp" alt="Website 1 Wun" class="site-logo">
     <nav class="main-nav">
       <a href="/login" data-sveltekit-preload-data="tap" class="nav-button">Sign In</a>
     </nav>
@@ -345,7 +345,7 @@
 
       <div class="who-am-i-grid">
         <div class="author-image">
-          <img src="/w1w/guitar-dsp-square.png" alt="Guitar - Dead Simple Productivity" class="author-photo">
+          <img src="/w1w/guitar-dsp-square.webp" alt="Guitar - Dead Simple Productivity" class="author-photo" loading="lazy">
         </div>
 
         <div class="author-story">
@@ -377,49 +377,49 @@
     <div class="showcase-grid">
       <div class="showcase-item" style="animation-delay: 0.1s">
         <div class="showcase-image-wrapper">
-          <img src="/w1w/web-showcase-1.png" alt="Student Website 1" class="showcase-image">
+          <img src="/w1w/web-showcase-1.webp" alt="Student Website 1" class="showcase-image" loading="lazy">
         </div>
       </div>
 
       <div class="showcase-item" style="animation-delay: 0.2s">
         <div class="showcase-image-wrapper">
-          <img src="/w1w/web-showcase-2.png" alt="Student Website 2" class="showcase-image">
+          <img src="/w1w/web-showcase-2.webp" alt="Student Website 2" class="showcase-image" loading="lazy">
         </div>
       </div>
 
       <div class="showcase-item" style="animation-delay: 0.3s">
         <div class="showcase-image-wrapper">
-          <img src="/w1w/web-showcase-3.png" alt="Student Website 3" class="showcase-image">
+          <img src="/w1w/web-showcase-3.webp" alt="Student Website 3" class="showcase-image" loading="lazy">
         </div>
       </div>
 
       <div class="showcase-item" style="animation-delay: 0.4s">
         <div class="showcase-image-wrapper">
-          <img src="/w1w/web-showcase-4.png" alt="Student Website 4" class="showcase-image">
+          <img src="/w1w/web-showcase-4.webp" alt="Student Website 4" class="showcase-image" loading="lazy">
         </div>
       </div>
 
       <div class="showcase-item" style="animation-delay: 0.5s">
         <div class="showcase-image-wrapper">
-          <img src="/w1w/web-showcase-5.png" alt="Student Website 5" class="showcase-image">
+          <img src="/w1w/web-showcase-5.webp" alt="Student Website 5" class="showcase-image" loading="lazy">
         </div>
       </div>
 
       <div class="showcase-item" style="animation-delay: 0.6s">
         <div class="showcase-image-wrapper">
-          <img src="/w1w/web-showcase-6.png" alt="Student Website 6" class="showcase-image">
+          <img src="/w1w/web-showcase-6.webp" alt="Student Website 6" class="showcase-image" loading="lazy">
         </div>
       </div>
 
       <div class="showcase-item" style="animation-delay: 0.7s">
         <div class="showcase-image-wrapper">
-          <img src="/w1w/web-showcase-7.png" alt="Student Website 7" class="showcase-image">
+          <img src="/w1w/web-showcase-7.webp" alt="Student Website 7" class="showcase-image" loading="lazy">
         </div>
       </div>
 
       <div class="showcase-item" style="animation-delay: 0.8s">
         <div class="showcase-image-wrapper">
-          <img src="/w1w/web-showcase-8.png" alt="Student Website 8" class="showcase-image">
+          <img src="/w1w/web-showcase-8.webp" alt="Student Website 8" class="showcase-image" loading="lazy">
         </div>
       </div>
 
@@ -437,60 +437,60 @@
     <div class="testimonials-track">
       <!-- Row 1 -->
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/1.png" alt="Testimonial 1" class="testimonial-img">
+        <img src="/w1w/images/1.webp" alt="Testimonial 1" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/2.png" alt="Testimonial 2" class="testimonial-img">
+        <img src="/w1w/images/2.webp" alt="Testimonial 2" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/3.png" alt="Testimonial 3" class="testimonial-img">
+        <img src="/w1w/images/3.webp" alt="Testimonial 3" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/4.png" alt="Testimonial 4" class="testimonial-img">
+        <img src="/w1w/images/4.webp" alt="Testimonial 4" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/5.png" alt="Testimonial 5" class="testimonial-img">
+        <img src="/w1w/images/5.webp" alt="Testimonial 5" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/6.png" alt="Testimonial 6" class="testimonial-img">
+        <img src="/w1w/images/6.webp" alt="Testimonial 6" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/7.png" alt="Testimonial 7" class="testimonial-img">
+        <img src="/w1w/images/7.webp" alt="Testimonial 7" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/8.png" alt="Testimonial 8" class="testimonial-img">
+        <img src="/w1w/images/8.webp" alt="Testimonial 8" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/9.png" alt="Testimonial 9" class="testimonial-img">
+        <img src="/w1w/images/9.webp" alt="Testimonial 9" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/10.png" alt="Testimonial 10" class="testimonial-img">
+        <img src="/w1w/images/10.webp" alt="Testimonial 10" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/11.png" alt="Testimonial 11" class="testimonial-img">
+        <img src="/w1w/images/11.webp" alt="Testimonial 11" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/12.png" alt="Testimonial 12" class="testimonial-img">
+        <img src="/w1w/images/12.webp" alt="Testimonial 12" class="testimonial-img" loading="lazy">
       </div>
 
       <!-- Duplicate for seamless loop -->
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/1.png" alt="Testimonial 1" class="testimonial-img">
+        <img src="/w1w/images/1.webp" alt="Testimonial 1" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/2.png" alt="Testimonial 2" class="testimonial-img">
+        <img src="/w1w/images/2.webp" alt="Testimonial 2" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/3.png" alt="Testimonial 3" class="testimonial-img">
+        <img src="/w1w/images/3.webp" alt="Testimonial 3" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/4.png" alt="Testimonial 4" class="testimonial-img">
+        <img src="/w1w/images/4.webp" alt="Testimonial 4" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/5.png" alt="Testimonial 5" class="testimonial-img">
+        <img src="/w1w/images/5.webp" alt="Testimonial 5" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/6.png" alt="Testimonial 6" class="testimonial-img">
+        <img src="/w1w/images/6.webp" alt="Testimonial 6" class="testimonial-img" loading="lazy">
       </div>
     </div>
   </div>
@@ -499,63 +499,63 @@
     <div class="testimonials-track">
       <!-- Row 2 (reverse direction) -->
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/13.png" alt="Testimonial 13" class="testimonial-img">
+        <img src="/w1w/images/13.webp" alt="Testimonial 13" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/14.png" alt="Testimonial 14" class="testimonial-img">
+        <img src="/w1w/images/14.webp" alt="Testimonial 14" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/15.png" alt="Testimonial 15" class="testimonial-img">
+        <img src="/w1w/images/15.webp" alt="Testimonial 15" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/16.png" alt="Testimonial 16" class="testimonial-img">
+        <img src="/w1w/images/16.webp" alt="Testimonial 16" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/17.png" alt="Testimonial 17" class="testimonial-img">
+        <img src="/w1w/images/17.webp" alt="Testimonial 17" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/18.png" alt="Testimonial 18" class="testimonial-img">
+        <img src="/w1w/images/18.webp" alt="Testimonial 18" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/19.png" alt="Testimonial 19" class="testimonial-img">
+        <img src="/w1w/images/19.webp" alt="Testimonial 19" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/20.png" alt="Testimonial 20" class="testimonial-img">
+        <img src="/w1w/images/20.webp" alt="Testimonial 20" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/21.png" alt="Testimonial 21" class="testimonial-img">
+        <img src="/w1w/images/21.webp" alt="Testimonial 21" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/22.png" alt="Testimonial 22" class="testimonial-img">
+        <img src="/w1w/images/22.webp" alt="Testimonial 22" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/23.png" alt="Testimonial 23" class="testimonial-img">
+        <img src="/w1w/images/23.webp" alt="Testimonial 23" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/24.png" alt="Testimonial 24" class="testimonial-img">
+        <img src="/w1w/images/24.webp" alt="Testimonial 24" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/25.png" alt="Testimonial 25" class="testimonial-img">
+        <img src="/w1w/images/25.webp" alt="Testimonial 25" class="testimonial-img" loading="lazy">
       </div>
 
       <!-- Duplicate for seamless loop -->
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/13.png" alt="Testimonial 13" class="testimonial-img">
+        <img src="/w1w/images/13.webp" alt="Testimonial 13" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/14.png" alt="Testimonial 14" class="testimonial-img">
+        <img src="/w1w/images/14.webp" alt="Testimonial 14" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/15.png" alt="Testimonial 15" class="testimonial-img">
+        <img src="/w1w/images/15.webp" alt="Testimonial 15" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/16.png" alt="Testimonial 16" class="testimonial-img">
+        <img src="/w1w/images/16.webp" alt="Testimonial 16" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/17.png" alt="Testimonial 17" class="testimonial-img">
+        <img src="/w1w/images/17.webp" alt="Testimonial 17" class="testimonial-img" loading="lazy">
       </div>
       <div class="testimonial-mini-card">
-        <img src="/w1w/images/18.png" alt="Testimonial 18" class="testimonial-img">
+        <img src="/w1w/images/18.webp" alt="Testimonial 18" class="testimonial-img" loading="lazy">
       </div>
     </div>
   </div>

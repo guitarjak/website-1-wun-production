@@ -111,7 +111,7 @@
               class="block transition-opacity hover:opacity-80"
             >
               <img
-                src="/w1w-logo.png"
+                src="/w1w/w1w-logo.webp"
                 alt="Website 1 Wun"
                 class="h-8 sm:h-10 w-auto"
               />
