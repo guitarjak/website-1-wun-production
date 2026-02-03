@@ -607,7 +607,7 @@
       <div class="value-calculation">
         <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; color: white;">
           <strong style="font-size: 2rem; color: #febf00;">.</strong><br>
-          <strong style="font-size: 2rem; color: #febf00;">2,490 บาท</strong><br>
+          <strong style="font-size: 2rem; color: #febf00;">4,490 บาท</strong><br>
           <strong style="font-size: 2rem; color: #febf00;">.</strong><br>
           คือราคาที่ผมตั้งไว้<br>สำหรับ Website 1 Wun<br>
           คุณจะสามารถเอาไปใช้สร้าง<br>เว็บไซต์ของตัวเอง<br>
@@ -629,7 +629,7 @@
           ถ้าคุณโอเคกับการเริ่มไปพร้อมกัน<br>
           ราคานี้คือคำขอบคุณจากผมครับ<br>
           <strong style="font-size: 2rem; color: #febf00;">.</strong><br>
-          <strong style="font-size: 2rem; color: #febf00;">1,490 บาท</strong><br>
+          <strong style="font-size: 2rem; color: #febf00;">2,490 บาท</strong><br>
           <strong style="font-size: 2rem; color: #febf00;">.</strong><br>
           กับเว็บที่คุณจะได้ใช้ไปตลอดชีวิต<br>
           ถือว่าเลี้ยงชาบู You & I ผมมื้อนึง (ฮ่าา) 😄
@@ -745,8 +745,8 @@
           <div class="offer-title">Website 1 Wun</div>
           <div class="offer-description">Complete 1-Day Build System</div>
           <div class="offer-price">
-            <span class="offer-price-original">2,490 THB</span>
-            <span class="offer-price-amount">1,490 THB</span>
+            <span class="offer-price-original">4,490 THB</span>
+            <span class="offer-price-amount">2,490 THB</span>
             <span class="offer-price-note">ราคาพิเศษ 100 คนแรก (founder price)</span>
           </div>
         </div>
