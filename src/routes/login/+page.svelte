@@ -28,10 +28,16 @@
         method="POST"
         action="?/login"
         use:enhance={() => {
+          console.log('[LOGIN] Form submission started');
+          console.log('[LOGIN] Browser:', navigator.userAgent);
+          console.log('[LOGIN] Cookies enabled:', navigator.cookieEnabled);
+          console.log('[LOGIN] LocalStorage available:', typeof localStorage !== 'undefined');
           loading = true;
-          return async ({ update }) => {
+          return async ({ update, result }) => {
+            console.log('[LOGIN] Form response received:', result);
             await update();
             loading = false;
+            console.log('[LOGIN] Form submission completed');
           };
         }}
         class="space-y-5"
