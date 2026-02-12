@@ -6,6 +6,10 @@ import type { LayoutLoad } from './$types';
 export const load = async ({ data, depends, fetch }: Parameters<LayoutLoad>[0]) => {
   depends('supabase:auth');
 
+  console.log('[LAYOUT] Environment:', isBrowser() ? 'browser' : 'server');
+  console.log('[LAYOUT] Supabase URL configured:', !!PUBLIC_SUPABASE_URL);
+  console.log('[LAYOUT] Supabase key configured:', !!PUBLIC_SUPABASE_ANON_KEY);
+
   const supabase = isBrowser()
     ? createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
         global: {
@@ -23,9 +27,13 @@ export const load = async ({ data, depends, fetch }: Parameters<LayoutLoad>[0]) 
         }
       });
 
+  console.log('[LAYOUT] Supabase client created');
+
   const {
     data: { session }
   } = await supabase.auth.getSession();
+
+  console.log('[LAYOUT] Session status:', session ? 'active' : 'none');
 
   return { ...data, supabase, session };
 };

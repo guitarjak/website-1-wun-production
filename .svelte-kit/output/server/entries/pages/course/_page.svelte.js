@@ -1,4 +1,4 @@
-import { a0 as bind_props, U as store_get, W as attr_style, Y as ensure_array_like, Z as attr, X as attr_class, a1 as stringify, $ as unsubscribe_stores } from "../../../chunks/index2.js";
+import { a8 as fallback, a6 as bind_props, Z as store_get, a3 as escape_html, $ as attr_style, a1 as ensure_array_like, a2 as attr, a0 as attr_class, a7 as stringify, a5 as unsubscribe_stores } from "../../../chunks/index.js";
 import { p as page } from "../../../chunks/stores.js";
 import "@sveltejs/kit/internal";
 import "../../../chunks/exports.js";
@@ -7,7 +7,6 @@ import "@sveltejs/kit/internal/server";
 import "../../../chunks/state.svelte.js";
 import { generateHTML } from "@tiptap/html";
 import StarterKit from "@tiptap/starter-kit";
-import { f as fallback, e as escape_html } from "../../../chunks/context.js";
 function html(value) {
   var html2 = String(value ?? "");
   var open = "<!---->";

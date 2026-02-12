@@ -10,10 +10,41 @@ const load = async ({ locals, setHeaders }) => {
   setHeaders({
     "cache-control": "private, max-age=300, stale-while-revalidate=60"
   });
-  const { count: userCount } = await supabase.from("users_profile").select("*", { count: "exact", head: true });
+  const { data: courses } = await supabase.from("courses").select("id").limit(1);
+  const course = courses?.[0];
+  let moduleIds = [];
+  if (course) {
+    const { data: modules } = await supabase.from("modules").select("id").eq("course_id", course.id);
+    moduleIds = (modules || []).map((m) => m.id);
+  }
+  const [userCountResult, courseCountResult, lessonCountResult, progressResult] = await Promise.all([
+    supabase.from("users_profile").select("*", { count: "exact", head: true }),
+    supabase.from("courses").select("*", { count: "exact", head: true }),
+    moduleIds.length > 0 ? supabase.from("lessons").select("*", { count: "exact", head: true }).in("module_id", moduleIds) : Promise.resolve({ count: 0 }),
+    moduleIds.length > 0 ? supabase.from("lesson_progress").select("user_id, completed").eq("completed", true) : Promise.resolve({ data: [] })
+  ]);
+  const userCount = userCountResult.count || 0;
+  const courseCount = courseCountResult.count || 0;
+  const lessonCount = lessonCountResult.count || 0;
+  let avgCompletion = 0;
+  if (userCount > 0 && lessonCount > 0) {
+    const progressData = progressResult.data || [];
+    const userCompletions = /* @__PURE__ */ new Map();
+    progressData.forEach((p) => {
+      userCompletions.set(p.user_id, (userCompletions.get(p.user_id) || 0) + 1);
+    });
+    let totalPercentage = 0;
+    userCompletions.forEach((completed) => {
+      totalPercentage += Math.round(completed / lessonCount * 100);
+    });
+    avgCompletion = userCount > 0 ? Math.round(totalPercentage / userCount) : 0;
+  }
   return {
     profile: locals.profile,
-    userCount: userCount || 0
+    userCount,
+    courseCount,
+    lessonCount,
+    avgCompletion
   };
 };
 export {

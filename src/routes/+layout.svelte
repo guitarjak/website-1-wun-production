@@ -164,7 +164,8 @@
             style="color: var(--text-secondary);"
             on:mouseenter={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-secondary)'}
             on:mouseleave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-            aria-label="Toggle menu"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {#if mobileMenuOpen}

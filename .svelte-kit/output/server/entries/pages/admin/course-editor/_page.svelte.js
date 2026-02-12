@@ -1,11 +1,10 @@
-import { Y as ensure_array_like, X as attr_class, a1 as stringify, Z as attr, a0 as bind_props } from "../../../../chunks/index2.js";
+import { a3 as escape_html, a1 as ensure_array_like, a0 as attr_class, a7 as stringify, a2 as attr, a6 as bind_props } from "../../../../chunks/index.js";
 import "@tiptap/starter-kit";
 import "@sveltejs/kit/internal";
 import "../../../../chunks/exports.js";
 import "../../../../chunks/utils.js";
 import "@sveltejs/kit/internal/server";
 import "../../../../chunks/state.svelte.js";
-import { e as escape_html } from "../../../../chunks/context.js";
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     let course, modules;

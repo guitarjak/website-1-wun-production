@@ -1,12 +1,22 @@
-import { U as store_get, V as head, W as attr_style, X as attr_class, Y as ensure_array_like, Z as attr, _ as slot, $ as unsubscribe_stores, a0 as bind_props } from "../../chunks/index2.js";
+import { Z as store_get, _ as head, $ as attr_style, a0 as attr_class, a1 as ensure_array_like, a2 as attr, a3 as escape_html, a4 as slot, a5 as unsubscribe_stores, a6 as bind_props } from "../../chunks/index.js";
 import { p as page } from "../../chunks/stores.js";
-import { p as preloadData } from "../../chunks/client.js";
-import { e as escape_html } from "../../chunks/context.js";
+import "clsx";
+import "@sveltejs/kit/internal";
+import "../../chunks/exports.js";
+import "../../chunks/utils.js";
+import "@sveltejs/kit/internal/server";
+import "../../chunks/state.svelte.js";
+async function preloadData(href) {
+  {
+    throw new Error("Cannot call preloadData(...) on the server");
+  }
+}
 function _layout($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     var $$store_subs;
     let session, profile, currentPath, navLinks;
     let data = $$props["data"];
+    let mobileMenuOpen = false;
     ({ session, profile } = data);
     currentPath = store_get($$store_subs ??= {}, "$page", page).url.pathname;
     navLinks = session ? [
@@ -59,7 +69,7 @@ function _layout($$renderer, $$props) {
     } else {
       $$renderer2.push("<!--[!-->");
     }
-    $$renderer2.push(`<!--]--></div> <button class="md:hidden p-2 -mr-2 rounded-lg transition-colors" style="color: var(--text-secondary);" aria-label="Toggle menu"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">`);
+    $$renderer2.push(`<!--]--></div> <button class="md:hidden p-2 -mr-2 rounded-lg transition-colors" style="color: var(--text-secondary);"${attr("aria-label", "Open menu")}${attr("aria-expanded", mobileMenuOpen)}><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">`);
     {
       $$renderer2.push("<!--[!-->");
       $$renderer2.push(`<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>`);

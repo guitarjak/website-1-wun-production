@@ -69,21 +69,28 @@
     const heroSection = document.getElementById('hero');
 
     let lastScrollTop = 0;
+    let scrollTicking = false;
 
     const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const heroBottom = heroSection?.offsetTop + heroSection?.offsetHeight;
+      if (!scrollTicking) {
+        requestAnimationFrame(() => {
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          const heroBottom = heroSection?.offsetTop + heroSection?.offsetHeight;
 
-      if (scrollTop > heroBottom && scrollTop > lastScrollTop) {
-        stickyCta?.classList.add('visible');
-      } else if (scrollTop < heroBottom) {
-        stickyCta?.classList.remove('visible');
+          if (scrollTop > heroBottom && scrollTop > lastScrollTop) {
+            stickyCta?.classList.add('visible');
+          } else if (scrollTop < heroBottom) {
+            stickyCta?.classList.remove('visible');
+          }
+
+          lastScrollTop = scrollTop;
+          scrollTicking = false;
+        });
+        scrollTicking = true;
       }
-
-      lastScrollTop = scrollTop;
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     const ctaButtons = document.querySelectorAll('a[href="#checkout"]');
     ctaButtons.forEach(button => {

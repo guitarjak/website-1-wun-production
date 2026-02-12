@@ -72,31 +72,40 @@
 
 <div class="max-w-md mx-auto">
   <div class="space-y-6 sm:space-y-8">
-    <div class="text-center space-y-2">
-      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
-        Reset your password
-      </h1>
-      <p class="text-sm sm:text-base text-gray-600">
-        Enter your new password below
-      </p>
+    <div class="text-center space-y-4">
+      <a href="/" class="inline-block">
+        <img
+          src="/w1w/w1w-logo.webp"
+          alt="Website 1 Wun"
+          class="h-10 sm:h-12 w-auto mx-auto"
+        />
+      </a>
+      <div class="space-y-2">
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight" style="color: var(--text-primary);">
+          Reset your password
+        </h1>
+        <p class="text-sm sm:text-base" style="color: var(--text-secondary);">
+          Enter your new password below
+        </p>
+      </div>
     </div>
 
     {#if checkingAuth}
-      <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 sm:p-8">
+      <div class="bg-white rounded-2xl shadow-sm p-6 sm:p-8" style="border: 1px solid var(--border-light);">
         <div class="text-center space-y-3">
-          <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-          <p class="text-sm text-gray-600">Verifying your reset link...</p>
+          <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2" style="border-color: var(--golden);"></div>
+          <p class="text-sm" style="color: var(--text-secondary);">Verifying your reset link...</p>
         </div>
       </div>
     {:else if authError}
-      <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 sm:p-8">
+      <div class="bg-white rounded-2xl shadow-sm p-6 sm:p-8" style="border: 1px solid var(--border-light);">
         <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl text-sm">
           {authError}
         </div>
-        <p class="text-sm text-gray-600 mt-4 text-center">Redirecting to login...</p>
+        <p class="text-sm mt-4 text-center" style="color: var(--text-secondary);">Redirecting to login...</p>
       </div>
     {:else if hasValidSession}
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 sm:p-8">
+    <div class="bg-white rounded-2xl shadow-sm p-6 sm:p-8" style="border: 1px solid var(--border-light);">
       <form
         method="POST"
         action="?/resetPassword"
@@ -116,7 +125,7 @@
         {/if}
 
         <div class="space-y-2">
-          <label for="password" class="block text-sm font-medium text-gray-700">
+          <label for="password" class="block text-sm font-medium" style="color: var(--text-secondary);">
             New password
           </label>
           <div class="relative">
@@ -128,22 +137,23 @@
               required
               minlength="6"
               autocomplete="new-password"
-              class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow text-sm sm:text-base"
+              class="w-full px-4 py-3 pr-12 rounded-xl text-sm sm:text-base input-themed"
               placeholder="••••••••"
             />
             <button
               type="button"
               on:click={() => showPassword = !showPassword}
-              class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 text-sm"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-sm"
+              style="color: var(--text-tertiary);"
             >
               {showPassword ? 'Hide' : 'Show'}
             </button>
           </div>
-          <p class="text-xs text-gray-500">Must be at least 6 characters</p>
+          <p class="text-xs" style="color: var(--text-tertiary);">Must be at least 6 characters</p>
         </div>
 
         <div class="space-y-2">
-          <label for="confirmPassword" class="block text-sm font-medium text-gray-700">
+          <label for="confirmPassword" class="block text-sm font-medium" style="color: var(--text-secondary);">
             Confirm new password
           </label>
           <div class="relative">
@@ -155,13 +165,14 @@
               required
               minlength="6"
               autocomplete="new-password"
-              class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow text-sm sm:text-base"
+              class="w-full px-4 py-3 pr-12 rounded-xl text-sm sm:text-base input-themed"
               placeholder="••••••••"
             />
             <button
               type="button"
               on:click={() => showConfirmPassword = !showConfirmPassword}
-              class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 text-sm"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-sm"
+              style="color: var(--text-tertiary);"
             >
               {showConfirmPassword ? 'Hide' : 'Show'}
             </button>
@@ -171,7 +182,7 @@
         <button
           type="submit"
           disabled={loading || password !== confirmPassword || password.length < 6}
-          class="w-full bg-gray-900 text-white py-3 px-4 rounded-xl font-medium hover:bg-black transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md text-sm sm:text-base min-h-[48px]"
+          class="w-full btn-primary py-3 px-4 rounded-xl font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md text-sm sm:text-base min-h-[48px]"
         >
           {loading ? 'Resetting password...' : 'Reset password'}
         </button>
@@ -181,7 +192,8 @@
     <div class="text-center">
       <a
         href="/login"
-        class="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+        class="text-sm transition-colors"
+        style="color: var(--text-secondary);"
       >
         Back to login
       </a>

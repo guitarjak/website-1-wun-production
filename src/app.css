@@ -223,6 +223,24 @@
     color: #059669;
   }
 
+  /* Input Styles */
+  .input-themed {
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    background: white;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .input-themed:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--golden);
+    border-color: var(--golden);
+  }
+
+  .input-themed::placeholder {
+    color: var(--text-tertiary);
+  }
+
   /* Progress Bar */
   .progress-bar {
     width: 100%;

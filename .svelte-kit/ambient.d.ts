@@ -49,8 +49,8 @@ declare module '$env/static/private' {
 	export const MallocNanoZone: string;
 	export const ORIGINAL_XDG_CURRENT_DESKTOP: string;
 	export const ZDOTDIR: string;
-	export const VIPSHOME: string;
 	export const COLOR: string;
+	export const QWEN_CODE_IDE_SERVER_PORT: string;
 	export const npm_config_noproxy: string;
 	export const ENABLE_IDE_INTEGRATION: string;
 	export const npm_config_local_prefix: string;
@@ -61,6 +61,7 @@ declare module '$env/static/private' {
 	export const npm_config_globalconfig: string;
 	export const SSH_AUTH_SOCK: string;
 	export const CLAUDE_CODE_SSE_PORT: string;
+	export const QWEN_CODE_IDE_WORKSPACE_PATH: string;
 	export const __CF_USER_TEXT_ENCODING: string;
 	export const VSCODE_PROFILE_INITIALIZED: string;
 	export const npm_execpath: string;
@@ -158,8 +159,8 @@ declare module '$env/dynamic/private' {
 		MallocNanoZone: string;
 		ORIGINAL_XDG_CURRENT_DESKTOP: string;
 		ZDOTDIR: string;
-		VIPSHOME: string;
 		COLOR: string;
+		QWEN_CODE_IDE_SERVER_PORT: string;
 		npm_config_noproxy: string;
 		ENABLE_IDE_INTEGRATION: string;
 		npm_config_local_prefix: string;
@@ -170,6 +171,7 @@ declare module '$env/dynamic/private' {
 		npm_config_globalconfig: string;
 		SSH_AUTH_SOCK: string;
 		CLAUDE_CODE_SSE_PORT: string;
+		QWEN_CODE_IDE_WORKSPACE_PATH: string;
 		__CF_USER_TEXT_ENCODING: string;
 		VSCODE_PROFILE_INITIALIZED: string;
 		npm_execpath: string;

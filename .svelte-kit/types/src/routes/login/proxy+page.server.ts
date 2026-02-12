@@ -17,9 +17,13 @@ export const load = async ({ locals }: Parameters<PageServerLoad>[0]) => {
 
 export const actions = {
   login: async ({ request, locals }: import('./$types').RequestEvent) => {
+    console.log('[SERVER LOGIN] Action started');
     const formData = await request.formData();
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
+
+    console.log('[SERVER LOGIN] Email:', email);
+    console.log('[SERVER LOGIN] Supabase client available:', !!locals.supabase);
 
     const { error } = await locals.supabase.auth.signInWithPassword({
       email,
@@ -27,16 +31,21 @@ export const actions = {
     });
 
     if (error) {
+      console.error('[SERVER LOGIN] Authentication error:', error);
       return {
         success: false,
         error: error.message
       };
     }
 
+    console.log('[SERVER LOGIN] Authentication successful');
+
     // Get the profile to determine redirect
     const {
       data: { user }
     } = await locals.supabase.auth.getUser();
+
+    console.log('[SERVER LOGIN] User fetched:', user?.id);
 
     if (user) {
       const { data: profile } = await locals.supabase
@@ -45,11 +54,15 @@ export const actions = {
         .eq('id', user.id)
         .single();
 
+      console.log('[SERVER LOGIN] Profile fetched:', profile);
+
       if (profile?.role === 'admin') {
+        console.log('[SERVER LOGIN] Redirecting to admin dashboard');
         throw redirect(303, '/admin-dashboard');
       }
     }
 
+    console.log('[SERVER LOGIN] Redirecting to course');
     throw redirect(303, '/course');
   },
 

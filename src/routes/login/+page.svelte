@@ -14,30 +14,33 @@
 
 <div class="max-w-md mx-auto">
   <div class="space-y-6 sm:space-y-8">
-    <div class="text-center space-y-2">
-      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
-        Welcome back
-      </h1>
-      <p class="text-sm sm:text-base text-gray-600">
-        Sign in to continue your learning journey
-      </p>
+    <div class="text-center space-y-4">
+      <a href="/" class="inline-block">
+        <img
+          src="/w1w/w1w-logo.webp"
+          alt="Website 1 Wun"
+          class="h-10 sm:h-12 w-auto mx-auto"
+        />
+      </a>
+      <div class="space-y-2">
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight" style="color: var(--text-primary);">
+          Welcome back
+        </h1>
+        <p class="text-sm sm:text-base" style="color: var(--text-secondary);">
+          Sign in to continue your learning journey
+        </p>
+      </div>
     </div>
 
-    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 sm:p-8">
+    <div class="bg-white rounded-2xl shadow-sm p-6 sm:p-8" style="border: 1px solid var(--border-light);">
       <form
         method="POST"
         action="?/login"
         use:enhance={() => {
-          console.log('[LOGIN] Form submission started');
-          console.log('[LOGIN] Browser:', navigator.userAgent);
-          console.log('[LOGIN] Cookies enabled:', navigator.cookieEnabled);
-          console.log('[LOGIN] LocalStorage available:', typeof localStorage !== 'undefined');
           loading = true;
-          return async ({ update, result }) => {
-            console.log('[LOGIN] Form response received:', result);
+          return async ({ update }) => {
             await update();
             loading = false;
-            console.log('[LOGIN] Form submission completed');
           };
         }}
         class="space-y-5"
@@ -55,7 +58,7 @@
         {/if}
 
         <div class="space-y-2">
-          <label for="email" class="block text-sm font-medium text-gray-700">
+          <label for="email" class="block text-sm font-medium" style="color: var(--text-secondary);">
             Email address
           </label>
           <input
@@ -64,20 +67,21 @@
             name="email"
             required
             autocomplete="email"
-            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow text-sm sm:text-base"
+            class="w-full px-4 py-3 rounded-xl text-sm sm:text-base input-themed"
             placeholder="you@example.com"
           />
         </div>
 
         <div class="space-y-2">
           <div class="flex items-center justify-between">
-            <label for="password" class="block text-sm font-medium text-gray-700">
+            <label for="password" class="block text-sm font-medium" style="color: var(--text-secondary);">
               Password
             </label>
             <button
               type="button"
               on:click={() => showForgotPassword = true}
-              class="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              class="text-sm transition-colors"
+              style="color: var(--text-secondary);"
             >
               Forgot password?
             </button>
@@ -88,7 +92,7 @@
             name="password"
             required
             autocomplete="current-password"
-            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow text-sm sm:text-base"
+            class="w-full px-4 py-3 rounded-xl text-sm sm:text-base input-themed"
             placeholder="••••••••"
           />
         </div>
@@ -96,14 +100,14 @@
         <button
           type="submit"
           disabled={loading}
-          class="w-full bg-gray-900 text-white py-3 px-4 rounded-xl font-medium hover:bg-black transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md text-sm sm:text-base min-h-[48px]"
+          class="w-full btn-primary py-3 px-4 rounded-xl font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md text-sm sm:text-base min-h-[48px]"
         >
           {loading ? 'Signing in...' : 'Sign In'}
         </button>
       </form>
     </div>
 
-    <p class="text-center text-sm text-gray-600">
+    <p class="text-center text-sm" style="color: var(--text-secondary);">
       Need access? Contact your administrator for an account.
     </p>
   </div>
@@ -112,7 +116,7 @@
 <!-- Forgot Password Modal -->
 {#if showForgotPassword}
   <div
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+    class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
     on:click={() => showForgotPassword = false}
     on:keydown={(e) => e.key === 'Escape' && (showForgotPassword = false)}
     role="button"
@@ -127,8 +131,8 @@
     >
       <div class="space-y-4">
         <div>
-          <h2 class="text-2xl font-bold text-gray-900">Reset password</h2>
-          <p class="text-sm text-gray-600 mt-2">
+          <h2 class="text-2xl font-bold" style="color: var(--text-primary);">Reset password</h2>
+          <p class="text-sm mt-2" style="color: var(--text-secondary);">
             Enter your email address and we'll send you a link to reset your password.
           </p>
         </div>
@@ -156,7 +160,7 @@
           class="space-y-4"
         >
           <div class="space-y-2">
-            <label for="forgot-email" class="block text-sm font-medium text-gray-700">
+            <label for="forgot-email" class="block text-sm font-medium" style="color: var(--text-secondary);">
               Email address
             </label>
             <input
@@ -166,7 +170,7 @@
               bind:value={forgotPasswordEmail}
               required
               autocomplete="email"
-              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-shadow text-sm"
+              class="w-full px-4 py-3 rounded-xl text-sm input-themed"
               placeholder="you@example.com"
             />
           </div>
@@ -175,14 +179,14 @@
             <button
               type="button"
               on:click={() => showForgotPassword = false}
-              class="flex-1 bg-gray-100 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-gray-200 transition-all duration-200 text-sm"
+              class="flex-1 btn-ghost py-3 px-4 rounded-xl font-medium transition-all duration-200 text-sm"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              class="flex-1 bg-gray-900 text-white py-3 px-4 rounded-xl font-medium hover:bg-black transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md text-sm"
+              class="flex-1 btn-primary py-3 px-4 rounded-xl font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md text-sm"
             >
               {loading ? 'Sending...' : 'Send reset link'}
             </button>
