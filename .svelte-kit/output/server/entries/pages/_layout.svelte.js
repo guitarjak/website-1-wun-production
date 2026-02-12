@@ -1,16 +1,10 @@
 import { Z as store_get, _ as head, $ as attr_style, a0 as attr_class, a1 as ensure_array_like, a2 as attr, a3 as escape_html, a4 as slot, a5 as unsubscribe_stores, a6 as bind_props } from "../../chunks/index.js";
 import { p as page } from "../../chunks/stores.js";
-import "clsx";
 import "@sveltejs/kit/internal";
 import "../../chunks/exports.js";
 import "../../chunks/utils.js";
 import "@sveltejs/kit/internal/server";
 import "../../chunks/state.svelte.js";
-async function preloadData(href) {
-  {
-    throw new Error("Cannot call preloadData(...) on the server");
-  }
-}
 function _layout($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     var $$store_subs;
@@ -27,34 +21,15 @@ function _layout($$renderer, $$props) {
       { href: "/", label: "Home" },
       { href: "/login", label: "Login" }
     ];
-    if (typeof window !== "undefined") {
-      setTimeout(
-        () => {
-          if (currentPath !== "/") {
-            preloadData().catch(() => {
-            });
-          }
-          if (session) {
-            preloadData().catch(() => {
-            });
-            preloadData().catch(() => {
-            });
-            if (profile?.role === "admin") {
-              preloadData().catch(() => {
-              });
-            }
-          } else {
-            if (currentPath !== "/login") {
-              preloadData().catch(() => {
-              });
-            }
-          }
-        },
-        100
-      );
-    }
     head("12qhfyh", $$renderer2, ($$renderer3) => {
-      $$renderer3.push(`<link rel="preconnect" href="https://fonts.googleapis.com"/> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/> <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/> <link rel="preload" href="/w1w/style.css" as="style"/> <link rel="stylesheet" href="/w1w/style.css"/>`);
+      $$renderer3.push(`<link rel="preconnect" href="https://fonts.googleapis.com"/> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/> <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Prompt:wght@400;500;600;700;800&amp;family=Caveat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/> `);
+      if (currentPath === "/") {
+        $$renderer3.push("<!--[-->");
+        $$renderer3.push(`<link rel="stylesheet" href="/w1w/style.css"/>`);
+      } else {
+        $$renderer3.push("<!--[!-->");
+      }
+      $$renderer3.push(`<!--]-->`);
     });
     $$renderer2.push(`<div class="min-h-screen"${attr_style(currentPath === "/" ? "" : "background-color: var(--cream-light);")}><nav${attr_class("sticky top-0 z-40 border-b navbar-container svelte-12qhfyh", void 0, { "hidden-nav": currentPath === "/" })} style="background: var(--cream-light); border-color: var(--border-light);"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex justify-between items-center h-14 sm:h-16"><div class="flex-shrink-0"><a href="/" data-sveltekit-preload-data="tap" data-sveltekit-noscroll="" class="block transition-opacity hover:opacity-80"><img src="/w1w/w1w-logo.webp" alt="Website 1 Wun" class="h-8 sm:h-10 w-auto"/></a></div> <div class="hidden md:flex items-center gap-1"><!--[-->`);
     const each_array = ensure_array_like(navLinks);

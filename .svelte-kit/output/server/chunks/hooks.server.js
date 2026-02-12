@@ -31,7 +31,6 @@ const supabaseHandle = async ({ event, resolve }) => {
       console.error("Error fetching profile:", profileError);
       return { session, profile: null };
     }
-    console.log("Profile fetched successfully:", profile);
     return { session, profile };
   };
   return resolve(event, {

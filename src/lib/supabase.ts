@@ -44,7 +44,6 @@ export const supabaseHandle: Handle = async ({ event, resolve }) => {
       return { session, profile: null };
     }
 
-    console.log('Profile fetched successfully:', profile);
     return { session, profile };
   };
 

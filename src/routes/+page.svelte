@@ -2,72 +2,38 @@
   import { onMount } from 'svelte';
 
   onMount(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
+    // Single IntersectionObserver for all animated elements
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // Stop observing once visible
         }
       });
-    }, observerOptions);
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-    const dreamItems = document.querySelectorAll('.dream-item');
-    dreamItems.forEach(item => observer.observe(item));
-
-    const problemItems = document.querySelectorAll('.problem-item');
-    problemItems.forEach(item => observer.observe(item));
-
-    const mechanismCards = document.querySelectorAll('.mechanism-card');
-    mechanismCards.forEach(card => observer.observe(card));
-
-    const outcomeListItems = document.querySelectorAll('.outcome-list li');
-    outcomeListItems.forEach((item, index) => {
-      item.style.animationDelay = `${index * 0.1}s`;
-      observer.observe(item);
+    // Observe all animatable elements in one pass
+    const selectors = '.dream-item, .problem-item, .mechanism-card, .comparison-card, .choice-item, .value-item, .outcome-list li, .for-list li, .faq-item';
+    document.querySelectorAll(selectors).forEach((el, index) => {
+      if (el.matches('.outcome-list li, .value-item, .comparison-card, .for-list li, .faq-item, .choice-item')) {
+        el.style.animationDelay = `${index * 0.05}s`;
+      }
+      observer.observe(el);
     });
 
-    const valueItems = document.querySelectorAll('.value-item');
-    valueItems.forEach((item, index) => {
-      item.style.animationDelay = `${index * 0.1}s`;
-      observer.observe(item);
+    // FAQ toggle handlers
+    document.querySelectorAll('.faq-item .faq-question-wrapper').forEach(wrapper => {
+      wrapper.addEventListener('click', () => wrapper.closest('.faq-item')?.classList.toggle('active'));
     });
 
-    const comparisonCards = document.querySelectorAll('.comparison-card');
-    comparisonCards.forEach((card, index) => {
-      card.style.animationDelay = `${index * 0.1}s`;
-      observer.observe(card);
+    // Floating card delays
+    document.querySelectorAll('.floating-card').forEach((card, i) => {
+      card.style.animationDelay = `${i * 0.3}s`;
     });
 
-    const forListItems = document.querySelectorAll('.for-list li');
-    forListItems.forEach((item, index) => {
-      item.style.animationDelay = `${index * 0.1}s`;
-      observer.observe(item);
-    });
-
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach((item, index) => {
-      item.style.animationDelay = `${index * 0.1}s`;
-      observer.observe(item);
-
-      const questionWrapper = item.querySelector('.faq-question-wrapper');
-      questionWrapper?.addEventListener('click', function() {
-        item.classList.toggle('active');
-      });
-    });
-
-    const choiceItems = document.querySelectorAll('.choice-item');
-    choiceItems.forEach((item, index) => {
-      item.style.animationDelay = `${index * 0.15}s`;
-      observer.observe(item);
-    });
-
+    // Sticky CTA on scroll
     const stickyCta = document.getElementById('sticky-cta');
     const heroSection = document.getElementById('hero');
-
     let lastScrollTop = 0;
     let scrollTicking = false;
 
@@ -75,7 +41,7 @@
       if (!scrollTicking) {
         requestAnimationFrame(() => {
           const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-          const heroBottom = heroSection?.offsetTop + heroSection?.offsetHeight;
+          const heroBottom = heroSection ? heroSection.offsetTop + heroSection.offsetHeight : 0;
 
           if (scrollTop > heroBottom && scrollTop > lastScrollTop) {
             stickyCta?.classList.add('visible');
@@ -92,21 +58,16 @@
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    const ctaButtons = document.querySelectorAll('a[href="#checkout"]');
-    ctaButtons.forEach(button => {
-      button.addEventListener('click', function(e) {
+    // Smooth scroll for CTA buttons
+    document.querySelectorAll('a[href="#checkout"]').forEach(button => {
+      button.addEventListener('click', (e) => {
         e.preventDefault();
-        const checkoutSection = document.getElementById('checkout');
-        checkoutSection?.scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('checkout')?.scrollIntoView({ behavior: 'smooth' });
       });
     });
 
-    const floatingCards = document.querySelectorAll('.floating-card');
-    floatingCards.forEach((card, index) => {
-      card.style.animationDelay = `${index * 0.3}s`;
-    });
-
     return () => {
+      observer.disconnect();
       window.removeEventListener('scroll', handleScroll);
     };
   });
@@ -114,9 +75,6 @@
 
 <svelte:head>
   <title>Website 1 Wun – Build a Real Website in 1 Day</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
 </svelte:head>
 
 <header class="site-header">

@@ -17,16 +17,27 @@ const load = async ({ locals, setHeaders }) => {
     throw error(404, "No courses found");
   }
   const course = courses[0];
-  const { data: modules, error: modulesError } = await supabase.from("modules").select("id, title, description, order").eq("course_id", course.id).order("order", { ascending: true });
-  if (modulesError) {
+  const [modulesResult, progressResult] = await Promise.all([
+    supabase.from("modules").select("id, title, description, order").eq("course_id", course.id).order("order", { ascending: true }),
+    supabase.from("lesson_progress").select("lesson_id, completed").eq("user_id", userId).eq("completed", true)
+  ]);
+  if (modulesResult.error) {
     throw error(500, "Failed to load modules");
   }
-  const moduleIds = (modules || []).map((m) => m.id);
-  const { data: lessons, error: lessonsError } = await supabase.from("lessons").select("id, module_id, title, order, video_embed, content").in("module_id", moduleIds).eq("is_published", true).order("order", { ascending: true });
-  if (lessonsError) {
-    throw error(500, "Failed to load lessons");
+  const modules = modulesResult.data || [];
+  const moduleIds = modules.map((m) => m.id);
+  let lessons = null;
+  const publishedResult = await supabase.from("lessons").select("id, module_id, title, order, video_embed, content").in("module_id", moduleIds).eq("is_published", true).order("order", { ascending: true });
+  if (publishedResult.error) {
+    const fallbackResult = await supabase.from("lessons").select("id, module_id, title, order, video_embed, content").in("module_id", moduleIds).order("order", { ascending: true });
+    if (fallbackResult.error) {
+      throw error(500, "Failed to load lessons");
+    }
+    lessons = fallbackResult.data;
+  } else {
+    lessons = publishedResult.data;
   }
-  const modulesWithLessons = (modules || []).map((module) => ({
+  const modulesWithLessons = modules.map((module) => ({
     id: module.id,
     title: module.title,
     description: module.description,
@@ -35,14 +46,12 @@ const load = async ({ locals, setHeaders }) => {
       id: lesson.id,
       title: lesson.title,
       slug: lesson.id,
-      // Use id as slug since slug doesn't exist
       position: lesson.order,
       video_embed_html: lesson.video_embed,
       content_json: lesson.content
     }))
   }));
-  const { data: progressRows, error: progressError } = await supabase.from("lesson_progress").select("lesson_id, completed").eq("user_id", userId).eq("completed", true);
-  const completedLessonIds = progressRows?.map((row) => row.lesson_id) ?? [];
+  const completedLessonIds = progressResult.data?.map((row) => row.lesson_id) ?? [];
   const totalLessons = modulesWithLessons.reduce((total, module) => total + module.lessons.length, 0);
   return {
     course,

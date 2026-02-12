@@ -34,23 +34,29 @@ export const load: PageServerLoad = async ({ locals, setHeaders }) => {
 
   // Note: enrollments table doesn't exist in schema, so all authenticated users can access
 
-  // Load modules for this course
-  const { data: modules, error: modulesError } = await supabase
-    .from('modules')
-    .select('id, title, description, order')
-    .eq('course_id', course.id)
-    .order('order', { ascending: true });
+  // Load modules and progress in parallel (both only need course.id / userId)
+  const [modulesResult, progressResult] = await Promise.all([
+    supabase
+      .from('modules')
+      .select('id, title, description, order')
+      .eq('course_id', course.id)
+      .order('order', { ascending: true }),
+    supabase
+      .from('lesson_progress')
+      .select('lesson_id, completed')
+      .eq('user_id', userId)
+      .eq('completed', true)
+  ]);
 
-  if (modulesError) {
+  if (modulesResult.error) {
     throw error(500, 'Failed to load modules');
   }
 
-  // Load all published lessons for these modules
-  const moduleIds = (modules || []).map((m) => m.id);
+  const modules = modulesResult.data || [];
+  const moduleIds = modules.map((m) => m.id);
 
-  // Try loading only published lessons; fall back to all lessons if is_published column doesn't exist yet
+  // Load published lessons (with fallback if is_published column doesn't exist yet)
   let lessons: any[] | null = null;
-  let lessonsError: any = null;
 
   const publishedResult = await supabase
     .from('lessons')
@@ -60,25 +66,22 @@ export const load: PageServerLoad = async ({ locals, setHeaders }) => {
     .order('order', { ascending: true });
 
   if (publishedResult.error) {
-    // Column likely doesn't exist yet — load all lessons
     const fallbackResult = await supabase
       .from('lessons')
       .select('id, module_id, title, order, video_embed, content')
       .in('module_id', moduleIds)
       .order('order', { ascending: true });
 
+    if (fallbackResult.error) {
+      throw error(500, 'Failed to load lessons');
+    }
     lessons = fallbackResult.data;
-    lessonsError = fallbackResult.error;
   } else {
     lessons = publishedResult.data;
   }
 
-  if (lessonsError) {
-    throw error(500, 'Failed to load lessons');
-  }
-
   // Combine modules with their lessons
-  const modulesWithLessons: Module[] = (modules || []).map((module) => ({
+  const modulesWithLessons: Module[] = modules.map((module) => ({
     id: module.id,
     title: module.title,
     description: module.description,
@@ -88,22 +91,14 @@ export const load: PageServerLoad = async ({ locals, setHeaders }) => {
       .map((lesson) => ({
         id: lesson.id,
         title: lesson.title,
-        slug: lesson.id, // Use id as slug since slug doesn't exist
+        slug: lesson.id,
         position: lesson.order,
         video_embed_html: lesson.video_embed,
         content_json: lesson.content
       }))
   }));
 
-  // Load lesson progress for the current user
-  const { data: progressRows, error: progressError } = await supabase
-    .from('lesson_progress')
-    .select('lesson_id, completed')
-    .eq('user_id', userId)
-    .eq('completed', true);
-
-  // Build array of completed lesson IDs
-  const completedLessonIds = progressRows?.map((row) => row.lesson_id) ?? [];
+  const completedLessonIds = progressResult.data?.map((row) => row.lesson_id) ?? [];
 
   // Calculate total number of lessons
   const totalLessons = modulesWithLessons.reduce((total, module) => total + module.lessons.length, 0);

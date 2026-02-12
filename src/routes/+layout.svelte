@@ -1,7 +1,7 @@
 <script lang="ts">
   import '../app.css';
   import { page } from '$app/stores';
-  import { invalidate, preloadData, goto } from '$app/navigation';
+  import { invalidate, goto } from '$app/navigation';
   import { onMount } from 'svelte';
 
   export let data;
@@ -23,29 +23,7 @@
         { href: '/login', label: 'Login' }
       ];
 
-  // Eagerly preload main navigation pages for instant navigation
-  $: if (typeof window !== 'undefined') {
-    // Preload after a short delay to not block initial page load
-    setTimeout(() => {
-      // Always preload homepage for instant navigation
-      if (currentPath !== '/') {
-        preloadData('/').catch(() => {});
-      }
-
-      if (session) {
-        preloadData('/course').catch(() => {});
-        preloadData('/profile').catch(() => {});
-        if (profile?.role === 'admin') {
-          preloadData('/admin-dashboard').catch(() => {});
-        }
-      } else {
-        // Preload login page when not authenticated
-        if (currentPath !== '/login') {
-          preloadData('/login').catch(() => {});
-        }
-      }
-    }, 100);
-  }
+  // Navigation preloading handled by data-sveltekit-preload-data="tap" on nav links
 
   async function handleSignOut() {
     const { error } = await data.supabase.auth.signOut();
@@ -91,10 +69,10 @@
 <svelte:head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- Preload homepage stylesheet for instant loading -->
-  <link rel="preload" href="/w1w/style.css" as="style">
-  <link rel="stylesheet" href="/w1w/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700;800&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  {#if currentPath === '/'}
+    <link rel="stylesheet" href="/w1w/style.css">
+  {/if}
 </svelte:head>
 
 <div class="min-h-screen" style="{currentPath === '/' ? '' : 'background-color: var(--cream-light);'}">
