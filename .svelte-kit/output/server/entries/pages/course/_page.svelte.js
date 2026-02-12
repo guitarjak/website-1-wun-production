@@ -7,6 +7,7 @@ import "@sveltejs/kit/internal/server";
 import "../../../chunks/state.svelte.js";
 import { generateHTML } from "@tiptap/html";
 import StarterKit from "@tiptap/starter-kit";
+import Link from "@tiptap/extension-link";
 function html(value) {
   var html2 = String(value ?? "");
   var open = "<!---->";
@@ -23,7 +24,7 @@ function RenderContent($$renderer, $$props) {
         try {
           const parsed = JSON.parse(content);
           if (parsed && typeof parsed === "object" && parsed.type === "doc") {
-            htmlContent = generateHTML(parsed, [StarterKit]);
+            htmlContent = generateHTML(parsed, [StarterKit, Link]);
           } else {
             htmlContent = content;
           }
@@ -32,7 +33,7 @@ function RenderContent($$renderer, $$props) {
         }
       } else if (typeof content === "object") {
         try {
-          htmlContent = generateHTML(content, [StarterKit]);
+          htmlContent = generateHTML(content, [StarterKit, Link]);
         } catch (error) {
           console.error("Failed to generate HTML from Tiptap content:", error);
           htmlContent = "";

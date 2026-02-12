@@ -22,7 +22,7 @@ const load = async ({ locals, setHeaders }) => {
     throw error(500, "Failed to load modules");
   }
   const moduleIds = (modules || []).map((m) => m.id);
-  const { data: lessons, error: lessonsError } = await supabase.from("lessons").select("id, module_id, title, order, video_embed, content").in("module_id", moduleIds).order("order", { ascending: true });
+  const { data: lessons, error: lessonsError } = await supabase.from("lessons").select("id, module_id, title, order, video_embed, content").in("module_id", moduleIds).eq("is_published", true).order("order", { ascending: true });
   if (lessonsError) {
     throw error(500, "Failed to load lessons");
   }

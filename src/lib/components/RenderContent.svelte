@@ -1,6 +1,7 @@
 <script lang="ts">
   import { generateHTML } from '@tiptap/html';
   import StarterKit from '@tiptap/starter-kit';
+  import Link from '@tiptap/extension-link';
 
   export let content: any = null;
 
@@ -16,7 +17,7 @@
         const parsed = JSON.parse(content);
         // If it's a valid TipTap document, convert to HTML
         if (parsed && typeof parsed === 'object' && parsed.type === 'doc') {
-          htmlContent = generateHTML(parsed, [StarterKit]);
+          htmlContent = generateHTML(parsed, [StarterKit, Link]);
         } else {
           // Not a TipTap document, treat as HTML
           htmlContent = content;
@@ -28,7 +29,7 @@
     } else if (typeof content === 'object') {
       // Content is TipTap JSON object, convert to HTML
       try {
-        htmlContent = generateHTML(content, [StarterKit]);
+        htmlContent = generateHTML(content, [StarterKit, Link]);
       } catch (error) {
         console.error('Failed to generate HTML from Tiptap content:', error);
         htmlContent = '';

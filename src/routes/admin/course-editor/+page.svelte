@@ -8,6 +8,9 @@
   import { goto } from '$app/navigation';
   import { beforeNavigate } from '$app/navigation';
 
+  // Reference to the lesson form for Ctrl+S
+  let lessonFormEl: HTMLFormElement;
+
   export let data: PageData;
   export let form: ActionData;
 
@@ -23,6 +26,9 @@
   // Track editor content separately
   let editorContent: any = null;
 
+  // Baseline editor content after TipTap normalizes it (set on first editor update after lesson switch)
+  let baselineEditorContent: any = null;
+
   // Track form values for dirty state detection
   let currentTitle = '';
   let currentVideoEmbed = '';
@@ -33,20 +39,25 @@
   // Update editorContent when selected lesson changes
   $: if (selectedLesson) {
     editorContent = selectedLesson.content_json;
+    baselineEditorContent = null; // reset — will be captured on first editor update
     currentTitle = selectedLesson.title;
     currentVideoEmbed = selectedLesson.video_embed_html || '';
     isDirty = false; // Reset dirty state when switching lessons
   }
 
-  // Check if form has unsaved changes
+  // Check if form has unsaved changes (only compare editor content against normalized baseline)
   $: if (selectedLesson) {
     isDirty =
       currentTitle !== selectedLesson.title ||
       currentVideoEmbed !== (selectedLesson.video_embed_html || '') ||
-      JSON.stringify(editorContent) !== JSON.stringify(selectedLesson.content_json);
+      (baselineEditorContent !== null && JSON.stringify(editorContent) !== JSON.stringify(baselineEditorContent));
   }
 
   function handleEditorChange(json: any) {
+    if (baselineEditorContent === null) {
+      // First update after selecting a lesson — TipTap normalizing the content, not a user edit
+      baselineEditorContent = json;
+    }
     editorContent = json;
   }
 
@@ -172,6 +183,48 @@
   });
 
   // Instant lesson selection with unsaved changes warning
+  // Ctrl+S / Cmd+S keyboard shortcut
+  function handleKeydown(e: KeyboardEvent) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+      e.preventDefault();
+      if (selectedLesson && isDirty && lessonFormEl) {
+        lessonFormEl.requestSubmit();
+      }
+    }
+  }
+
+  // Reorder forms
+  let reorderModuleFormEl: HTMLFormElement;
+  let reorderLessonFormEl: HTMLFormElement;
+  let reorderModuleUpdates = '';
+  let reorderLessonUpdates = '';
+  let reorderLessonModuleId = '';
+
+  function moveModule(index: number, direction: 'up' | 'down') {
+    const newIndex = direction === 'up' ? index - 1 : index + 1;
+    if (newIndex < 0 || newIndex >= modules.length) return;
+    const arr = [...modules];
+    [arr[index], arr[newIndex]] = [arr[newIndex], arr[index]];
+    modules = arr;
+    // Build updates array
+    reorderModuleUpdates = JSON.stringify(arr.map((m, i) => ({ id: m.id, position: i })));
+    // Submit after tick
+    setTimeout(() => reorderModuleFormEl?.requestSubmit(), 0);
+  }
+
+  function moveLesson(module: any, lessonIndex: number, direction: 'up' | 'down') {
+    const newIndex = direction === 'up' ? lessonIndex - 1 : lessonIndex + 1;
+    if (newIndex < 0 || newIndex >= module.lessons.length) return;
+    const arr = [...module.lessons];
+    [arr[lessonIndex], arr[newIndex]] = [arr[newIndex], arr[lessonIndex]];
+    module.lessons = arr;
+    modules = modules;
+    // Build updates
+    reorderLessonUpdates = JSON.stringify(arr.map((l: any, i: number) => ({ id: l.id, position: i })));
+    reorderLessonModuleId = module.id;
+    setTimeout(() => reorderLessonFormEl?.requestSubmit(), 0);
+  }
+
   function selectLesson(lesson: Lesson) {
     if (isDirty) {
       if (!confirm('You have unsaved changes. Switch lesson anyway?')) {
@@ -182,6 +235,8 @@
     showLessonDrawer = false;
   }
 </script>
+
+<svelte:window on:keydown={handleKeydown} />
 
 <div class="max-w-7xl mx-auto -mt-6 lg:-mt-4">
   <!-- Success Notification -->
@@ -289,12 +344,32 @@
         </div>
 
         <nav class="space-y-3">
-          {#each modules as module}
+          {#each modules as module, moduleIndex}
             <div class="group">
               <div class="flex items-center justify-between mb-2">
-                <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  {module.title}
-                </h3>
+                <div class="flex items-center gap-1">
+                  <div class="flex flex-col opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button
+                      on:click={() => moveModule(moduleIndex, 'up')}
+                      class="p-0.5 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed"
+                      title="Move Up"
+                      disabled={moduleIndex === 0}
+                    >
+                      <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+                    </button>
+                    <button
+                      on:click={() => moveModule(moduleIndex, 'down')}
+                      class="p-0.5 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed"
+                      title="Move Down"
+                      disabled={moduleIndex === modules.length - 1}
+                    >
+                      <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                  </div>
+                  <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    {module.title}
+                  </h3>
+                </div>
                 <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     on:click={() => openLessonCreate(module.id)}
@@ -328,9 +403,27 @@
 
               {#if module.lessons.length > 0}
                 <ul class="space-y-1">
-                  {#each module.lessons as lesson}
+                  {#each module.lessons as lesson, lessonIndex}
                     <li class="group/lesson">
                       <div class="flex items-center gap-1">
+                        <div class="flex flex-col opacity-0 group-hover/lesson:opacity-100 transition-opacity">
+                          <button
+                            on:click={() => moveLesson(module, lessonIndex, 'up')}
+                            class="p-0.5 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed"
+                            title="Move Up"
+                            disabled={lessonIndex === 0}
+                          >
+                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+                          </button>
+                          <button
+                            on:click={() => moveLesson(module, lessonIndex, 'down')}
+                            class="p-0.5 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed"
+                            title="Move Down"
+                            disabled={lessonIndex === module.lessons.length - 1}
+                          >
+                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                          </button>
+                        </div>
                         <button
                           type="button"
                           on:click={() => selectLesson(lesson)}
@@ -384,6 +477,36 @@
                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
                                 </svg>
                               {/if}
+                            </button>
+                          </form>
+                          <form
+                            method="post"
+                            action="?/duplicateLesson"
+                            use:enhance={() => {
+                              return async ({ result }) => {
+                                if (result.type === 'success') {
+                                  const mod = modules.find(m => m.id === result.data.moduleId);
+                                  if (mod) {
+                                    mod.lessons = [...mod.lessons, result.data.lesson];
+                                  }
+                                  modules = modules;
+                                  selectedLesson = result.data.lesson;
+                                  successMessage = 'Lesson duplicated!';
+                                  showSuccess = true;
+                                  setTimeout(() => { showSuccess = false; successMessage = ''; }, 3000);
+                                }
+                              };
+                            }}
+                          >
+                            <input type="hidden" name="lessonId" value={lesson.id} />
+                            <button
+                              type="submit"
+                              class="p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100"
+                              title="Duplicate Lesson"
+                            >
+                              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                              </svg>
                             </button>
                           </form>
                           <button
@@ -467,16 +590,34 @@
                 </h4>
                 {#if module.lessons.length > 0}
                   <div class="space-y-1">
-                    {#each module.lessons as lesson}
-                      <button
-                        type="button"
-                        on:click={() => selectLesson(lesson)}
-                        class="w-full text-left px-4 py-3 text-sm rounded-xl transition-all {selectedLesson?.id === lesson.id
-                          ? 'bg-gray-900 text-white font-medium'
-                          : 'text-gray-700 hover:bg-gray-100'}"
-                      >
-                        {lesson.title}
-                      </button>
+                    {#each module.lessons as lesson, lessonIndex}
+                      <div class="flex items-center gap-1">
+                        <div class="flex flex-col">
+                          <button
+                            on:click={() => moveLesson(module, lessonIndex, 'up')}
+                            class="p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed"
+                            disabled={lessonIndex === 0}
+                          >
+                            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+                          </button>
+                          <button
+                            on:click={() => moveLesson(module, lessonIndex, 'down')}
+                            class="p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed"
+                            disabled={lessonIndex === module.lessons.length - 1}
+                          >
+                            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          on:click={() => selectLesson(lesson)}
+                          class="flex-1 text-left px-4 py-3 text-sm rounded-xl transition-all {selectedLesson?.id === lesson.id
+                            ? 'bg-gray-900 text-white font-medium'
+                            : 'text-gray-700 hover:bg-gray-100'}"
+                        >
+                          {lesson.title}
+                        </button>
+                      </div>
                     {/each}
                   </div>
                 {:else}
@@ -511,6 +652,7 @@
           </div>
         {:else}
           <form
+            bind:this={lessonFormEl}
             method="post"
             action="?/save"
             use:enhance={() => {
@@ -523,7 +665,8 @@
                     selectedLesson.content_json = editorContent;
                   }
 
-                  // Reset dirty state
+                  // Reset dirty state — update baseline to current editor content
+                  baselineEditorContent = editorContent;
                   isDirty = false;
 
                   // Show success notification
@@ -573,6 +716,16 @@
                   placeholder="Paste full embed HTML here (<iframe>...</iframe>)"
                   class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm font-mono focus:border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900/20"
                 ></textarea>
+                {#if currentVideoEmbed}
+                  <div class="mt-3 border border-gray-200 rounded-xl overflow-hidden">
+                    <div class="bg-gray-50 px-3 py-1.5 border-b border-gray-200">
+                      <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Preview</span>
+                    </div>
+                    <div class="aspect-video">
+                      {@html currentVideoEmbed}
+                    </div>
+                  </div>
+                {/if}
               </div>
 
               <!-- Rich Text Content -->
@@ -731,6 +884,7 @@
                   const moduleToUpdate = modules.find(m => m.id === editingModule.id);
                   if (moduleToUpdate) {
                     moduleToUpdate.title = formData.get('title');
+                    moduleToUpdate.description = formData.get('description') || null;
                   }
                   modules = modules;
                   successMessage = 'Module updated!';
@@ -773,8 +927,21 @@
                 name="title"
                 value={editingModule?.title || ''}
                 required
-                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900/20"
+                class="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900/20"
               />
+            </div>
+            <div>
+              <label for="module-description" class="block text-sm font-medium text-gray-700 mb-1">
+                Description (optional)
+              </label>
+              <textarea
+                id="module-description"
+                name="description"
+                value={editingModule?.description || ''}
+                rows="3"
+                placeholder="Brief description of this module..."
+                class="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900/20"
+              ></textarea>
             </div>
           </div>
 
@@ -887,6 +1054,44 @@
       </div>
     </div>
   {/if}
+
+  <!-- Hidden Reorder Forms -->
+  <form
+    bind:this={reorderModuleFormEl}
+    method="post"
+    action="?/reorderModules"
+    class="hidden"
+    use:enhance={() => {
+      return async ({ result }) => {
+        if (result.type === 'success') {
+          successMessage = 'Modules reordered!';
+          showSuccess = true;
+          setTimeout(() => { showSuccess = false; successMessage = ''; }, 2000);
+        }
+      };
+    }}
+  >
+    <input type="hidden" name="updates" value={reorderModuleUpdates} />
+  </form>
+
+  <form
+    bind:this={reorderLessonFormEl}
+    method="post"
+    action="?/reorderLessons"
+    class="hidden"
+    use:enhance={() => {
+      return async ({ result }) => {
+        if (result.type === 'success') {
+          successMessage = 'Lessons reordered!';
+          showSuccess = true;
+          setTimeout(() => { showSuccess = false; successMessage = ''; }, 2000);
+        }
+      };
+    }}
+  >
+    <input type="hidden" name="updates" value={reorderLessonUpdates} />
+    <input type="hidden" name="moduleId" value={reorderLessonModuleId} />
+  </form>
 
   <!-- Delete Confirmation Modal -->
   {#if showDeleteConfirmModal && deletingItem}

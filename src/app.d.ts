@@ -36,6 +36,7 @@ export type Lesson = {
   position: number;
   video_embed_html: string | null;
   content_json: any | null;
+  is_published: boolean;
 };
 
 export type Module = {

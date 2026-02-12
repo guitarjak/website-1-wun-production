@@ -49,11 +49,30 @@ export const load = async ({ locals, setHeaders }: Parameters<PageServerLoad>[0]
   // Load all published lessons for these modules
   const moduleIds = (modules || []).map((m) => m.id);
 
-  const { data: lessons, error: lessonsError } = await supabase
+  // Try loading only published lessons; fall back to all lessons if is_published column doesn't exist yet
+  let lessons: any[] | null = null;
+  let lessonsError: any = null;
+
+  const publishedResult = await supabase
     .from('lessons')
     .select('id, module_id, title, order, video_embed, content')
     .in('module_id', moduleIds)
+    .eq('is_published', true)
     .order('order', { ascending: true });
+
+  if (publishedResult.error) {
+    // Column likely doesn't exist yet — load all lessons
+    const fallbackResult = await supabase
+      .from('lessons')
+      .select('id, module_id, title, order, video_embed, content')
+      .in('module_id', moduleIds)
+      .order('order', { ascending: true });
+
+    lessons = fallbackResult.data;
+    lessonsError = fallbackResult.error;
+  } else {
+    lessons = publishedResult.data;
+  }
 
   if (lessonsError) {
     throw error(500, 'Failed to load lessons');

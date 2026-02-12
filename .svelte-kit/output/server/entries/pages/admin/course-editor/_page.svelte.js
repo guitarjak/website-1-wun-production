@@ -1,5 +1,6 @@
-import { a3 as escape_html, a1 as ensure_array_like, a0 as attr_class, a7 as stringify, a2 as attr, a6 as bind_props } from "../../../../chunks/index.js";
+import { a3 as escape_html, a1 as ensure_array_like, a2 as attr, a0 as attr_class, a7 as stringify, a6 as bind_props } from "../../../../chunks/index.js";
 import "@tiptap/starter-kit";
+import "@tiptap/extension-link";
 import "@sveltejs/kit/internal";
 import "../../../../chunks/exports.js";
 import "../../../../chunks/utils.js";
@@ -11,6 +12,9 @@ function _page($$renderer, $$props) {
     let data = $$props["data"];
     let form = $$props["form"];
     let selectedLesson = null;
+    let reorderModuleUpdates = "";
+    let reorderLessonUpdates = "";
+    let reorderLessonModuleId = "";
     course = data.course;
     modules = data.modules || [];
     modules.flatMap((m) => m.lessons);
@@ -31,16 +35,16 @@ function _page($$renderer, $$props) {
     }
     $$renderer2.push(`<!--]--></div> <button class="ml-4 text-sm text-gray-600 hover:text-gray-900 flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-all"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg> <span class="hidden sm:inline">Edit</span></button></div></div> <div class="grid grid-cols-1 lg:grid-cols-[280px,1fr] gap-6"><aside class="hidden lg:block"><div class="bg-white border border-gray-200 rounded-2xl p-4 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto"><div class="mb-4 flex items-center justify-between"><h2 class="text-sm font-semibold text-gray-900">${escape_html(course?.title || "Course")}</h2> <button class="text-xs text-gray-600 hover:text-gray-900 flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 transition-all" title="Add Module"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg> <span>Add Module</span></button></div> <nav class="space-y-3"><!--[-->`);
     const each_array = ensure_array_like(modules);
-    for (let $$index_1 = 0, $$length = each_array.length; $$index_1 < $$length; $$index_1++) {
-      let module = each_array[$$index_1];
-      $$renderer2.push(`<div class="group"><div class="flex items-center justify-between mb-2"><h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">${escape_html(module.title)}</h3> <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity"><button class="p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100" title="Add Lesson"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg></button> <button class="p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100" title="Edit Module"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></button> <button class="p-1 text-red-400 hover:text-red-600 rounded hover:bg-red-50" title="Delete Module"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div></div> `);
+    for (let moduleIndex = 0, $$length = each_array.length; moduleIndex < $$length; moduleIndex++) {
+      let module = each_array[moduleIndex];
+      $$renderer2.push(`<div class="group"><div class="flex items-center justify-between mb-2"><div class="flex items-center gap-1"><div class="flex flex-col opacity-0 group-hover:opacity-100 transition-opacity"><button class="p-0.5 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed" title="Move Up"${attr("disabled", moduleIndex === 0, true)}><svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button> <button class="p-0.5 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed" title="Move Down"${attr("disabled", moduleIndex === modules.length - 1, true)}><svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button></div> <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">${escape_html(module.title)}</h3></div> <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity"><button class="p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100" title="Add Lesson"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg></button> <button class="p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100" title="Edit Module"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></button> <button class="p-1 text-red-400 hover:text-red-600 rounded hover:bg-red-50" title="Delete Module"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div></div> `);
       if (module.lessons.length > 0) {
         $$renderer2.push("<!--[-->");
         $$renderer2.push(`<ul class="space-y-1"><!--[-->`);
         const each_array_1 = ensure_array_like(module.lessons);
-        for (let $$index = 0, $$length2 = each_array_1.length; $$index < $$length2; $$index++) {
-          let lesson = each_array_1[$$index];
-          $$renderer2.push(`<li class="group/lesson"><div class="flex items-center gap-1"><button type="button"${attr_class(`flex-1 text-left px-3 py-2 text-sm rounded-lg transition-all ${stringify(selectedLesson?.id === lesson.id ? "bg-gray-900 text-white font-medium" : "text-gray-700 hover:bg-gray-100")}`)}><div class="flex items-center gap-2"><span class="flex-1">${escape_html(lesson.title)}</span> `);
+        for (let lessonIndex = 0, $$length2 = each_array_1.length; lessonIndex < $$length2; lessonIndex++) {
+          let lesson = each_array_1[lessonIndex];
+          $$renderer2.push(`<li class="group/lesson"><div class="flex items-center gap-1"><div class="flex flex-col opacity-0 group-hover/lesson:opacity-100 transition-opacity"><button class="p-0.5 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed" title="Move Up"${attr("disabled", lessonIndex === 0, true)}><svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button> <button class="p-0.5 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed" title="Move Down"${attr("disabled", lessonIndex === module.lessons.length - 1, true)}><svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button></div> <button type="button"${attr_class(`flex-1 text-left px-3 py-2 text-sm rounded-lg transition-all ${stringify(selectedLesson?.id === lesson.id ? "bg-gray-900 text-white font-medium" : "text-gray-700 hover:bg-gray-100")}`)}><div class="flex items-center gap-2"><span class="flex-1">${escape_html(lesson.title)}</span> `);
           if (!lesson.is_published) {
             $$renderer2.push("<!--[-->");
             $$renderer2.push(`<span${attr_class(`text-xs px-1.5 py-0.5 rounded ${stringify(selectedLesson?.id === lesson.id ? "bg-amber-400/20 text-amber-100" : "bg-amber-100 text-amber-700")}`)}>Draft</span>`);
@@ -55,7 +59,7 @@ function _page($$renderer, $$props) {
             $$renderer2.push("<!--[!-->");
             $$renderer2.push(`<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg>`);
           }
-          $$renderer2.push(`<!--]--></button></form> <button class="p-1 text-red-400 hover:text-red-600 rounded hover:bg-red-50" title="Delete Lesson"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div></div></li>`);
+          $$renderer2.push(`<!--]--></button></form> <form method="post" action="?/duplicateLesson"><input type="hidden" name="lessonId"${attr("value", lesson.id)}/> <button type="submit" class="p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-100" title="Duplicate Lesson"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button></form> <button class="p-1 text-red-400 hover:text-red-600 rounded hover:bg-red-50" title="Delete Lesson"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div></div></li>`);
         }
         $$renderer2.push(`<!--]--></ul>`);
       } else {
@@ -92,7 +96,7 @@ function _page($$renderer, $$props) {
     {
       $$renderer2.push("<!--[!-->");
     }
-    $$renderer2.push(`<!--]--> `);
+    $$renderer2.push(`<!--]--> <form method="post" action="?/reorderModules" class="hidden"><input type="hidden" name="updates"${attr("value", reorderModuleUpdates)}/></form> <form method="post" action="?/reorderLessons" class="hidden"><input type="hidden" name="updates"${attr("value", reorderLessonUpdates)}/> <input type="hidden" name="moduleId"${attr("value", reorderLessonModuleId)}/></form> `);
     {
       $$renderer2.push("<!--[!-->");
     }

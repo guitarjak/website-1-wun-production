@@ -14,6 +14,7 @@ type AdminLesson = {
 type AdminModule = {
   id: string;
   title: string;
+  description: string | null;
   position: number;
   lessons: AdminLesson[];
 };
@@ -67,11 +68,29 @@ export const load: PageServerLoad = async ({ locals, url, setHeaders }) => {
   // Load all lessons for these modules (including unpublished)
   const moduleIds = (modules || []).map((m) => m.id);
 
-  const { data: lessons, error: lessonsError } = await supabase
+  // Try selecting is_published; fall back without it if column doesn't exist yet
+  let lessons: any[] | null = null;
+  let lessonsError: any = null;
+
+  const fullResult = await supabase
     .from('lessons')
-    .select('id, module_id, title, order, video_embed, content')
+    .select('id, module_id, title, order, video_embed, content, is_published')
     .in('module_id', moduleIds)
     .order('order', { ascending: true });
+
+  if (fullResult.error) {
+    // is_published column likely doesn't exist yet
+    const fallbackResult = await supabase
+      .from('lessons')
+      .select('id, module_id, title, order, video_embed, content')
+      .in('module_id', moduleIds)
+      .order('order', { ascending: true });
+
+    lessons = fallbackResult.data;
+    lessonsError = fallbackResult.error;
+  } else {
+    lessons = fullResult.data;
+  }
 
   if (lessonsError) {
     throw error(500, 'Failed to load lessons');
@@ -100,6 +119,7 @@ export const load: PageServerLoad = async ({ locals, url, setHeaders }) => {
   const modulesWithLessons: AdminModule[] = (modules || []).map((module) => ({
     id: module.id,
     title: module.title,
+    description: module.description || null,
     position: module.order,
     lessons: (lessons || [])
       .filter((lesson) => lesson.module_id === module.id)
@@ -110,7 +130,7 @@ export const load: PageServerLoad = async ({ locals, url, setHeaders }) => {
         position: lesson.order,
         video_embed_html: lesson.video_embed,
         content_json: parseContent(lesson.content),
-        is_published: true // Assume all lessons are published
+        is_published: lesson.is_published ?? true
       }))
   }));
 
@@ -466,9 +486,10 @@ export const actions: Actions = {
         title,
         order: newOrder,
         video_embed: null,
-        content: null
+        content: null,
+        is_published: true
       })
-      .select('id, module_id, title, order, video_embed, content')
+      .select('id, module_id, title, order, video_embed, content, is_published')
       .single();
 
     if (insertError || !newLesson) {
@@ -485,7 +506,7 @@ export const actions: Actions = {
         position: newLesson.order, // Add position for compatibility
         video_embed_html: newLesson.video_embed,
         content_json: newLesson.content,
-        is_published: true
+        is_published: newLesson.is_published ?? true
       }
     };
   },
@@ -543,11 +564,94 @@ export const actions: Actions = {
       });
     }
 
-    // Note: is_published column doesn't exist in database
-    // All lessons are considered published
+    const newStatus = !isPublished;
+
+    const { error: updateError } = await locals.supabase
+      .from('lessons')
+      .update({ is_published: newStatus })
+      .eq('id', lessonId);
+
+    if (updateError) {
+      return fail(500, {
+        error: 'Failed to toggle publish status: ' + updateError.message
+      });
+    }
+
     return {
       success: true,
-      newStatus: true // Always published
+      newStatus
+    };
+  },
+
+  duplicateLesson: async ({ request, locals }) => {
+    if (!locals.session) {
+      throw redirect(303, '/login');
+    }
+
+    if (locals.profile?.role !== 'admin') {
+      throw redirect(303, '/course');
+    }
+
+    const formData = await request.formData();
+    const lessonId = formData.get('lessonId') as string;
+
+    if (!lessonId) {
+      return fail(400, { error: 'Lesson ID is required' });
+    }
+
+    // Fetch the source lesson
+    const { data: sourceLesson, error: fetchError } = await locals.supabase
+      .from('lessons')
+      .select('title, module_id, video_embed, content, is_published')
+      .eq('id', lessonId)
+      .single();
+
+    if (fetchError || !sourceLesson) {
+      return fail(500, { error: 'Failed to fetch lesson: ' + (fetchError?.message || 'Not found') });
+    }
+
+    // Get max order in the same module
+    const { data: existingLessons } = await locals.supabase
+      .from('lessons')
+      .select('order')
+      .eq('module_id', sourceLesson.module_id)
+      .order('order', { ascending: false })
+      .limit(1);
+
+    const newOrder = existingLessons && existingLessons.length > 0
+      ? existingLessons[0].order + 1
+      : 0;
+
+    // Insert duplicate
+    const { data: newLesson, error: insertError } = await locals.supabase
+      .from('lessons')
+      .insert({
+        module_id: sourceLesson.module_id,
+        title: sourceLesson.title + ' (Copy)',
+        order: newOrder,
+        video_embed: sourceLesson.video_embed,
+        content: sourceLesson.content,
+        is_published: sourceLesson.is_published ?? true
+      })
+      .select('id, module_id, title, order, video_embed, content, is_published')
+      .single();
+
+    if (insertError || !newLesson) {
+      return fail(500, { error: 'Failed to duplicate lesson: ' + (insertError?.message || 'Unknown error') });
+    }
+
+    return {
+      success: true,
+      lesson: {
+        id: newLesson.id,
+        title: newLesson.title,
+        slug: newLesson.id,
+        position: newLesson.order,
+        video_embed_html: newLesson.video_embed,
+        content_json: newLesson.content,
+        is_published: newLesson.is_published ?? true
+      },
+      moduleId: newLesson.module_id
     };
   },
 
