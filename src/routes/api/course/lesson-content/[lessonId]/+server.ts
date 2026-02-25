@@ -1,5 +1,6 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import { lessonContentToHtml } from '$lib/server/lesson-content';
 
 export const GET: RequestHandler = async ({ locals, params }) => {
   if (!locals.session) {
@@ -28,6 +29,6 @@ export const GET: RequestHandler = async ({ locals, params }) => {
   return json({
     id: data.id,
     video_embed_html: data.video_embed,
-    content_json: data.content
+    content_html: lessonContentToHtml(data.content)
   });
 };

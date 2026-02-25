@@ -1,4 +1,5 @@
 import { json } from "@sveltejs/kit";
+import { l as lessonContentToHtml } from "../../../../../../chunks/lesson-content.js";
 const GET = async ({ locals, params }) => {
   if (!locals.session) {
     return json({ error: "Unauthorized" }, { status: 401 });
@@ -17,7 +18,7 @@ const GET = async ({ locals, params }) => {
   return json({
     id: data.id,
     video_embed_html: data.video_embed,
-    content_json: data.content
+    content_html: lessonContentToHtml(data.content)
   });
 };
 export {

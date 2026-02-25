@@ -5,53 +5,22 @@ import "../../../chunks/exports.js";
 import "../../../chunks/utils.js";
 import "@sveltejs/kit/internal/server";
 import "../../../chunks/state.svelte.js";
-import { generateHTML } from "@tiptap/html";
-import StarterKit from "@tiptap/starter-kit";
-import Link from "@tiptap/extension-link";
 function html(value) {
   var html2 = String(value ?? "");
   var open = "<!---->";
   return open + html2 + "<!---->";
 }
 function RenderContent($$renderer, $$props) {
-  $$renderer.component(($$renderer2) => {
-    let content = fallback($$props["content"], null);
-    let htmlContent = "";
-    {
-      if (!content) {
-        htmlContent = "";
-      } else if (typeof content === "string") {
-        try {
-          const parsed = JSON.parse(content);
-          if (parsed && typeof parsed === "object" && parsed.type === "doc") {
-            htmlContent = generateHTML(parsed, [StarterKit, Link]);
-          } else {
-            htmlContent = content;
-          }
-        } catch (e) {
-          htmlContent = content;
-        }
-      } else if (typeof content === "object") {
-        try {
-          htmlContent = generateHTML(content, [StarterKit, Link]);
-        } catch (error) {
-          console.error("Failed to generate HTML from Tiptap content:", error);
-          htmlContent = "";
-        }
-      } else {
-        htmlContent = "";
-      }
-    }
-    if (!htmlContent) {
-      $$renderer2.push("<!--[-->");
-      $$renderer2.push(`<div class="bg-gray-50 border border-gray-200 rounded-xl p-8 text-center"><svg class="mx-auto h-12 w-12 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> <p class="text-gray-600 text-sm">No written content for this lesson yet.</p></div>`);
-    } else {
-      $$renderer2.push("<!--[!-->");
-      $$renderer2.push(`<div class="lesson-content svelte-e8s6u5">${html(htmlContent)}</div>`);
-    }
-    $$renderer2.push(`<!--]-->`);
-    bind_props($$props, { content });
-  });
+  let contentHtml = fallback($$props["contentHtml"], null);
+  if (!contentHtml) {
+    $$renderer.push("<!--[-->");
+    $$renderer.push(`<div class="bg-gray-50 border border-gray-200 rounded-xl p-8 text-center"><svg class="mx-auto h-12 w-12 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> <p class="text-gray-600 text-sm">No written content for this lesson yet.</p></div>`);
+  } else {
+    $$renderer.push("<!--[!-->");
+    $$renderer.push(`<div class="lesson-content svelte-e8s6u5">${html(contentHtml)}</div>`);
+  }
+  $$renderer.push(`<!--]-->`);
+  bind_props($$props, { contentHtml });
 }
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
@@ -256,7 +225,7 @@ function _page($$renderer, $$props) {
             $$renderer2.push("<!--[!-->");
             if (selectedLessonContent) {
               $$renderer2.push("<!--[-->");
-              RenderContent($$renderer2, { content: selectedLessonContent.content_json });
+              RenderContent($$renderer2, { contentHtml: selectedLessonContent.content_html });
             } else {
               $$renderer2.push("<!--[!-->");
               $$renderer2.push(`<div class="rounded-xl p-6 text-sm" style="background-color: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-light);">Loading lesson content...</div>`);

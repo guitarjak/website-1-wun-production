@@ -1,0 +1,1 @@
+import{j as y,k as o,H as _,l as t,m as g,C as m,n as a,o as i,q as n,u as p}from"./DozsQRlr.js";function E(d,r){let s=null,f=t;var l;if(t){s=p;for(var e=g(document.head);e!==null&&(e.nodeType!==m||e.data!==d);)e=a(e);if(e===null)i(!1);else{var u=a(e);e.remove(),n(u)}}t||(l=document.head.appendChild(y()));try{o(()=>r(l),_)}finally{f&&(i(!0),n(s))}}export{E as h};

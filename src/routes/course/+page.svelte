@@ -28,7 +28,7 @@
   // Flatten lessons and select
   $: allLessons = modules.flatMap((m) => m.lessons);
   let selectedLesson: Lesson | null = null;
-  type LessonContent = { id: string; video_embed_html: string | null; content_json: any | null };
+  type LessonContent = { id: string; video_embed_html: string | null; content_html: string | null };
   let lessonContentById: Record<string, LessonContent> = {};
   let lessonContentLoading = false;
   let lessonContentError = '';
@@ -636,7 +636,7 @@
                     {lessonContentError}
                   </div>
                 {:else if selectedLessonContent}
-                  <RenderContent content={selectedLessonContent.content_json} />
+                  <RenderContent contentHtml={selectedLessonContent.content_html} />
                 {:else}
                   <div class="rounded-xl p-6 text-sm" style="background-color: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-light);">
                     Loading lesson content...

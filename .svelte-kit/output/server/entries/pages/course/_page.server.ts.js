@@ -1,4 +1,5 @@
 import { redirect, fail, error } from "@sveltejs/kit";
+import { l as lessonContentToHtml } from "../../../chunks/lesson-content.js";
 let cachedCourseContent = null;
 async function fetchLessonContent(supabase, lessonId) {
   const { data, error: lessonError } = await supabase.from("lessons").select("id, video_embed, content").eq("id", lessonId).maybeSingle();
@@ -8,7 +9,7 @@ async function fetchLessonContent(supabase, lessonId) {
   return {
     id: data.id,
     video_embed_html: data.video_embed,
-    content_json: data.content
+    content_html: lessonContentToHtml(data.content)
   };
 }
 async function getCachedCourseContent(supabase) {

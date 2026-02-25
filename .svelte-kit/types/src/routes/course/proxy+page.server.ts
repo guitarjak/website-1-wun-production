@@ -2,6 +2,7 @@
 import { redirect, error, fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 import type { Module } from '../../../app.d';
+import { lessonContentToHtml } from '$lib/server/lesson-content';
 
 type CachedCourseContent = {
   course: {
@@ -30,7 +31,7 @@ async function fetchLessonContent(supabase: App.Locals['supabase'], lessonId: st
   return {
     id: data.id,
     video_embed_html: data.video_embed,
-    content_json: data.content
+    content_html: lessonContentToHtml(data.content)
   };
 }
 

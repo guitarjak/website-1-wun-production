@@ -39,6 +39,10 @@
       "src/hooks.server.ts"
     ]
   },
+  "_lesson-content.js": {
+    "file": "chunks/lesson-content.js",
+    "name": "lesson-content"
+  },
   "_public.js": {
     "file": "chunks/public.js",
     "name": "public"
@@ -208,13 +212,19 @@
     "file": "entries/endpoints/api/course/lesson-content/_lessonId_/_server.ts.js",
     "name": "entries/endpoints/api/course/lesson-content/_lessonId_/_server.ts",
     "src": "src/routes/api/course/lesson-content/[lessonId]/+server.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_lesson-content.js"
+    ]
   },
   "src/routes/course/+page.server.ts": {
     "file": "entries/pages/course/_page.server.ts.js",
     "name": "entries/pages/course/_page.server.ts",
     "src": "src/routes/course/+page.server.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_lesson-content.js"
+    ]
   },
   "src/routes/course/+page.svelte": {
     "file": "entries/pages/course/_page.svelte.js",

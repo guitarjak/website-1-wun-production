@@ -1,46 +1,8 @@
 <script lang="ts">
-  import { generateHTML } from '@tiptap/html';
-  import StarterKit from '@tiptap/starter-kit';
-  import Link from '@tiptap/extension-link';
-
-  export let content: any = null;
-
-  let htmlContent = '';
-
-  $: {
-    if (!content) {
-      htmlContent = '';
-    } else if (typeof content === 'string') {
-      // Content is a string - could be JSON string or HTML string
-      // Try to parse as JSON first
-      try {
-        const parsed = JSON.parse(content);
-        // If it's a valid TipTap document, convert to HTML
-        if (parsed && typeof parsed === 'object' && parsed.type === 'doc') {
-          htmlContent = generateHTML(parsed, [StarterKit, Link]);
-        } else {
-          // Not a TipTap document, treat as HTML
-          htmlContent = content;
-        }
-      } catch (e) {
-        // Not valid JSON, treat as HTML string
-        htmlContent = content;
-      }
-    } else if (typeof content === 'object') {
-      // Content is TipTap JSON object, convert to HTML
-      try {
-        htmlContent = generateHTML(content, [StarterKit, Link]);
-      } catch (error) {
-        console.error('Failed to generate HTML from Tiptap content:', error);
-        htmlContent = '';
-      }
-    } else {
-      htmlContent = '';
-    }
-  }
+  export let contentHtml: string | null = null;
 </script>
 
-{#if !htmlContent}
+{#if !contentHtml}
   <div class="bg-gray-50 border border-gray-200 rounded-xl p-8 text-center">
     <svg
       class="mx-auto h-12 w-12 text-gray-400 mb-3"
@@ -59,7 +21,7 @@
   </div>
 {:else}
   <div class="lesson-content">
-    {@html htmlContent}
+    {@html contentHtml}
   </div>
 {/if}
 
