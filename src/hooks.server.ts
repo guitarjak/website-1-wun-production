@@ -8,16 +8,22 @@ const PROFILE_REQUIRED_PREFIXES = [
   '/manage-users',
   '/api/admin'
 ];
+const PROFILE_FOR_NAV_PREFIXES = ['/course', '/profile'];
 
 const SESSION_ONLY_PATHS = new Set(['/login', '/reset-password']);
 
 function hasSupabaseAuthCookie(cookieNames: string[]) {
-  return cookieNames.some((name) => name.startsWith('sb-'));
+  return cookieNames.some((name) =>
+    name.startsWith('sb-')
+    || name.startsWith('__Host-sb-')
+    || (name.includes('sb-') && name.includes('auth-token'))
+  );
 }
 
 const authGuard: Handle = async ({ event, resolve }) => {
   const pathname = event.url.pathname;
-  const needsProfile = PROFILE_REQUIRED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
+  const needsProfile = PROFILE_REQUIRED_PREFIXES.some((prefix) => pathname.startsWith(prefix))
+    || PROFILE_FOR_NAV_PREFIXES.some((prefix) => pathname.startsWith(prefix));
   const needsSession = needsProfile
     || SESSION_ONLY_PATHS.has(pathname)
     || pathname === '/course'

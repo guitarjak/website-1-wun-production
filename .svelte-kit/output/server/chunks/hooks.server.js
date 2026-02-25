@@ -19,20 +19,28 @@ const supabaseHandle = async ({ event, resolve }) => {
     if (!session) {
       return { session: null, profile: null };
     }
-    if (!verifyUser) {
+    if (!withProfile && !verifyUser) {
       return { session, profile: null };
     }
-    if (!withProfile) {
+    let profileUserId = null;
+    if (verifyUser) {
+      const {
+        data: { user },
+        error
+      } = await event.locals.supabase.auth.getUser();
+      if (error || !user) {
+        return { session: null, profile: null };
+      }
+      if (!withProfile) {
+        return { session, profile: null };
+      }
+      profileUserId = user.id;
+    } else if (withProfile) {
+      profileUserId = session.user.id;
+    } else {
       return { session, profile: null };
     }
-    const {
-      data: { user },
-      error
-    } = await event.locals.supabase.auth.getUser();
-    if (error || !user) {
-      return { session: null, profile: null };
-    }
-    const { data: profile, error: profileError } = await event.locals.supabase.from("users_profile").select("id, email, full_name, role").eq("id", user.id).single();
+    const { data: profile, error: profileError } = await event.locals.supabase.from("users_profile").select("id, email, full_name, role").eq("id", profileUserId).single();
     if (profileError) {
       console.error("Error fetching profile:", profileError);
       return { session, profile: null };
@@ -51,13 +59,16 @@ const PROFILE_REQUIRED_PREFIXES = [
   "/manage-users",
   "/api/admin"
 ];
+const PROFILE_FOR_NAV_PREFIXES = ["/course", "/profile"];
 const SESSION_ONLY_PATHS = /* @__PURE__ */ new Set(["/login", "/reset-password"]);
 function hasSupabaseAuthCookie(cookieNames) {
-  return cookieNames.some((name) => name.startsWith("sb-"));
+  return cookieNames.some(
+    (name) => name.startsWith("sb-") || name.startsWith("__Host-sb-") || name.includes("sb-") && name.includes("auth-token")
+  );
 }
 const authGuard = async ({ event, resolve }) => {
   const pathname = event.url.pathname;
-  const needsProfile = PROFILE_REQUIRED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
+  const needsProfile = PROFILE_REQUIRED_PREFIXES.some((prefix) => pathname.startsWith(prefix)) || PROFILE_FOR_NAV_PREFIXES.some((prefix) => pathname.startsWith(prefix));
   const needsSession = needsProfile || SESSION_ONLY_PATHS.has(pathname) || pathname === "/course" || pathname === "/profile" || pathname.startsWith("/api/course");
   const needsVerifiedUser = needsProfile;
   if (!needsSession) {

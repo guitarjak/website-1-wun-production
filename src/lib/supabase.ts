@@ -23,29 +23,39 @@ export const supabaseHandle: Handle = async ({ event, resolve }) => {
       return { session: null, profile: null };
     }
 
-    if (!verifyUser) {
-      return { session, profile: null };
-    }
-
     // For routes that only need to know if a session exists, avoid extra DB work.
-    if (!withProfile) {
+    if (!withProfile && !verifyUser) {
       return { session, profile: null };
     }
 
-    const {
-      data: { user },
-      error
-    } = await event.locals.supabase.auth.getUser();
+    let profileUserId: string | null = null;
 
-    if (error || !user) {
-      return { session: null, profile: null };
+    if (verifyUser) {
+      const {
+        data: { user },
+        error
+      } = await event.locals.supabase.auth.getUser();
+
+      if (error || !user) {
+        return { session: null, profile: null };
+      }
+
+      if (!withProfile) {
+        return { session, profile: null };
+      }
+
+      profileUserId = user.id;
+    } else if (withProfile) {
+      profileUserId = session.user.id;
+    } else {
+      return { session, profile: null };
     }
 
     // Fetch profile from database
     const { data: profile, error: profileError } = await event.locals.supabase
       .from('users_profile')
       .select('id, email, full_name, role')
-      .eq('id', user.id)
+      .eq('id', profileUserId)
       .single();
 
     if (profileError) {
