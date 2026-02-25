@@ -478,8 +478,8 @@ export const actions: Actions = {
       ? existingLessons[0].order + 1
       : 0;
 
-    // Insert new lesson
-    const { data: newLesson, error: insertError } = await locals.supabase
+    // Insert new lesson. Keep compatibility with DBs that don't have is_published yet.
+    let insertResult = await locals.supabase
       .from('lessons')
       .insert({
         module_id: moduleId,
@@ -487,10 +487,26 @@ export const actions: Actions = {
         order: newOrder,
         video_embed: null,
         content: null,
-        is_published: true
+        is_published: false
       })
       .select('id, module_id, title, order, video_embed, content, is_published')
       .single();
+
+    if (insertResult.error && insertResult.error.message?.includes('is_published')) {
+      insertResult = await locals.supabase
+        .from('lessons')
+        .insert({
+          module_id: moduleId,
+          title,
+          order: newOrder,
+          video_embed: null,
+          content: null
+        })
+        .select('id, module_id, title, order, video_embed, content')
+        .single();
+    }
+
+    const { data: newLesson, error: insertError } = insertResult;
 
     if (insertError || !newLesson) {
       return fail(500, {
@@ -506,7 +522,7 @@ export const actions: Actions = {
         position: newLesson.order, // Add position for compatibility
         video_embed_html: newLesson.video_embed,
         content_json: newLesson.content,
-        is_published: newLesson.is_published ?? true
+        is_published: newLesson.is_published ?? false
       }
     };
   },

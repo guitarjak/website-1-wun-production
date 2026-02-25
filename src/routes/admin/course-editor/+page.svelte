@@ -73,6 +73,7 @@
   let showModuleModal = false;
   let showLessonModal = false;
   let showDeleteConfirmModal = false;
+  let lessonModalError = '';
 
   // Edit states
   let editingModule: any | null = null; // null = create mode, object = edit mode
@@ -106,6 +107,7 @@
   }
 
   function openLessonCreate(moduleId: string) {
+    lessonModalError = '';
     creatingLessonForModuleId = moduleId;
     showLessonModal = true;
   }
@@ -127,6 +129,7 @@
     editingModule = null;
     deletingItem = null;
     creatingLessonForModuleId = null;
+    lessonModalError = '';
   }
 
   onMount(() => {
@@ -985,6 +988,7 @@
           use:enhance={() => {
             return async ({ result }) => {
               if (result.type === 'success') {
+                lessonModalError = '';
                 // Add new lesson to the correct module in local state
                 const moduleToUpdate = modules.find(m => m.id === creatingLessonForModuleId);
                 if (moduleToUpdate) {
@@ -1002,10 +1006,20 @@
                   showSuccess = false;
                   successMessage = '';
                 }, 3000);
+              } else if (result.type === 'failure') {
+                lessonModalError = result.data?.error || 'Failed to create lesson.';
+              } else if (result.type === 'error') {
+                lessonModalError = 'Unexpected server error while creating lesson.';
               }
             };
           }}
         >
+          {#if lessonModalError}
+            <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
+              <p class="text-sm text-red-800">{lessonModalError}</p>
+            </div>
+          {/if}
+
           {#if form?.error}
             <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
               <p class="text-sm text-red-800">{form.error}</p>

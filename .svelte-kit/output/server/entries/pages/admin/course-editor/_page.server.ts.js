@@ -298,14 +298,24 @@ const actions = {
     }
     const { data: existingLessons } = await locals.supabase.from("lessons").select("order").eq("module_id", moduleId).order("order", { ascending: false }).limit(1);
     const newOrder = existingLessons && existingLessons.length > 0 ? existingLessons[0].order + 1 : 0;
-    const { data: newLesson, error: insertError } = await locals.supabase.from("lessons").insert({
+    let insertResult = await locals.supabase.from("lessons").insert({
       module_id: moduleId,
       title,
       order: newOrder,
       video_embed: null,
       content: null,
-      is_published: true
+      is_published: false
     }).select("id, module_id, title, order, video_embed, content, is_published").single();
+    if (insertResult.error && insertResult.error.message?.includes("is_published")) {
+      insertResult = await locals.supabase.from("lessons").insert({
+        module_id: moduleId,
+        title,
+        order: newOrder,
+        video_embed: null,
+        content: null
+      }).select("id, module_id, title, order, video_embed, content").single();
+    }
+    const { data: newLesson, error: insertError } = insertResult;
     if (insertError || !newLesson) {
       return fail(500, {
         error: "Failed to create lesson: " + (insertError?.message || "Unknown error")
@@ -321,7 +331,7 @@ const actions = {
         // Add position for compatibility
         video_embed_html: newLesson.video_embed,
         content_json: newLesson.content,
-        is_published: newLesson.is_published ?? true
+        is_published: newLesson.is_published ?? false
       }
     };
   },
