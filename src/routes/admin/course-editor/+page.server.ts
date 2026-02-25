@@ -522,7 +522,7 @@ export const actions: Actions = {
         position: newLesson.order, // Add position for compatibility
         video_embed_html: newLesson.video_embed,
         content_json: newLesson.content,
-        is_published: newLesson.is_published ?? false
+        is_published: newLesson.is_published ?? true
       }
     };
   },
@@ -588,6 +588,11 @@ export const actions: Actions = {
       .eq('id', lessonId);
 
     if (updateError) {
+      if (updateError.message?.includes('is_published')) {
+        return fail(400, {
+          error: 'Publish toggle requires the is_published column in lessons table.'
+        });
+      }
       return fail(500, {
         error: 'Failed to toggle publish status: ' + updateError.message
       });

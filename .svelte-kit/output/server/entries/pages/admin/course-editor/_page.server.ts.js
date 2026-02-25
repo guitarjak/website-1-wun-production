@@ -331,7 +331,7 @@ const actions = {
         // Add position for compatibility
         video_embed_html: newLesson.video_embed,
         content_json: newLesson.content,
-        is_published: newLesson.is_published ?? false
+        is_published: newLesson.is_published ?? true
       }
     };
   },
@@ -377,6 +377,11 @@ const actions = {
     const newStatus = !isPublished;
     const { error: updateError } = await locals.supabase.from("lessons").update({ is_published: newStatus }).eq("id", lessonId);
     if (updateError) {
+      if (updateError.message?.includes("is_published")) {
+        return fail(400, {
+          error: "Publish toggle requires the is_published column in lessons table."
+        });
+      }
       return fail(500, {
         error: "Failed to toggle publish status: " + updateError.message
       });

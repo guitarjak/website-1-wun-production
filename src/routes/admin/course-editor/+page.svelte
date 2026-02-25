@@ -64,6 +64,8 @@
   // Success notification
   let showSuccess = false;
   let successMessage = '';
+  let showError = false;
+  let errorMessage = '';
 
   // Mobile lesson list drawer
   let showLessonDrawer = false;
@@ -253,6 +255,26 @@
         <button
           on:click={() => showSuccess = false}
           class="ml-2 text-green-600 hover:text-green-800"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  {/if}
+
+  {#if showError}
+    <div class="fixed top-20 right-4 z-50 animate-in slide-in-from-top-5 fade-in duration-300">
+      <div class="bg-red-50 border border-red-200 rounded-xl shadow-lg p-4 flex items-center gap-3">
+        <svg class="w-5 h-5 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z" />
+        </svg>
+        <span class="text-sm font-medium text-red-900">{errorMessage}</span>
+        <button
+          on:click={() => showError = false}
+          class="ml-2 text-red-600 hover:text-red-800"
+          aria-label="Dismiss error"
         >
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -455,10 +477,25 @@
                                   modules = modules;
                                   successMessage = result.data.newStatus ? 'Lesson published!' : 'Lesson unpublished';
                                   showSuccess = true;
+                                  showError = false;
                                   setTimeout(() => {
                                     showSuccess = false;
                                     successMessage = '';
                                   }, 3000);
+                                } else if (result.type === 'failure') {
+                                  errorMessage = result.data?.error || 'Failed to update publish status.';
+                                  showError = true;
+                                  setTimeout(() => {
+                                    showError = false;
+                                    errorMessage = '';
+                                  }, 4000);
+                                } else if (result.type === 'error') {
+                                  errorMessage = 'Unexpected server error while updating publish status.';
+                                  showError = true;
+                                  setTimeout(() => {
+                                    showError = false;
+                                    errorMessage = '';
+                                  }, 4000);
                                 }
                               };
                             }}
