@@ -14,7 +14,7 @@ export const supabaseHandle: Handle = async ({ event, resolve }) => {
     }
   });
 
-  event.locals.safeGetSession = async () => {
+  event.locals.safeGetSession = async (withProfile = true) => {
     const {
       data: { session }
     } = await event.locals.supabase.auth.getSession();
@@ -23,12 +23,17 @@ export const supabaseHandle: Handle = async ({ event, resolve }) => {
       return { session: null, profile: null };
     }
 
+    // For routes that only need to know if a session exists, avoid extra DB work.
+    if (!withProfile) {
+      return { session, profile: null };
+    }
+
     const {
       data: { user },
       error
     } = await event.locals.supabase.auth.getUser();
 
-    if (error) {
+    if (error || !user) {
       return { session: null, profile: null };
     }
 

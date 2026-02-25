@@ -129,29 +129,11 @@
     "isEntry": true,
     "imports": [
       "_index.js",
-      "_stores.js",
-      "_exports.js",
-      "_utils.js",
-      "_state.svelte.js"
+      "_stores.js"
     ],
     "css": [
-      "_app/immutable/assets/_layout.CNgw2v6K.css"
+      "_app/immutable/assets/_layout.BifqS3TJ.css"
     ]
-  },
-  "src/routes/+layout.ts": {
-    "file": "entries/pages/_layout.ts.js",
-    "name": "entries/pages/_layout.ts",
-    "src": "src/routes/+layout.ts",
-    "isEntry": true,
-    "imports": [
-      "_public.js"
-    ]
-  },
-  "src/routes/+page.server.ts": {
-    "file": "entries/pages/_page.server.ts.js",
-    "name": "entries/pages/_page.server.ts",
-    "src": "src/routes/+page.server.ts",
-    "isEntry": true
   },
   "src/routes/+page.svelte": {
     "file": "entries/pages/_page.svelte.js",
@@ -164,6 +146,12 @@
     "css": [
       "_app/immutable/assets/_page.DoOv0dRD.css"
     ]
+  },
+  "src/routes/+page.ts": {
+    "file": "entries/pages/_page.ts.js",
+    "name": "entries/pages/_page.ts",
+    "src": "src/routes/+page.ts",
+    "isEntry": true
   },
   "src/routes/admin-dashboard/+page.server.ts": {
     "file": "entries/pages/admin-dashboard/_page.server.ts.js",
@@ -210,23 +198,11 @@
       "_public.js"
     ]
   },
-  "src/routes/build-landing-page/+page.server.ts": {
-    "file": "entries/pages/build-landing-page/_page.server.ts.js",
-    "name": "entries/pages/build-landing-page/_page.server.ts",
-    "src": "src/routes/build-landing-page/+page.server.ts",
+  "src/routes/api/auth/signout/+server.ts": {
+    "file": "entries/endpoints/api/auth/signout/_server.ts.js",
+    "name": "entries/endpoints/api/auth/signout/_server.ts",
+    "src": "src/routes/api/auth/signout/+server.ts",
     "isEntry": true
-  },
-  "src/routes/build-landing-page/+page.svelte": {
-    "file": "entries/pages/build-landing-page/_page.svelte.js",
-    "name": "entries/pages/build-landing-page/_page.svelte",
-    "src": "src/routes/build-landing-page/+page.svelte",
-    "isEntry": true,
-    "imports": [
-      "_index.js"
-    ],
-    "css": [
-      "_app/immutable/assets/_page.7fFHN-Ys.css"
-    ]
   },
   "src/routes/course/+page.server.ts": {
     "file": "entries/pages/course/_page.server.ts.js",

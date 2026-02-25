@@ -1,7 +1,6 @@
 <script lang="ts">
   import '../app.css';
   import { page } from '$app/stores';
-  import { invalidate, goto } from '$app/navigation';
   import { onMount } from 'svelte';
 
   export let data;
@@ -26,9 +25,8 @@
   // Navigation preloading handled by data-sveltekit-preload-data="tap" on nav links
 
   async function handleSignOut() {
-    const { error } = await data.supabase.auth.signOut();
-    if (!error) {
-      invalidate('supabase:auth');
+    const response = await fetch('/api/auth/signout', { method: 'POST' });
+    if (response.ok) {
       window.location.href = '/';
     }
   }
@@ -43,25 +41,25 @@
 
   onMount(() => {
     const analyticsSrc = 'https://track.justforr.fun/api/script.js';
-    if (!document.querySelector(`script[src="${analyticsSrc}"]`)) {
+    const injectAnalytics = () => {
+      if (document.querySelector(`script[src="${analyticsSrc}"]`)) return;
       const analyticsScript = document.createElement('script');
       analyticsScript.src = analyticsSrc;
       analyticsScript.async = true;
       analyticsScript.defer = true;
       analyticsScript.dataset.siteId = '1';
       document.head.appendChild(analyticsScript);
-    }
+    };
 
-    const { data: authData } = data.supabase.auth.onAuthStateChange((event, newSession) => {
-      if (newSession?.expires_at !== session?.expires_at) {
-        invalidate('supabase:auth');
-      }
-    });
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(injectAnalytics, { timeout: 2000 });
+    } else {
+      setTimeout(injectAnalytics, 300);
+    }
 
     return () => {
       const injectedScript = document.querySelector(`script[src="${analyticsSrc}"]`);
       injectedScript?.remove();
-      authData.subscription.unsubscribe();
     };
   });
 </script>
@@ -69,7 +67,7 @@
 <svelte:head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700;800&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;700&display=swap" rel="stylesheet">
   {#if currentPath === '/'}
     <link rel="stylesheet" href="/w1w/style.css">
   {/if}
@@ -92,6 +90,9 @@
                 src="/w1w/w1w-logo.webp"
                 alt="Website 1 Wun"
                 class="h-8 sm:h-10 w-auto"
+                width="144"
+                height="40"
+                decoding="async"
               />
             </a>
           </div>

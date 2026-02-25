@@ -2,7 +2,8 @@
   import { enhance } from '$app/forms';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { invalidate } from '$app/navigation';
+  import { invalidateAll } from '$app/navigation';
+  import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
   import type { ActionData, PageData } from './$types';
 
   export let data: PageData;
@@ -37,11 +38,22 @@
     const hasAuthHash = hashParams.has('access_token') || hashParams.get('type') === 'recovery';
 
     if (hasAuthHash) {
-      // Wait a bit for Supabase to process the hash and set cookies
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Process recovery hash on this page only (avoid loading Supabase client globally).
+      const { createBrowserClient } = await import('@supabase/ssr');
+      const supabase = createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
+      const {
+        data: { session }
+      } = await supabase.auth.getSession();
 
-      // Invalidate the session to get fresh data
-      await invalidate('supabase:auth');
+      if (session) {
+        hasValidSession = true;
+        checkingAuth = false;
+        void invalidateAll();
+        return;
+      }
+
+      // Refresh server data so cookies/session from hash exchange are reflected in page data.
+      await invalidateAll();
 
       // Check if session was established
       if (data.session) {

@@ -1,9 +1,8 @@
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async ({ locals, cookies }) => {
+export const load: LayoutServerLoad = async ({ locals }) => {
   return {
     session: locals.session,
-    profile: locals.profile,
-    cookies: cookies.getAll()
+    profile: locals.profile
   };
 };

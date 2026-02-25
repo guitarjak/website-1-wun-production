@@ -27,7 +27,7 @@ export {};
 
 declare module "$app/types" {
 	export interface AppTypes {
-		RouteId(): "/" | "/admin-dashboard" | "/admin" | "/admin/course-editor" | "/api" | "/api/admin" | "/api/admin/users" | "/build-landing-page" | "/course" | "/login" | "/manage-users" | "/profile" | "/reset-password";
+		RouteId(): "/" | "/admin-dashboard" | "/admin" | "/admin/course-editor" | "/api" | "/api/admin" | "/api/admin/users" | "/api/auth" | "/api/auth/signout" | "/course" | "/login" | "/manage-users" | "/profile" | "/reset-password";
 		RouteParams(): {
 			
 		};
@@ -39,14 +39,15 @@ declare module "$app/types" {
 			"/api": Record<string, never>;
 			"/api/admin": Record<string, never>;
 			"/api/admin/users": Record<string, never>;
-			"/build-landing-page": Record<string, never>;
+			"/api/auth": Record<string, never>;
+			"/api/auth/signout": Record<string, never>;
 			"/course": Record<string, never>;
 			"/login": Record<string, never>;
 			"/manage-users": Record<string, never>;
 			"/profile": Record<string, never>;
 			"/reset-password": Record<string, never>
 		};
-		Pathname(): "/" | "/admin-dashboard" | "/admin-dashboard/" | "/admin" | "/admin/" | "/admin/course-editor" | "/admin/course-editor/" | "/api" | "/api/" | "/api/admin" | "/api/admin/" | "/api/admin/users" | "/api/admin/users/" | "/build-landing-page" | "/build-landing-page/" | "/course" | "/course/" | "/login" | "/login/" | "/manage-users" | "/manage-users/" | "/profile" | "/profile/" | "/reset-password" | "/reset-password/";
+		Pathname(): "/" | "/admin-dashboard" | "/admin-dashboard/" | "/admin" | "/admin/" | "/admin/course-editor" | "/admin/course-editor/" | "/api" | "/api/" | "/api/admin" | "/api/admin/" | "/api/admin/users" | "/api/admin/users/" | "/api/auth" | "/api/auth/" | "/api/auth/signout" | "/api/auth/signout/" | "/course" | "/course/" | "/login" | "/login/" | "/manage-users" | "/manage-users/" | "/profile" | "/profile/" | "/reset-password" | "/reset-password/";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
 		Asset(): "/w1w/guitar-dsp-square.png" | "/w1w/guitar-dsp-square.webp" | "/w1w/images/1.png" | "/w1w/images/1.webp" | "/w1w/images/10.png" | "/w1w/images/10.webp" | "/w1w/images/11.png" | "/w1w/images/11.webp" | "/w1w/images/12.png" | "/w1w/images/12.webp" | "/w1w/images/13.png" | "/w1w/images/13.webp" | "/w1w/images/14.png" | "/w1w/images/14.webp" | "/w1w/images/15.png" | "/w1w/images/15.webp" | "/w1w/images/16.png" | "/w1w/images/16.webp" | "/w1w/images/17.png" | "/w1w/images/17.webp" | "/w1w/images/18.png" | "/w1w/images/18.webp" | "/w1w/images/19.png" | "/w1w/images/19.webp" | "/w1w/images/2.png" | "/w1w/images/2.webp" | "/w1w/images/20.png" | "/w1w/images/20.webp" | "/w1w/images/21.png" | "/w1w/images/21.webp" | "/w1w/images/22.png" | "/w1w/images/22.webp" | "/w1w/images/23.png" | "/w1w/images/23.webp" | "/w1w/images/24.png" | "/w1w/images/24.webp" | "/w1w/images/25.png" | "/w1w/images/25.webp" | "/w1w/images/3.png" | "/w1w/images/3.webp" | "/w1w/images/4.png" | "/w1w/images/4.webp" | "/w1w/images/5.png" | "/w1w/images/5.webp" | "/w1w/images/6.png" | "/w1w/images/6.webp" | "/w1w/images/7.png" | "/w1w/images/7.webp" | "/w1w/images/8.png" | "/w1w/images/8.webp" | "/w1w/images/9.png" | "/w1w/images/9.webp" | "/w1w/jakkrapat-dot-com.png" | "/w1w/jakkrapat-dot-com.webp" | "/w1w/style.css" | "/w1w/w1w-logo.png" | "/w1w/w1w-logo.webp" | "/w1w/web-showcase-1.png" | "/w1w/web-showcase-1.webp" | "/w1w/web-showcase-2.png" | "/w1w/web-showcase-2.webp" | "/w1w/web-showcase-3.png" | "/w1w/web-showcase-3.webp" | "/w1w/web-showcase-4.jpeg" | "/w1w/web-showcase-4.png" | "/w1w/web-showcase-4.webp" | "/w1w/web-showcase-5.png" | "/w1w/web-showcase-5.webp" | "/w1w/web-showcase-6.jpeg" | "/w1w/web-showcase-6.png" | "/w1w/web-showcase-6.webp" | "/w1w/web-showcase-7.png" | "/w1w/web-showcase-7.webp" | "/w1w/web-showcase-8.jpeg" | "/w1w/web-showcase-8.png" | "/w1w/web-showcase-8.webp" | "/w1w-logo.jpeg" | "/w1w-logo.png" | "/w1w-logo.webp" | string & {};
 	}

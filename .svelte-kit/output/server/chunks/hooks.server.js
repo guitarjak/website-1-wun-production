@@ -12,18 +12,21 @@ const supabaseHandle = async ({ event, resolve }) => {
       }
     }
   });
-  event.locals.safeGetSession = async () => {
+  event.locals.safeGetSession = async (withProfile = true) => {
     const {
       data: { session }
     } = await event.locals.supabase.auth.getSession();
     if (!session) {
       return { session: null, profile: null };
     }
+    if (!withProfile) {
+      return { session, profile: null };
+    }
     const {
       data: { user },
       error
     } = await event.locals.supabase.auth.getUser();
-    if (error) {
+    if (error || !user) {
       return { session: null, profile: null };
     }
     const { data: profile, error: profileError } = await event.locals.supabase.from("users_profile").select("id, email, full_name, role").eq("id", user.id).single();
@@ -39,8 +42,34 @@ const supabaseHandle = async ({ event, resolve }) => {
     }
   });
 };
+const PROFILE_REQUIRED_PREFIXES = [
+  "/course",
+  "/profile",
+  "/admin-dashboard",
+  "/admin",
+  "/manage-users",
+  "/api/admin"
+];
+const SESSION_ONLY_PATHS = /* @__PURE__ */ new Set(["/login", "/reset-password"]);
+function hasSupabaseAuthCookie(cookieNames) {
+  return cookieNames.some((name) => name.startsWith("sb-"));
+}
 const authGuard = async ({ event, resolve }) => {
-  const { session, profile } = await event.locals.safeGetSession();
+  const pathname = event.url.pathname;
+  const needsProfile = PROFILE_REQUIRED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
+  const needsSession = needsProfile || SESSION_ONLY_PATHS.has(pathname);
+  if (!needsSession) {
+    event.locals.session = null;
+    event.locals.profile = null;
+    return resolve(event);
+  }
+  const cookieNames = event.cookies.getAll().map(({ name }) => name);
+  if (!hasSupabaseAuthCookie(cookieNames)) {
+    event.locals.session = null;
+    event.locals.profile = null;
+    return resolve(event);
+  }
+  const { session, profile } = await event.locals.safeGetSession(needsProfile);
   event.locals.session = session;
   event.locals.profile = profile;
   return resolve(event);

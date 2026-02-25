@@ -57,12 +57,12 @@
   body {
     background-color: var(--bg-tertiary);
     color: var(--text-primary);
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
     line-height: 1.6;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Prompt', sans-serif;
     font-weight: 700;
     line-height: 1.2;
     color: var(--text-primary);
