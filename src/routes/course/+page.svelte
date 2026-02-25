@@ -28,8 +28,14 @@
   // Flatten lessons and select
   $: allLessons = modules.flatMap((m) => m.lessons);
   let selectedLesson: Lesson | null = null;
-  type LessonContent = { id: string; video_embed_html: string | null; content_html: string | null };
+  type LessonContent = {
+    id: string;
+    video_embed_html: string | null;
+    content_html: string | null;
+    content_json?: unknown;
+  };
   let lessonContentById: Record<string, LessonContent> = {};
+  const inFlightLessonContentRequests = new Set<string>();
   let lessonContentLoading = false;
   let lessonContentError = '';
   let lastRequestedLessonId = '';
@@ -102,30 +108,48 @@
     }
   });
 
-  async function ensureLessonContent(lessonId: string) {
-    if (!lessonId || lessonContentById[lessonId]) return;
+  async function ensureLessonContent(lessonId: string, options: { silent?: boolean } = {}) {
+    if (!lessonId || lessonContentById[lessonId] || inFlightLessonContentRequests.has(lessonId)) return;
 
-    lastRequestedLessonId = lessonId;
-    lessonContentLoading = true;
-    lessonContentError = '';
+    const silent = options.silent ?? false;
+
+    inFlightLessonContentRequests.add(lessonId);
+    if (!silent) {
+      lastRequestedLessonId = lessonId;
+      lessonContentLoading = true;
+      lessonContentError = '';
+    }
 
     try {
-      const response = await fetch(`/api/course/lesson-content/${lessonId}`);
+      const response = await fetch(`/api/course/lesson-content/${lessonId}?v=2`);
       if (!response.ok) {
         throw new Error(`Failed to load lesson content (${response.status})`);
       }
 
-      const lessonContent = await response.json();
+      const rawLessonContent = await response.json();
+      const lessonContent: LessonContent = {
+        id: rawLessonContent.id,
+        video_embed_html: rawLessonContent.video_embed_html ?? null,
+        // Backward compatibility for older cached payload shape.
+        content_html: rawLessonContent.content_html ?? (
+          typeof rawLessonContent.content_json === 'string'
+            ? rawLessonContent.content_json
+            : null
+        ),
+        content_json: rawLessonContent.content_json
+      };
+
       lessonContentById = {
         ...lessonContentById,
         [lessonId]: lessonContent
       };
     } catch (error) {
-      if (lastRequestedLessonId === lessonId) {
+      if (!silent && lastRequestedLessonId === lessonId) {
         lessonContentError = 'Failed to load lesson content. Please try again.';
       }
     } finally {
-      if (lastRequestedLessonId === lessonId) {
+      inFlightLessonContentRequests.delete(lessonId);
+      if (!silent && lastRequestedLessonId === lessonId) {
         lessonContentLoading = false;
       }
     }
@@ -133,6 +157,10 @@
 
   $: if (selectedLesson) {
     void ensureLessonContent(selectedLesson.id);
+  }
+
+  $: if (selectedLesson && nextLesson && nextLesson.id !== selectedLesson.id) {
+    void ensureLessonContent(nextLesson.id, { silent: true });
   }
 
   function selectLesson(lesson: Lesson) {

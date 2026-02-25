@@ -1,8 +1,9 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { lessonContentToHtml } from '$lib/server/lesson-content';
+import { createHash } from 'node:crypto';
 
-export const GET: RequestHandler = async ({ locals, params }) => {
+export const GET: RequestHandler = async ({ locals, params, request }) => {
   if (!locals.session) {
     return json({ error: 'Unauthorized' }, { status: 401 });
   }
@@ -26,9 +27,30 @@ export const GET: RequestHandler = async ({ locals, params }) => {
     return json({ error: 'Lesson not available' }, { status: 403 });
   }
 
-  return json({
+  const payload = {
     id: data.id,
     video_embed_html: data.video_embed,
     content_html: lessonContentToHtml(data.content)
+  };
+
+  const etag = `"${createHash('sha1')
+    .update(`${payload.id}|${payload.video_embed_html ?? ''}|${payload.content_html ?? ''}`)
+    .digest('hex')}"`;
+  const ifNoneMatch = request.headers.get('if-none-match');
+
+  const responseHeaders = {
+    'cache-control': 'private, max-age=60, stale-while-revalidate=300',
+    etag
+  };
+
+  if (ifNoneMatch === etag) {
+    return new Response(null, {
+      status: 304,
+      headers: responseHeaders
+    });
+  }
+
+  return json(payload, {
+    headers: responseHeaders
   });
 };

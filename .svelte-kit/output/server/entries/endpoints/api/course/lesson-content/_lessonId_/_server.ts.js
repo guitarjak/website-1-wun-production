@@ -1,6 +1,7 @@
 import { json } from "@sveltejs/kit";
 import { l as lessonContentToHtml } from "../../../../../../chunks/lesson-content.js";
-const GET = async ({ locals, params }) => {
+import { createHash } from "node:crypto";
+const GET = async ({ locals, params, request }) => {
   if (!locals.session) {
     return json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -15,10 +16,25 @@ const GET = async ({ locals, params }) => {
   if (data.is_published === false) {
     return json({ error: "Lesson not available" }, { status: 403 });
   }
-  return json({
+  const payload = {
     id: data.id,
     video_embed_html: data.video_embed,
     content_html: lessonContentToHtml(data.content)
+  };
+  const etag = `"${createHash("sha1").update(`${payload.id}|${payload.video_embed_html ?? ""}|${payload.content_html ?? ""}`).digest("hex")}"`;
+  const ifNoneMatch = request.headers.get("if-none-match");
+  const responseHeaders = {
+    "cache-control": "private, max-age=60, stale-while-revalidate=300",
+    etag
+  };
+  if (ifNoneMatch === etag) {
+    return new Response(null, {
+      status: 304,
+      headers: responseHeaders
+    });
+  }
+  return json(payload, {
+    headers: responseHeaders
   });
 };
 export {

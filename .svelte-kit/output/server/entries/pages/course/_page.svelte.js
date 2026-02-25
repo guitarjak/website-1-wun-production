@@ -30,27 +30,40 @@ function _page($$renderer, $$props) {
     let localCompletedLessonIds = data.completedLessonIds || [];
     let selectedLesson = null;
     let lessonContentById = {};
+    const inFlightLessonContentRequests = /* @__PURE__ */ new Set();
     let lessonContentLoading = false;
     let lessonContentError = "";
     let lastRequestedLessonId = "";
-    async function ensureLessonContent(lessonId) {
-      if (!lessonId || lessonContentById[lessonId]) return;
-      lastRequestedLessonId = lessonId;
-      lessonContentLoading = true;
-      lessonContentError = "";
+    async function ensureLessonContent(lessonId, options = {}) {
+      if (!lessonId || lessonContentById[lessonId] || inFlightLessonContentRequests.has(lessonId)) return;
+      const silent = options.silent ?? false;
+      inFlightLessonContentRequests.add(lessonId);
+      if (!silent) {
+        lastRequestedLessonId = lessonId;
+        lessonContentLoading = true;
+        lessonContentError = "";
+      }
       try {
-        const response = await fetch(`/api/course/lesson-content/${lessonId}`);
+        const response = await fetch(`/api/course/lesson-content/${lessonId}?v=2`);
         if (!response.ok) {
           throw new Error(`Failed to load lesson content (${response.status})`);
         }
-        const lessonContent = await response.json();
+        const rawLessonContent = await response.json();
+        const lessonContent = {
+          id: rawLessonContent.id,
+          video_embed_html: rawLessonContent.video_embed_html ?? null,
+          // Backward compatibility for older cached payload shape.
+          content_html: rawLessonContent.content_html ?? (typeof rawLessonContent.content_json === "string" ? rawLessonContent.content_json : null),
+          content_json: rawLessonContent.content_json
+        };
         lessonContentById = { ...lessonContentById, [lessonId]: lessonContent };
       } catch (error) {
-        if (lastRequestedLessonId === lessonId) {
+        if (!silent && lastRequestedLessonId === lessonId) {
           lessonContentError = "Failed to load lesson content. Please try again.";
         }
       } finally {
-        if (lastRequestedLessonId === lessonId) {
+        inFlightLessonContentRequests.delete(lessonId);
+        if (!silent && lastRequestedLessonId === lessonId) {
           lessonContentLoading = false;
         }
       }
@@ -97,6 +110,9 @@ function _page($$renderer, $$props) {
     selectedLessonContent = selectedLesson ? lessonContentById[selectedLesson.id] || null : null;
     if (selectedLesson) {
       void ensureLessonContent(selectedLesson.id);
+    }
+    if (selectedLesson && nextLesson && nextLesson.id !== selectedLesson.id) {
+      void ensureLessonContent(nextLesson.id, { silent: true });
     }
     if (
       // Update URL to trigger reactive selection
