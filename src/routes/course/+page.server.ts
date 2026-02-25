@@ -15,6 +15,24 @@ type CachedCourseContent = {
 
 let cachedCourseContent: CachedCourseContent | null = null;
 
+async function fetchLessonContent(supabase: App.Locals['supabase'], lessonId: string) {
+  const { data, error: lessonError } = await supabase
+    .from('lessons')
+    .select('id, video_embed, content')
+    .eq('id', lessonId)
+    .maybeSingle();
+
+  if (lessonError || !data) {
+    return null;
+  }
+
+  return {
+    id: data.id,
+    video_embed_html: data.video_embed,
+    content_json: data.content
+  };
+}
+
 async function getCachedCourseContent(supabase: App.Locals['supabase']) {
   const now = Date.now();
   if (cachedCourseContent && cachedCourseContent.expiresAt > now) {
@@ -55,7 +73,7 @@ async function getCachedCourseContent(supabase: App.Locals['supabase']) {
 
   const publishedResult = await supabase
     .from('lessons')
-    .select('id, module_id, title, order, video_embed, content')
+    .select('id, module_id, title, order')
     .in('module_id', moduleIds)
     .eq('is_published', true)
     .order('order', { ascending: true });
@@ -63,7 +81,7 @@ async function getCachedCourseContent(supabase: App.Locals['supabase']) {
   if (publishedResult.error) {
     const fallbackResult = await supabase
       .from('lessons')
-      .select('id, module_id, title, order, video_embed, content')
+      .select('id, module_id, title, order')
       .in('module_id', moduleIds)
       .order('order', { ascending: true });
 
@@ -87,8 +105,8 @@ async function getCachedCourseContent(supabase: App.Locals['supabase']) {
         title: lesson.title,
         slug: lesson.id,
         position: lesson.order,
-        video_embed_html: lesson.video_embed,
-        content_json: lesson.content
+        video_embed_html: null,
+        content_json: null
       }))
   }));
 
@@ -104,7 +122,7 @@ async function getCachedCourseContent(supabase: App.Locals['supabase']) {
   return cachedCourseContent;
 }
 
-export const load: PageServerLoad = async ({ locals, setHeaders }) => {
+export const load: PageServerLoad = async ({ locals, setHeaders, url }) => {
   if (!locals.session) {
     throw redirect(303, '/login');
   }
@@ -126,12 +144,22 @@ export const load: PageServerLoad = async ({ locals, setHeaders }) => {
   ]);
 
   const completedLessonIds = progressResult.data?.map((row) => row.lesson_id) ?? [];
+  const allLessons = courseContent.modules.flatMap((module) => module.lessons);
+  const requestedLessonId = url.searchParams.get('lessonId');
+  const selectedLessonId = (requestedLessonId && allLessons.some((lesson) => lesson.id === requestedLessonId))
+    ? requestedLessonId
+    : (allLessons[0]?.id ?? null);
+  const initialLessonContent = selectedLessonId
+    ? await fetchLessonContent(supabase, selectedLessonId)
+    : null;
 
   return {
     course: courseContent.course,
     modules: courseContent.modules,
     completedLessonIds,
-    totalLessons: courseContent.totalLessons
+    totalLessons: courseContent.totalLessons,
+    initialLessonId: selectedLessonId,
+    initialLessonContent
   };
 };
 

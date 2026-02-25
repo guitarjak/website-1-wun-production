@@ -28,12 +28,25 @@
   // Flatten lessons and select
   $: allLessons = modules.flatMap((m) => m.lessons);
   let selectedLesson: Lesson | null = null;
+  type LessonContent = { id: string; video_embed_html: string | null; content_json: any | null };
+  let lessonContentById: Record<string, LessonContent> = {};
+  let lessonContentLoading = false;
+  let lessonContentError = '';
+  let lastRequestedLessonId = '';
+
+  $: if (data.initialLessonId && data.initialLessonContent) {
+    lessonContentById = {
+      ...lessonContentById,
+      [data.initialLessonId]: data.initialLessonContent
+    };
+  }
 
   // Calculate next lesson
   $: currentLessonIndex = selectedLesson ? allLessons.findIndex(l => l.id === selectedLesson.id) : -1;
   $: nextLesson = currentLessonIndex >= 0 && currentLessonIndex < allLessons.length - 1
     ? allLessons[currentLessonIndex + 1]
     : null;
+  $: selectedLessonContent = selectedLesson ? (lessonContentById[selectedLesson.id] || null) : null;
 
   // Mobile lesson drawer
   let showLessonDrawer = false;
@@ -88,6 +101,39 @@
       }, 3000);
     }
   });
+
+  async function ensureLessonContent(lessonId: string) {
+    if (!lessonId || lessonContentById[lessonId]) return;
+
+    lastRequestedLessonId = lessonId;
+    lessonContentLoading = true;
+    lessonContentError = '';
+
+    try {
+      const response = await fetch(`/api/course/lesson-content/${lessonId}`);
+      if (!response.ok) {
+        throw new Error(`Failed to load lesson content (${response.status})`);
+      }
+
+      const lessonContent = await response.json();
+      lessonContentById = {
+        ...lessonContentById,
+        [lessonId]: lessonContent
+      };
+    } catch (error) {
+      if (lastRequestedLessonId === lessonId) {
+        lessonContentError = 'Failed to load lesson content. Please try again.';
+      }
+    } finally {
+      if (lastRequestedLessonId === lessonId) {
+        lessonContentLoading = false;
+      }
+    }
+  }
+
+  $: if (selectedLesson) {
+    void ensureLessonContent(selectedLesson.id);
+  }
 
   function selectLesson(lesson: Lesson) {
     // Update URL to trigger reactive selection
@@ -472,10 +518,19 @@
 
             <!-- Video Player -->
             <div class="lg:p-6 lg:pt-4">
-              {#if selectedLesson.video_embed_html}
+              {#if selectedLessonContent?.video_embed_html}
                 <div class="aspect-video w-full lg:rounded-xl overflow-hidden bg-black relative">
                   <div class="absolute inset-0 [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:absolute [&>iframe]:top-0 [&>iframe]:left-0">
-                    {@html selectedLesson.video_embed_html}
+                    {@html selectedLessonContent.video_embed_html}
+                  </div>
+                </div>
+              {:else if lessonContentLoading}
+                <div class="aspect-video w-full lg:rounded-xl overflow-hidden flex items-center justify-center" style="background-color: var(--bg-secondary); border: 1px solid var(--border-light);">
+                  <div class="text-center p-6">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style="border-color: var(--golden);"></div>
+                    <p class="text-sm" style="color: var(--text-secondary);">
+                      Loading lesson...
+                    </p>
                   </div>
                 </div>
               {:else}
@@ -576,7 +631,17 @@
 
               <!-- Written Content -->
               <div class="prose prose-sm sm:prose max-w-none">
-                <RenderContent content={selectedLesson.content_json} />
+                {#if lessonContentError}
+                  <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700">
+                    {lessonContentError}
+                  </div>
+                {:else if selectedLessonContent}
+                  <RenderContent content={selectedLessonContent.content_json} />
+                {:else}
+                  <div class="rounded-xl p-6 text-sm" style="background-color: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-light);">
+                    Loading lesson content...
+                  </div>
+                {/if}
               </div>
             </div>
           </div>

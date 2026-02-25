@@ -204,6 +204,12 @@
     "src": "src/routes/api/auth/signout/+server.ts",
     "isEntry": true
   },
+  "src/routes/api/course/lesson-content/[lessonId]/+server.ts": {
+    "file": "entries/endpoints/api/course/lesson-content/_lessonId_/_server.ts.js",
+    "name": "entries/endpoints/api/course/lesson-content/_lessonId_/_server.ts",
+    "src": "src/routes/api/course/lesson-content/[lessonId]/+server.ts",
+    "isEntry": true
+  },
   "src/routes/course/+page.server.ts": {
     "file": "entries/pages/course/_page.server.ts.js",
     "name": "entries/pages/course/_page.server.ts",

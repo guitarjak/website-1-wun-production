@@ -56,10 +56,36 @@ function RenderContent($$renderer, $$props) {
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     var $$store_subs;
-    let course, modules, isAdmin, totalLessons, completedCount, progress, allLessons, currentLessonIndex, nextLesson;
+    let course, modules, isAdmin, totalLessons, completedCount, progress, allLessons, currentLessonIndex, nextLesson, selectedLessonContent;
     let data = $$props["data"];
     let localCompletedLessonIds = data.completedLessonIds || [];
     let selectedLesson = null;
+    let lessonContentById = {};
+    let lessonContentLoading = false;
+    let lessonContentError = "";
+    let lastRequestedLessonId = "";
+    async function ensureLessonContent(lessonId) {
+      if (!lessonId || lessonContentById[lessonId]) return;
+      lastRequestedLessonId = lessonId;
+      lessonContentLoading = true;
+      lessonContentError = "";
+      try {
+        const response = await fetch(`/api/course/lesson-content/${lessonId}`);
+        if (!response.ok) {
+          throw new Error(`Failed to load lesson content (${response.status})`);
+        }
+        const lessonContent = await response.json();
+        lessonContentById = { ...lessonContentById, [lessonId]: lessonContent };
+      } catch (error) {
+        if (lastRequestedLessonId === lessonId) {
+          lessonContentError = "Failed to load lesson content. Please try again.";
+        }
+      } finally {
+        if (lastRequestedLessonId === lessonId) {
+          lessonContentLoading = false;
+        }
+      }
+    }
     course = data.course;
     modules = data.modules || [];
     isAdmin = data.profile?.role === "admin";
@@ -70,6 +96,12 @@ function _page($$renderer, $$props) {
     completedCount = localCompletedLessonIds.length;
     progress = totalLessons > 0 ? Math.round(completedCount / totalLessons * 100) : 0;
     allLessons = modules.flatMap((m) => m.lessons);
+    if (data.initialLessonId && data.initialLessonContent) {
+      lessonContentById = {
+        ...lessonContentById,
+        [data.initialLessonId]: data.initialLessonContent
+      };
+    }
     {
       const lessonSlug = store_get($$store_subs ??= {}, "$page", page).url.searchParams.get("lesson");
       const lessonId = store_get($$store_subs ??= {}, "$page", page).url.searchParams.get("lessonId");
@@ -93,8 +125,11 @@ function _page($$renderer, $$props) {
     }
     currentLessonIndex = selectedLesson ? allLessons.findIndex((l) => l.id === selectedLesson.id) : -1;
     nextLesson = currentLessonIndex >= 0 && currentLessonIndex < allLessons.length - 1 ? allLessons[currentLessonIndex + 1] : null;
+    selectedLessonContent = selectedLesson ? lessonContentById[selectedLesson.id] || null : null;
+    if (selectedLesson) {
+      void ensureLessonContent(selectedLesson.id);
+    }
     if (
-      // Show success notification
       // Update URL to trigger reactive selection
       !course
     ) {
@@ -184,12 +219,19 @@ function _page($$renderer, $$props) {
             $$renderer2.push("<!--[!-->");
           }
           $$renderer2.push(`<!--]--></div></div> <div class="lg:hidden p-4 pb-3" style="border-bottom: 1px solid var(--border-light);"><h1 class="text-xl sm:text-2xl font-bold tracking-tight" style="color: var(--text-primary);">${escape_html(selectedLesson.title)}</h1></div> <div class="lg:p-6 lg:pt-4">`);
-          if (selectedLesson.video_embed_html) {
+          if (selectedLessonContent?.video_embed_html) {
             $$renderer2.push("<!--[-->");
-            $$renderer2.push(`<div class="aspect-video w-full lg:rounded-xl overflow-hidden bg-black relative"><div class="absolute inset-0 [&amp;>iframe]:w-full [&amp;>iframe]:h-full [&amp;>iframe]:absolute [&amp;>iframe]:top-0 [&amp;>iframe]:left-0">${html(selectedLesson.video_embed_html)}</div></div>`);
+            $$renderer2.push(`<div class="aspect-video w-full lg:rounded-xl overflow-hidden bg-black relative"><div class="absolute inset-0 [&amp;>iframe]:w-full [&amp;>iframe]:h-full [&amp;>iframe]:absolute [&amp;>iframe]:top-0 [&amp;>iframe]:left-0">${html(selectedLessonContent.video_embed_html)}</div></div>`);
           } else {
             $$renderer2.push("<!--[!-->");
-            $$renderer2.push(`<div class="aspect-video w-full lg:rounded-xl overflow-hidden flex items-center justify-center" style="background-color: var(--bg-secondary); border: 1px solid var(--border-light);"><div class="text-center p-6"><svg class="mx-auto h-10 w-10 mb-3" style="color: var(--text-tertiary);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <p class="text-sm" style="color: var(--text-secondary);">No video available for this lesson</p></div></div>`);
+            if (lessonContentLoading) {
+              $$renderer2.push("<!--[-->");
+              $$renderer2.push(`<div class="aspect-video w-full lg:rounded-xl overflow-hidden flex items-center justify-center" style="background-color: var(--bg-secondary); border: 1px solid var(--border-light);"><div class="text-center p-6"><div class="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto mb-3" style="border-color: var(--golden);"></div> <p class="text-sm" style="color: var(--text-secondary);">Loading lesson...</p></div></div>`);
+            } else {
+              $$renderer2.push("<!--[!-->");
+              $$renderer2.push(`<div class="aspect-video w-full lg:rounded-xl overflow-hidden flex items-center justify-center" style="background-color: var(--bg-secondary); border: 1px solid var(--border-light);"><div class="text-center p-6"><svg class="mx-auto h-10 w-10 mb-3" style="color: var(--text-tertiary);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <p class="text-sm" style="color: var(--text-secondary);">No video available for this lesson</p></div></div>`);
+            }
+            $$renderer2.push(`<!--]-->`);
           }
           $$renderer2.push(`<!--]--></div> <div class="p-4 sm:p-6 lg:px-6 lg:pb-8"><div class="lg:hidden mb-6 space-y-3"><form method="POST" action="?/toggleCompletion" class="w-full"><input type="hidden" name="lessonId"${attr("value", selectedLesson.id)}/> <input type="hidden" name="isCompleted"${attr("value", isLessonCompleted ? "true" : "false")}/> <button type="submit"${attr_class(`w-full inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold border transition-all shadow-sm min-h-[48px] ${stringify(isLessonCompleted ? "badge-success" : "btn-secondary text-white")}`)}${attr_style(isLessonCompleted ? "border-color: var(--success); color: var(--success);" : "")}>`);
           if (isLessonCompleted) {
@@ -207,8 +249,21 @@ function _page($$renderer, $$props) {
             $$renderer2.push("<!--[!-->");
           }
           $$renderer2.push(`<!--]--></div> <div class="prose prose-sm sm:prose max-w-none">`);
-          RenderContent($$renderer2, { content: selectedLesson.content_json });
-          $$renderer2.push(`<!----></div></div></div>`);
+          if (lessonContentError) {
+            $$renderer2.push("<!--[-->");
+            $$renderer2.push(`<div class="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700">${escape_html(lessonContentError)}</div>`);
+          } else {
+            $$renderer2.push("<!--[!-->");
+            if (selectedLessonContent) {
+              $$renderer2.push("<!--[-->");
+              RenderContent($$renderer2, { content: selectedLessonContent.content_json });
+            } else {
+              $$renderer2.push("<!--[!-->");
+              $$renderer2.push(`<div class="rounded-xl p-6 text-sm" style="background-color: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-light);">Loading lesson content...</div>`);
+            }
+            $$renderer2.push(`<!--]-->`);
+          }
+          $$renderer2.push(`<!--]--></div></div></div>`);
         } else {
           $$renderer2.push("<!--[!-->");
         }

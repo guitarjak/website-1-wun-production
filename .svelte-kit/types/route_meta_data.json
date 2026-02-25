@@ -18,6 +18,9 @@
 	"/api/auth/signout": [
 		"src/routes/api/auth/signout/+server.ts"
 	],
+	"/api/course/lesson-content/[lessonId]": [
+		"src/routes/api/course/lesson-content/[lessonId]/+server.ts"
+	],
 	"/course": [
 		"src/routes/course/+page.server.ts",
 		"src/routes/+layout.server.ts"

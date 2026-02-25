@@ -18,7 +18,11 @@ function hasSupabaseAuthCookie(cookieNames: string[]) {
 const authGuard: Handle = async ({ event, resolve }) => {
   const pathname = event.url.pathname;
   const needsProfile = PROFILE_REQUIRED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
-  const needsSession = needsProfile || SESSION_ONLY_PATHS.has(pathname) || pathname === '/course' || pathname === '/profile';
+  const needsSession = needsProfile
+    || SESSION_ONLY_PATHS.has(pathname)
+    || pathname === '/course'
+    || pathname === '/profile'
+    || pathname.startsWith('/api/course');
   const needsVerifiedUser = needsProfile;
 
   // Public pages should not pay auth/database cost on first load.

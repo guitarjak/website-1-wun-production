@@ -58,7 +58,7 @@ function hasSupabaseAuthCookie(cookieNames) {
 const authGuard = async ({ event, resolve }) => {
   const pathname = event.url.pathname;
   const needsProfile = PROFILE_REQUIRED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
-  const needsSession = needsProfile || SESSION_ONLY_PATHS.has(pathname) || pathname === "/course" || pathname === "/profile";
+  const needsSession = needsProfile || SESSION_ONLY_PATHS.has(pathname) || pathname === "/course" || pathname === "/profile" || pathname.startsWith("/api/course");
   const needsVerifiedUser = needsProfile;
   if (!needsSession) {
     event.locals.session = null;
