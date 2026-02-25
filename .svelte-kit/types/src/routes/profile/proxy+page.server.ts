@@ -2,6 +2,8 @@
 import { redirect, error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
+let cachedTotalLessons: { value: number; expiresAt: number } | null = null;
+
 export const load = async ({ locals, setHeaders }: Parameters<PageServerLoad>[0]) => {
   if (!locals.session) {
     throw redirect(303, '/login');
@@ -15,38 +17,29 @@ export const load = async ({ locals, setHeaders }: Parameters<PageServerLoad>[0]
     'cache-control': 'private, max-age=120, stale-while-revalidate=30'
   });
 
-  // Get the first course
-  const { data: courses, error: courseError } = await supabase
-    .from('courses')
-    .select('id')
-    .limit(1);
+  const now = Date.now();
+  const totalLessonsPromise =
+    cachedTotalLessons && cachedTotalLessons.expiresAt > now
+      ? Promise.resolve(cachedTotalLessons.value)
+      : supabase
+          .from('lessons')
+          .select('*', { count: 'exact', head: true })
+          .then((result) => {
+            const total = result.count || 0;
+            cachedTotalLessons = {
+              value: total,
+              expiresAt: now + 60_000
+            };
+            return total;
+          });
 
-  if (courseError || !courses || courses.length === 0) {
-    return {
-      profile: locals.profile,
-      stats: null
-    };
-  }
-
-  const course = courses[0];
-
-  // Get modules for the course
-  const { data: modules } = await supabase
-    .from('modules')
-    .select('id')
-    .eq('course_id', course.id);
-
-  const moduleIds = (modules || []).map((m) => m.id);
-
-  // Parallelize statistics queries
-  const [lessonsCountResult, progressResult] = await Promise.all([
-    // Get total lessons count
+  const [profileResult, totalLessons, progressResult] = await Promise.all([
     supabase
-      .from('lessons')
-      .select('*', { count: 'exact', head: true })
-      .in('module_id', moduleIds),
-
-    // Get user's completed lessons
+      .from('users_profile')
+      .select('id, email, full_name, role, created_at')
+      .eq('id', userId)
+      .maybeSingle(),
+    totalLessonsPromise,
     supabase
       .from('lesson_progress')
       .select('lesson_id, completed_at, completed')
@@ -55,7 +48,10 @@ export const load = async ({ locals, setHeaders }: Parameters<PageServerLoad>[0]
       .order('completed_at', { ascending: false })
   ]);
 
-  const totalLessons = lessonsCountResult.count || 0;
+  if (profileResult.error) {
+    throw error(500, 'Failed to load profile');
+  }
+
   const completedLessons = progressResult.data?.length || 0;
   const progressPercentage = totalLessons > 0
     ? Math.round((completedLessons / totalLessons) * 100)
@@ -63,10 +59,10 @@ export const load = async ({ locals, setHeaders }: Parameters<PageServerLoad>[0]
 
   // Get most recent activity
   const lastActivity = progressResult.data?.[0]?.completed_at || null;
-  const enrolledAt = locals.profile?.created_at || null;
+  const enrolledAt = profileResult.data?.created_at || null;
 
   return {
-    profile: locals.profile,
+    profile: profileResult.data ?? null,
     stats: {
       totalLessons,
       completedLessons,

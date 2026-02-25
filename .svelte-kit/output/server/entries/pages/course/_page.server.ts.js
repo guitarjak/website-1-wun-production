@@ -1,13 +1,10 @@
-import { redirect, error, fail } from "@sveltejs/kit";
-const load = async ({ locals, setHeaders }) => {
-  if (!locals.session) {
-    throw redirect(303, "/login");
+import { redirect, fail, error } from "@sveltejs/kit";
+let cachedCourseContent = null;
+async function getCachedCourseContent(supabase) {
+  const now = Date.now();
+  if (cachedCourseContent && cachedCourseContent.expiresAt > now) {
+    return cachedCourseContent;
   }
-  setHeaders({
-    "cache-control": "private, max-age=60, stale-while-revalidate=30"
-  });
-  const supabase = locals.supabase;
-  const userId = locals.session.user.id;
   const { data: courses, error: courseError } = await supabase.from("courses").select("id, title, description").limit(1);
   if (courseError) {
     console.error("Error fetching course:", courseError);
@@ -17,15 +14,11 @@ const load = async ({ locals, setHeaders }) => {
     throw error(404, "No courses found");
   }
   const course = courses[0];
-  const [modulesResult, progressResult] = await Promise.all([
-    supabase.from("modules").select("id, title, description, order").eq("course_id", course.id).order("order", { ascending: true }),
-    supabase.from("lesson_progress").select("lesson_id, completed").eq("user_id", userId).eq("completed", true)
-  ]);
-  if (modulesResult.error) {
+  const { data: modules, error: modulesError } = await supabase.from("modules").select("id, title, description, order").eq("course_id", course.id).order("order", { ascending: true });
+  if (modulesError) {
     throw error(500, "Failed to load modules");
   }
-  const modules = modulesResult.data || [];
-  const moduleIds = modules.map((m) => m.id);
+  const moduleIds = (modules || []).map((m) => m.id);
   let lessons = null;
   const publishedResult = await supabase.from("lessons").select("id, module_id, title, order, video_embed, content").in("module_id", moduleIds).eq("is_published", true).order("order", { ascending: true });
   if (publishedResult.error) {
@@ -51,13 +44,34 @@ const load = async ({ locals, setHeaders }) => {
       content_json: lesson.content
     }))
   }));
-  const completedLessonIds = progressResult.data?.map((row) => row.lesson_id) ?? [];
   const totalLessons = modulesWithLessons.reduce((total, module) => total + module.lessons.length, 0);
-  return {
+  cachedCourseContent = {
     course,
     modules: modulesWithLessons,
+    totalLessons,
+    expiresAt: now + 6e4
+  };
+  return cachedCourseContent;
+}
+const load = async ({ locals, setHeaders }) => {
+  if (!locals.session) {
+    throw redirect(303, "/login");
+  }
+  setHeaders({
+    "cache-control": "private, max-age=60, stale-while-revalidate=30"
+  });
+  const supabase = locals.supabase;
+  const userId = locals.session.user.id;
+  const [courseContent, progressResult] = await Promise.all([
+    getCachedCourseContent(supabase),
+    supabase.from("lesson_progress").select("lesson_id, completed").eq("user_id", userId).eq("completed", true)
+  ]);
+  const completedLessonIds = progressResult.data?.map((row) => row.lesson_id) ?? [];
+  return {
+    course: courseContent.course,
+    modules: courseContent.modules,
     completedLessonIds,
-    totalLessons
+    totalLessons: courseContent.totalLessons
   };
 };
 const actions = {

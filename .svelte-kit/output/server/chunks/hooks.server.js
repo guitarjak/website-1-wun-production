@@ -12,12 +12,15 @@ const supabaseHandle = async ({ event, resolve }) => {
       }
     }
   });
-  event.locals.safeGetSession = async (withProfile = true) => {
+  event.locals.safeGetSession = async (withProfile = true, verifyUser = true) => {
     const {
       data: { session }
     } = await event.locals.supabase.auth.getSession();
     if (!session) {
       return { session: null, profile: null };
+    }
+    if (!verifyUser) {
+      return { session, profile: null };
     }
     if (!withProfile) {
       return { session, profile: null };
@@ -43,8 +46,6 @@ const supabaseHandle = async ({ event, resolve }) => {
   });
 };
 const PROFILE_REQUIRED_PREFIXES = [
-  "/course",
-  "/profile",
   "/admin-dashboard",
   "/admin",
   "/manage-users",
@@ -57,7 +58,8 @@ function hasSupabaseAuthCookie(cookieNames) {
 const authGuard = async ({ event, resolve }) => {
   const pathname = event.url.pathname;
   const needsProfile = PROFILE_REQUIRED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
-  const needsSession = needsProfile || SESSION_ONLY_PATHS.has(pathname);
+  const needsSession = needsProfile || SESSION_ONLY_PATHS.has(pathname) || pathname === "/course" || pathname === "/profile";
+  const needsVerifiedUser = needsProfile;
   if (!needsSession) {
     event.locals.session = null;
     event.locals.profile = null;
@@ -69,7 +71,7 @@ const authGuard = async ({ event, resolve }) => {
     event.locals.profile = null;
     return resolve(event);
   }
-  const { session, profile } = await event.locals.safeGetSession(needsProfile);
+  const { session, profile } = await event.locals.safeGetSession(needsProfile, needsVerifiedUser);
   event.locals.session = session;
   event.locals.profile = profile;
   return resolve(event);

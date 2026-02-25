@@ -102,7 +102,7 @@
             {#each navLinks as link}
               <a
                 href={link.href}
-                data-sveltekit-preload-data="tap"
+                data-sveltekit-preload-data="hover"
                 data-sveltekit-noscroll={link.href === '/'}
                 class="px-3 lg:px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200"
                 style="{currentPath === link.href
@@ -163,7 +163,7 @@
               <a
                 href={link.href}
                 on:click={closeMobileMenu}
-                data-sveltekit-preload-data="tap"
+                data-sveltekit-preload-data="hover"
                 data-sveltekit-noscroll={link.href === '/'}
                 class="block px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors"
                 style="{currentPath === link.href

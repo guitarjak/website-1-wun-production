@@ -30,7 +30,7 @@ function _layout($$renderer, $$props) {
     const each_array = ensure_array_like(navLinks);
     for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
       let link = each_array[$$index];
-      $$renderer2.push(`<a${attr("href", link.href)} data-sveltekit-preload-data="tap"${attr("data-sveltekit-noscroll", link.href === "/")} class="px-3 lg:px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200"${attr_style(currentPath === link.href ? "background-color: var(--golden); color: var(--dark);" : "color: var(--text-secondary);")}>${escape_html(link.label)}</a>`);
+      $$renderer2.push(`<a${attr("href", link.href)} data-sveltekit-preload-data="hover"${attr("data-sveltekit-noscroll", link.href === "/")} class="px-3 lg:px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200"${attr_style(currentPath === link.href ? "background-color: var(--golden); color: var(--dark);" : "color: var(--text-secondary);")}>${escape_html(link.label)}</a>`);
     }
     $$renderer2.push(`<!--]--> `);
     if (session && profile) {

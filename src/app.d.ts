@@ -4,7 +4,7 @@ declare global {
   namespace App {
     interface Locals {
       supabase: SupabaseClient;
-      safeGetSession: (withProfile?: boolean) => Promise<{ session: Session | null; profile: Profile | null }>;
+      safeGetSession: (withProfile?: boolean, verifyUser?: boolean) => Promise<{ session: Session | null; profile: Profile | null }>;
       session: Session | null;
       profile: Profile | null;
     }

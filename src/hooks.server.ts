@@ -3,8 +3,6 @@ import { supabaseHandle } from '$lib/supabase';
 import type { Handle } from '@sveltejs/kit';
 
 const PROFILE_REQUIRED_PREFIXES = [
-  '/course',
-  '/profile',
   '/admin-dashboard',
   '/admin',
   '/manage-users',
@@ -20,7 +18,8 @@ function hasSupabaseAuthCookie(cookieNames: string[]) {
 const authGuard: Handle = async ({ event, resolve }) => {
   const pathname = event.url.pathname;
   const needsProfile = PROFILE_REQUIRED_PREFIXES.some((prefix) => pathname.startsWith(prefix));
-  const needsSession = needsProfile || SESSION_ONLY_PATHS.has(pathname);
+  const needsSession = needsProfile || SESSION_ONLY_PATHS.has(pathname) || pathname === '/course' || pathname === '/profile';
+  const needsVerifiedUser = needsProfile;
 
   // Public pages should not pay auth/database cost on first load.
   if (!needsSession) {
@@ -36,7 +35,7 @@ const authGuard: Handle = async ({ event, resolve }) => {
     return resolve(event);
   }
 
-  const { session, profile } = await event.locals.safeGetSession(needsProfile);
+  const { session, profile } = await event.locals.safeGetSession(needsProfile, needsVerifiedUser);
   event.locals.session = session;
   event.locals.profile = profile;
 
