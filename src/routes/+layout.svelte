@@ -75,7 +75,7 @@
 
 <div class="min-h-screen" style="{currentPath === '/' ? '' : 'background-color: var(--cream-light);'}">
   <!-- Navigation Bar - Hidden on homepage with CSS -->
-  <nav class="sticky top-0 z-40 border-b navbar-container" class:hidden-nav={currentPath === '/'} style="background: var(--cream-light); border-color: var(--border-light);">
+  <nav class="z-40 border-b navbar-container lg:sticky lg:top-0" class:hidden-nav={currentPath === '/'} style="background: var(--cream-light); border-color: var(--border-light);">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-14 sm:h-16">
           <!-- Logo/Brand -->
