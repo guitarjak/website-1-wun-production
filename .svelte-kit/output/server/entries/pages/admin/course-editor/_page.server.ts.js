@@ -379,7 +379,7 @@ const actions = {
     if (updateError) {
       if (updateError.message?.includes("is_published")) {
         return fail(400, {
-          error: "Publish toggle requires the is_published column in lessons table."
+          error: "Publish toggle requires lessons.is_published. Run supabase-add-is-published.sql in Supabase SQL Editor."
         });
       }
       return fail(500, {

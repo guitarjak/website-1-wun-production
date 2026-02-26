@@ -53,6 +53,9 @@
     ? allLessons[currentLessonIndex + 1]
     : null;
   $: selectedLessonContent = selectedLesson ? (lessonContentById[selectedLesson.id] || null) : null;
+  $: normalizedVideoEmbedHtml = ensureEmbedFullscreenPermissions(
+    selectedLessonContent?.video_embed_html ?? null
+  );
 
   // Mobile lesson drawer
   let showLessonDrawer = false;
@@ -169,6 +172,35 @@
     url.searchParams.set('lessonId', lesson.id);
     goto(url.toString(), { noScroll: true });
     showLessonDrawer = false;
+  }
+
+  function ensureEmbedFullscreenPermissions(embedHtml: string | null): string | null {
+    if (!embedHtml) return null;
+
+    return embedHtml.replace(/<iframe\b([^>]*)>/gi, (_, rawAttrs: string) => {
+      let attrs = rawAttrs;
+
+      if (!/\ballowfullscreen\b/i.test(attrs)) {
+        attrs += ' allowfullscreen';
+      }
+
+      const allowAttrMatch = attrs.match(/\ballow\s*=\s*(['"])(.*?)\1/i);
+      if (allowAttrMatch) {
+        const quote = allowAttrMatch[1];
+        const allowValue = allowAttrMatch[2];
+        if (!/\bfullscreen\b/i.test(allowValue)) {
+          const updatedAllowValue = `${allowValue}; fullscreen`.replace(/^\s*;\s*/, '').trim();
+          attrs = attrs.replace(
+            /\ballow\s*=\s*(['"])(.*?)\1/i,
+            `allow=${quote}${updatedAllowValue}${quote}`
+          );
+        }
+      } else {
+        attrs += ' allow="fullscreen; autoplay; encrypted-media; picture-in-picture"';
+      }
+
+      return `<iframe${attrs}>`;
+    });
   }
 </script>
 
@@ -549,7 +581,7 @@
               {#if selectedLessonContent?.video_embed_html}
                 <div class="aspect-video w-full lg:rounded-xl overflow-hidden bg-black relative">
                   <div class="absolute inset-0 [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:absolute [&>iframe]:top-0 [&>iframe]:left-0">
-                    {@html selectedLessonContent.video_embed_html}
+                    {@html normalizedVideoEmbedHtml || ''}
                   </div>
                 </div>
               {:else if lessonContentLoading}
