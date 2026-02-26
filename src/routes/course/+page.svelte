@@ -56,12 +56,14 @@
   $: normalizedVideoEmbedHtml = ensureEmbedFullscreenPermissions(
     selectedLessonContent?.video_embed_html ?? null
   );
+  $: selectedLessonVideoSrc = extractEmbedIframeSrc(normalizedVideoEmbedHtml);
 
   // Mobile lesson drawer
   let showLessonDrawer = false;
 
   // Success notification
   let showSuccess = false;
+  let showMobileVideoOverlay = false;
 
   // Reactive lesson selection based on URL parameters
   $: {
@@ -183,6 +185,12 @@
       if (!/\ballowfullscreen\b/i.test(attrs)) {
         attrs += ' allowfullscreen';
       }
+      if (!/\bwebkitallowfullscreen\b/i.test(attrs)) {
+        attrs += ' webkitallowfullscreen';
+      }
+      if (!/\bmozallowfullscreen\b/i.test(attrs)) {
+        attrs += ' mozallowfullscreen';
+      }
 
       const allowAttrMatch = attrs.match(/\ballow\s*=\s*(['"])(.*?)\1/i);
       if (allowAttrMatch) {
@@ -201,6 +209,12 @@
 
       return `<iframe${attrs}>`;
     });
+  }
+
+  function extractEmbedIframeSrc(embedHtml: string | null): string | null {
+    if (!embedHtml) return null;
+    const srcMatch = embedHtml.match(/\bsrc\s*=\s*(['"])(.*?)\1/i);
+    return srcMatch?.[2] ?? null;
   }
 </script>
 
@@ -584,6 +598,18 @@
                     {@html normalizedVideoEmbedHtml || ''}
                   </div>
                 </div>
+                {#if selectedLessonVideoSrc}
+                  <div class="lg:hidden px-4 pt-3">
+                    <button
+                      type="button"
+                      class="w-full rounded-xl px-4 py-2.5 text-sm font-semibold"
+                      style="background-color: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-light);"
+                      on:click={() => showMobileVideoOverlay = true}
+                    >
+                      Expand Video
+                    </button>
+                  </div>
+                {/if}
               {:else if lessonContentLoading}
                 <div class="aspect-video w-full lg:rounded-xl overflow-hidden flex items-center justify-center" style="background-color: var(--bg-secondary); border: 1px solid var(--border-light);">
                   <div class="text-center p-6">
@@ -617,6 +643,28 @@
                 </div>
               {/if}
             </div>
+
+            {#if showMobileVideoOverlay && selectedLessonVideoSrc}
+              <div class="fixed inset-0 z-50 lg:hidden bg-black">
+                <button
+                  type="button"
+                  class="absolute top-4 right-4 z-10 rounded-lg px-3 py-1.5 text-xs font-semibold"
+                  style="background: rgba(0,0,0,0.55); color: white; border: 1px solid rgba(255,255,255,0.25);"
+                  on:click={() => showMobileVideoOverlay = false}
+                >
+                  Close
+                </button>
+                <div class="h-full w-full flex items-center justify-center">
+                  <iframe
+                    src={selectedLessonVideoSrc}
+                    title="Expanded lesson video"
+                    class="w-full h-full border-0"
+                    allow="fullscreen; autoplay; encrypted-media; picture-in-picture; gyroscope"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              </div>
+            {/if}
 
             <!-- Lesson Content -->
             <div class="p-4 sm:p-6 lg:px-6 lg:pb-8">
