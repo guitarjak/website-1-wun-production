@@ -8,7 +8,18 @@ export const supabaseHandle: Handle = async ({ event, resolve }) => {
       getAll: () => event.cookies.getAll(),
       setAll: (cookiesToSet) => {
         cookiesToSet.forEach(({ name, value, options }) => {
-          event.cookies.set(name, value, { ...options, path: '/' });
+          try {
+            event.cookies.set(name, value, { ...options, path: '/' });
+          } catch (error) {
+            // Supabase can attempt async cookie updates after the response is sent.
+            // Ignore that specific case so requests don't crash.
+            if (
+              !(error instanceof Error)
+              || !error.message.includes('Cannot use `cookies.set(...)` after the response has been generated')
+            ) {
+              throw error;
+            }
+          }
         });
       }
     }

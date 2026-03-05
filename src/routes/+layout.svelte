@@ -2,6 +2,7 @@
   import '../app.css';
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
+  import { dev } from '$app/environment';
 
   export let data;
 
@@ -40,6 +41,8 @@
   }
 
   onMount(() => {
+    if (dev) return;
+
     const analyticsSrc = 'https://track.justforr.fun/api/script.js';
     const injectAnalytics = () => {
       if (document.querySelector(`script[src="${analyticsSrc}"]`)) return;
@@ -68,12 +71,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;700&display=swap" rel="stylesheet">
-  {#if currentPath === '/'}
-    <link rel="stylesheet" href="/w1w/style.css">
-  {/if}
 </svelte:head>
 
-<div class="min-h-screen" style="{currentPath === '/' ? '' : 'background-color: var(--cream-light);'}">
+<div
+  class="min-h-screen"
+  style={currentPath === '/'
+    ? 'background-color:#FEFEFE;background-image:linear-gradient(rgba(0,0,0,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.035) 1px,transparent 1px);background-size:52px 52px;background-position:top left;'
+    : 'background-color: var(--cream-light);'}
+>
   <!-- Navigation Bar - Hidden on homepage with CSS -->
   <nav class="z-40 border-b navbar-container lg:sticky lg:top-0" class:hidden-nav={currentPath === '/'} style="background: var(--cream-light); border-color: var(--border-light);">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
