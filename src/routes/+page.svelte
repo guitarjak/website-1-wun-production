@@ -492,7 +492,6 @@
         </div>
         <div class="offer-price">
           <span class="strike">5,950 บาท</span>
-          <span class="val">รวมในแพ็กเกจ</span>
         </div>
       </div>
 
@@ -510,7 +509,7 @@
         </div>
         <div class="offer-price">
           <span class="strike">15,000 บาท</span>
-          <span class="val">ฟรี!</span>
+          <span class="offer-price-note">(ผมคิดลูกค้ารานี้จริงๆ)</span>
         </div>
       </div>
 
@@ -529,7 +528,6 @@
         </div>
         <div class="offer-price">
           <span class="strike">4,590 บาท</span>
-          <span class="val">ฟรี!</span>
         </div>
       </div>
 
@@ -552,38 +550,49 @@
         </div>
         <div class="offer-price">
           <span class="strike">2,950 บาท</span>
-          <span class="val">ฟรี!</span>
         </div>
+      </div>
+
+      <!-- Special bonus -->
+      <div class="special-bonus reveal">
+        <span class="eyebrow">Special Bonus</span>
+        <h3 class="heading-md">0 to 100k Solo-Blueprint</h3>
+        <ul class="sb-list">
+          <li>ผมจะแชร์เคสของตัวเองว่าตั้งแต่ 0 ผมเริ่มยังไง</li>
+          <li>เครื่องมือที่ใช้และสิ่งที่เราต้องรู้มีอะไรบ้าง</li>
+          <li>ถ้าอยากสเกล ควรศึกษาเรื่องไหนบ้าง</li>
+          <li>เพื่อให้คุณมีภาพในหัวที่ชัดว่าคุณควรคาดหวังอะไรในจุดไหน</li>
+        </ul>
       </div>
     </div>
     <!-- /offer-list -->
 
     <!-- Pricing summary -->
     <div class="price-box reveal" id="early-bird">
-      <span class="price-tag">Early Bird — 87% OFF</span>
-      <p class="price-original">มูลค่ารวมทั้งหมด <span>28,950 บาท</span></p>
+      <span class="price-tag">Early Bird</span>
+      <p class="price-intro">
+        ระบบนี้ผมใช้สร้างรายได้มาแล้ว <u>6 หลัก</u><br />
+        เป็นสิ่งที่คุณจะนำไปทำซ้ำกี่รอบก็ได้<br />
+        ทดสอบไอเดียขายของได้ไม่จำกัด
+      </p>
+      <p class="price-original">มูลค่ารวมของคอร์สนี้อยู่ที่ <span>28,950 บาท</span></p>
+      <p class="price-reason">แต่สำหรับ Early Bird รับไปเลย</p>
       <div class="price-row">
-        <span class="label">ราคาพิเศษสำหรับคุณ</span>
+        <span class="label">เพียง</span>
         <span class="amount">3,790</span>
         <span class="unit">บาท</span>
       </div>
       <p class="price-note">
-        สำหรับ <strong>200 คนแรก</strong> เท่านั้น — พร้อมรับ Special Bonus พิเศษเพิ่ม
+        ถ้าคุณอยากเริ่มต้นการเดินทางบนโลกออนไลน์<br />
+        อยากมีร้านของตัวเอง แต่งได้ตามใจ<br />
+        ไม่อยากไปติดอยู่กับระบบที่จะปิดคุณวันไหนก็ไม่รู้<br />
+        เก็บคุณรายเดือนทั้งๆ ที่คุณยังขายไม่ได้<br />
+        <strong>มาลุยกันข้างในได้เลยค้าบ</strong>
       </p>
-      <a href="#early-bird" class="btn btn--lg">รับราคา Early Bird พร้อมโบนัส</a
+      <a href="#early-bird" class="btn btn--lg">พร้อมลุยแล้ว!</a
       >
     </div>
 
-    <!-- Special bonus -->
-    <div class="special-bonus reveal">
-      <span class="eyebrow">Special Bonus — 200 คนแรกเท่านั้น</span>
-      <h3 class="heading-md">Backdoor Walkthrough</h3>
-      <ul class="sb-list">
-        <li>ผมจะพาคุณดูหลังบ้านว่าผมทำยังไง พ่วงอะไรมั่ง</li>
-        <li>ยิงโฆษณายังไง ขายได้เท่าไหร่ และคุณควรไปทางไหน</li>
-        <li>เพื่อเป็นแรงบันดาลใจ และคุณสามารถนำไปประยุกต์ใช้เองได้</li>
-      </ul>
-    </div>
   </div>
 </section>
 
@@ -595,18 +604,26 @@
 <section class="alt">
   <div class="wrap">
     <div class="guarantee-inner reveal">
-      <div class="guarantee-icon">🛡️</div>
-      <h2 class="heading-lg">รับรองว่าคุณต้องรัก OVM</h2>
+      <img
+        class="guarantee-icon"
+        src="/ovm/love-it-guarantee.png"
+        alt="Love it Guarantee"
+        loading="lazy"
+      />
+      <h2 class="heading-lg">Love it Guarantee</h2>
       <p>
-        ถ้าคุณอ่านมาถึงตรงนี้ ผมว่าคุณสนใจจริงๆ แหละ
-        แต่อาจจะไม่มั่นใจว่าจะทำได้จริงไหม
+        ถ้าคุณอ่านมาถึงตรงนี้ ผมว่าคุณสนใจจริงๆ แหละ<br>
+        แต่อาจจะไม่มั่นใจว่าจะทำได้จริงไหม (ผมเดาถูกมั้ยครับ ฮ่าา)
         <br /><br />
-        ผมสัญญาแบบนี้ครับ
+        <strong>ผมสัญญาแบบนี้</strong>
         <br /><br />
-        ภายใน 14 วันถ้าคุณนั่งเรียน OVM และคุณรู้สึกว่าทำไม่ได้จริงๆ เรียนไปทั้งหมดแล้ว
-        มันยากไป คุณยังไม่มีร้านของตัวเอง ผมไม่อยากได้เงินคุณเลยถ้าผมส่งมอบสิ่งที่สัญญาไว้ไม่ได้
-        ฉะนั้นไม่ต้องกลัวครับ ทักเข้ามาหาผมได้เลยครับ ผมยินดีคืนเงินให้ 100% แบบไม่โกรธกันเลย
-        :)
+        ภายใน <u><strong>30 วัน</strong></u
+        > ถ้าคุณนั่งเรียน OVM และคุณรู้สึกว่า<u>ทำไม่ได้จริงๆ</u
+        > เรียนไปทั้งหมดแล้ว <em>มันยากไป คุณยังไม่มีร้านของตัวเอง</em> ถ้าผม<strong
+          >ส่งมอบสิ่งที่สัญญาไว้ไม่ได้</strong
+        >
+        ไม่ต้องกลัวครับ ทักเข้ามาหาผมได้เลยครับ ผมยินดี<strong>คืนเงินให้ 100%</strong>
+        แบบไม่โกรธกันเลย <u>ผมแบกรับความเสี่ยงตรงนี้ไว้เอง</u> แฟร์มั้ยครับ :)
       </p>
     </div>
   </div>
@@ -690,6 +707,8 @@
   </div>
 </section>
 
+<div class="rule"></div>
+
 <!-- ═══════════════════════════════════
      FAQ
 ═══════════════════════════════════ -->
@@ -705,71 +724,16 @@
         <button class="faq-q">
           ไม่มีพื้นฐานจะทำได้จริงไหม
           <span class="faq-icon">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <line
-                x1="12"
-                y1="5"
-                x2="12"
-                y2="19"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-              <line
-                x1="5"
-                y1="12"
-                x2="19"
-                y2="12"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2" stroke-linecap="round" />
             </svg>
           </span>
         </button>
         <div class="faq-a">
           <div class="faq-a-inner">
-            ได้แน่นอนครับ คอร์สนี้ออกแบบมาสำหรับคนที่ไม่มีพื้นฐานเทคนิคโดยเฉพาะ
-            สอนแบบจับมือทำทุกขั้นตอน ทำตามได้เลยทันที
-            ไม่ต้องมีความรู้ด้านเทคนิคใดๆ มาก่อนเลย
-          </div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q">
-          ไม่เก่งโค้ดเลย ทำได้หรือเปล่า
-          <span class="faq-icon">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <line
-                x1="12"
-                y1="5"
-                x2="12"
-                y2="19"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-              <line
-                x1="5"
-                y1="12"
-                x2="19"
-                y2="12"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-            </svg>
-          </span>
-        </button>
-        <div class="faq-a">
-          <div class="faq-a-inner">
-            ไม่ต้องเขียนโค้ดเลยครับ! คอร์สนี้ใช้ AI ช่วยทำงานแทน
-            เน้นให้คุณสร้างระบบขายได้จริงโดยไม่ต้องงมเรื่องโปรแกรมมิ่งเลยแม้แต่บรรทัดเดียว
+            ทำได้แน่นอนไม่ต้องกังวลเลยครับ คอร์ส OVM เป็นคอร์สที่ถูกตบๆ มาจาก Website 1 Wun อีกที
+            ปรับจุดที่ซับซ้อนให้เข้าใจง่ายขึ้น ฉะนั้นมั่นใจได้เลยว่าง่ายแน่นอนค้าบ
           </div>
         </div>
       </div>
@@ -778,72 +742,35 @@
         <button class="faq-q">
           ต้องมีคอมพิวเตอร์ไหม
           <span class="faq-icon">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <line
-                x1="12"
-                y1="5"
-                x2="12"
-                y2="19"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-              <line
-                x1="5"
-                y1="12"
-                x2="19"
-                y2="12"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2" stroke-linecap="round" />
             </svg>
           </span>
         </button>
         <div class="faq-a">
           <div class="faq-a-inner">
-            แนะนำให้ใช้คอมพิวเตอร์หรือแล็ปท็อปครับ
-            เพราะการสร้างเว็บไซต์และตั้งค่าระบบต่างๆ จะทำได้สะดวกกว่ามาก
-            สเปคปกติทั่วไปก็เพียงพอแล้ว ไม่ต้องซื้อใหม่เลย
+            ตอบแบบเร็วๆ ว่าต้องมีครับ เพราะ AI ที่เราจะใช้ตอนนี้ยังไม่สามารถรันบนมือถือหรือแทบเล็ตได้
+            ไม่ต้องสเปคดีเลิศ ขอแค่คอมที่เข้า Google ได้ก็ใช้ได้แล้วครับ
           </div>
         </div>
       </div>
 
       <div class="faq-item">
         <button class="faq-q">
-          ใช้ฟรีแบบถูกกฎหมายไหม
+          ฟรีแบบถูกกฎหมายไหม
           <span class="faq-icon">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <line
-                x1="12"
-                y1="5"
-                x2="12"
-                y2="19"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-              <line
-                x1="5"
-                y1="12"
-                x2="19"
-                y2="12"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2" stroke-linecap="round" />
             </svg>
           </span>
         </button>
         <div class="faq-a">
           <div class="faq-a-inner">
-            ถูกกฎหมาย 100% ครับ ทุกเครื่องมือที่ใช้ในคอร์สเป็น Freemium หรือ
-            Open Source ที่ให้ใช้ฟรีอย่างถูกต้อง
-            ไม่มีการแคร็กหรือละเมิดลิขสิทธิ์ใดๆ ทั้งสิ้น
+            ถูกต้อง 100% แบบขาวสะอาดยิ่งกว่าโอโม่เลยฮะ ผมไม่กล้าเอาเว็บ สินค้า
+            หรือชื่อของเพื่อนๆ ไปเสี่ยงกับของผิดกฎหมายเลย สิ่งที่เราจะทำคือใช้ประโยชน์จากเครื่องมือฟรีให้เต็มที่
+            คั้นจนหยดสุดท้ายเลย ฮ่าา
           </div>
         </div>
       </div>
@@ -852,35 +779,126 @@
         <button class="faq-q">
           ออกแบบไม่เก่งจะเหมาะไหม
           <span class="faq-icon">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <line
-                x1="12"
-                y1="5"
-                x2="12"
-                y2="19"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-              <line
-                x1="5"
-                y1="12"
-                x2="19"
-                y2="12"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2" stroke-linecap="round" />
             </svg>
           </span>
         </button>
         <div class="faq-a">
           <div class="faq-a-inner">
-            เหมาะมากครับ คอร์สมี Website Template สำเร็จรูปให้เลือกใช้ได้เลย
-            ไม่ต้องออกแบบเอง แค่เลือก Template ที่ชอบแล้วใส่เนื้อหาของคุณลงไป
-            เว็บก็ออกมาดูดีแบบมืออาชีพทันที
+            ผมแชร์งี้ ตอนเรียนผมตกวิชาศิลปะ (แง้55) ผมเป็นคนไม่มีเซนส์ด้านการออกแบบเลย
+            แล้วถ้าคนที่ไม่มีหัวเรื่องดีไซน์แบบผมทำได้ เพื่อนๆ ทำได้แน่นอน เพราะเราใช้ AI ช่วยออกแบบ แฮ่ๆ
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          ยังไม่มีสินค้าเลย เริ่มได้ไหม?
+          <span class="faq-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            ดีเลยครับ เพราะการที่เราไม่มีต้นทุนวิ่งตามรายเดือนมันเป็นการอนุญาตให้เราลองทดสอบได้เต็มที่
+            สินค้าตัวแรกอาจจะไม่เวิร์ค เราก็ทำใหม่ ลองใหม่ ขอแค่เราไม่ท้อ ใส่ใจจริงๆ
+            ผมว่าลูกค้าสัมผัสได้และสนับสนุนแน่ๆ ครับ
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          บอกว่า 1 วัน แล้วถ้าทำไม่ทันล่ะ?
+          <span class="faq-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            เป้าหมาย 1 วันคือให้ร้านเวอร์ชันแรกใช้งานได้จริงครับ ไม่ใช่ต้องสมบูรณ์ทุกอย่างตั้งแต่วันแรก
+            จากนั้นค่อยอัปเกรดทีละส่วน แก้ไขเพิ่มไปได้ จะใช้เวลานานกว่านั้นก็ไม่ติดเลยย
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          กลัวมีค่าใช้จ่ายแอบแฝงที่หลัง
+          <span class="faq-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            ในคอร์สจะบอกชัดว่าอะไรฟรี อะไรอาจมีค่าใช้จ่าย และมักเกิดตอนไหน
+            เพื่อให้คุณวางงบได้ก่อนเริ่ม ไม่ต้องมาลุ้นทีหลัง แชร์หมดไม่ต้องกลัวเลยฮะ
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          ถ้าทำแล้วติดปัญหา มีคนช่วยไหม?
+          <span class="faq-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            เรามีกลุ่ม Support กันใน Facebook ถ้าเราติดตรงไหนสามารถสอบถามในกลุ่มได้เลย
+            หรือถ้าไม่สะดวกใจในกลุ่ม ทักหาผมตรงๆ ที่เพจ Guitar - Dead Simple Productivity ได้เลยค้าบ
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          ใช้ได้กับสินค้าแบบไหนบ้าง?
+          <span class="faq-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            ได้หมดเลย ebook / file อะไรก็ได้ที่เป็น Digital Product แล้วมันส่งผ่านคอมได้ ระบบเราไหวหมด
+            จริงๆ ประยุกต์ไปใช้กับสินค้า Offline ก็ได้ แต่ไม่ได้มีสอนในนี้เนื่องจากจะผิดจุดประสงค์ของ Online
+            Vending Machine ฮะ (เพราะมันจะไม่ Online แล้ว ฮ่าา)
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          ถ้าลองแล้วไม่เวิร์กจริงๆ ทำยังไง?
+          <span class="faq-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="12" y1="5" x2="12" y2="19" stroke-width="2" stroke-linecap="round" />
+              <line x1="5" y1="12" x2="19" y2="12" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            ผมเป็นคนตรงๆ ง่ายๆ เรียนจนจบแล้วคุณทำไม่ได้ ทักมา ผมคืนเงินให้ 100% เต็มจำนวน
+            คุณไม่ต้องแบกรับความเสี่ยงไว้เลย ตรงนี้ผมรับไว้เองค้าบ
           </div>
         </div>
       </div>
@@ -1518,21 +1536,23 @@
     flex-shrink: 0;
   }
   .offer-price .strike {
-    font-size: 12.5px;
-    color: var(--gray-light);
-    text-decoration: line-through;
-    display: block;
-    margin-bottom: 4px;
-  }
-  .offer-price .val {
-    font-size: 17px;
+    font-size: 19px;
     font-weight: 700;
     color: var(--black);
+    display: block;
+    margin-bottom: 4px;
+    line-height: 1.2;
   }
-  .offer-card.dark .offer-price .val {
-    color: var(--accent);
+  .offer-card.dark .offer-price .strike {
+    color: #fff;
   }
-
+  .offer-price-note {
+    display: block;
+    margin-top: 2px;
+    font-size: 11px;
+    color: var(--gray-mid);
+    line-height: 1.4;
+  }
   /* Pricing box — dark & commanding */
   .price-box {
     background: var(--black);
@@ -1554,13 +1574,21 @@
     margin-bottom: 24px;
   }
 
+  .price-intro {
+    font-size: 15px;
+    color: #ddd7cb;
+    margin-bottom: 18px;
+    line-height: 1.85;
+  }
+
   .price-original {
     font-size: 15px;
     color: var(--gray-light);
     margin-bottom: 6px;
   }
   .price-original span {
-    text-decoration: line-through;
+    font-weight: 600;
+    color: #fff;
   }
 
   .price-row {
@@ -1594,6 +1622,12 @@
     margin-bottom: 36px;
     line-height: 1.85;
   }
+  .price-reason {
+    font-size: 14px;
+    color: var(--gray-light);
+    margin-bottom: 10px;
+    line-height: 1.7;
+  }
   .price-note strong {
     color: #fff;
   }
@@ -1608,7 +1642,16 @@
     text-align: left;
   }
   .special-bonus .eyebrow {
-    color: var(--accent);
+    display: inline-block;
+    color: #f3be67;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    background: rgba(201, 126, 20, 0.16);
+    border: 1px solid rgba(201, 126, 20, 0.35);
+    padding: 6px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
   }
   .special-bonus .heading-md {
     color: #fff;
@@ -1645,17 +1688,11 @@
   }
 
   .guarantee-icon {
-    width: 72px;
-    height: 72px;
-    background: var(--white);
-    border: 1px solid var(--gray-border);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 220px;
+    height: auto;
+    object-fit: contain;
+    display: block;
     margin: 0 auto 28px;
-    font-size: 32px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   }
 
   .guarantee-inner .heading-lg {
