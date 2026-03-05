@@ -65,7 +65,6 @@ declare module '$env/static/private' {
 	export const npm_execpath: string;
 	export const PAGER: string;
 	export const PATH: string;
-	export const _: string;
 	export const npm_package_json: string;
 	export const npm_config_userconfig: string;
 	export const npm_config_init_module: string;
@@ -90,6 +89,7 @@ declare module '$env/static/private' {
 	export const SHLVL: string;
 	export const HOME: string;
 	export const VSCODE_GIT_ASKPASS_MAIN: string;
+	export const npm_config_loglevel: string;
 	export const HOMEBREW_PREFIX: string;
 	export const GH_PAGER: string;
 	export const npm_config_cache: string;
@@ -106,6 +106,7 @@ declare module '$env/static/private' {
 	export const npm_node_execpath: string;
 	export const npm_config_prefix: string;
 	export const COLORTERM: string;
+	export const _: string;
 	export const NODE_ENV: string;
 }
 
@@ -177,7 +178,6 @@ declare module '$env/dynamic/private' {
 		npm_execpath: string;
 		PAGER: string;
 		PATH: string;
-		_: string;
 		npm_package_json: string;
 		npm_config_userconfig: string;
 		npm_config_init_module: string;
@@ -202,6 +202,7 @@ declare module '$env/dynamic/private' {
 		SHLVL: string;
 		HOME: string;
 		VSCODE_GIT_ASKPASS_MAIN: string;
+		npm_config_loglevel: string;
 		HOMEBREW_PREFIX: string;
 		GH_PAGER: string;
 		npm_config_cache: string;
@@ -218,6 +219,7 @@ declare module '$env/dynamic/private' {
 		npm_node_execpath: string;
 		npm_config_prefix: string;
 		COLORTERM: string;
+		_: string;
 		NODE_ENV: string;
 		[key: `PUBLIC_${string}`]: undefined;
 		[key: `${string}`]: string | undefined;

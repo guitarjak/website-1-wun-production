@@ -98,7 +98,7 @@
 
       <div class="bg-white rounded-xl shadow-sm p-4" style="border: 1px solid var(--border-light);">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: rgba(74, 113, 246, 0.1);">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background-color: rgba(185, 122, 40, 0.14);">
             <svg class="w-5 h-5" style="color: var(--blue);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
@@ -164,7 +164,7 @@
                     </p>
                     <p class="text-xs truncate" style="color: var(--text-secondary);">{user.email}</p>
                     <span class="inline-flex mt-1 items-center px-2 py-0.5 rounded text-xs font-medium"
-                      style="background-color: {user.role === 'admin' ? 'rgba(74, 113, 246, 0.1)' : 'var(--bg-secondary)'}; color: {user.role === 'admin' ? 'var(--blue)' : 'var(--text-secondary)'};">
+                      style="background-color: {user.role === 'admin' ? 'rgba(185, 122, 40, 0.14)' : 'var(--bg-secondary)'}; color: {user.role === 'admin' ? 'var(--blue)' : 'var(--text-secondary)'};">
                       {user.role}
                     </span>
                   </div>
@@ -258,7 +258,7 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                        style="background-color: {user.role === 'admin' ? 'rgba(74, 113, 246, 0.1)' : 'var(--bg-secondary)'}; color: {user.role === 'admin' ? 'var(--blue)' : 'var(--text-secondary)'};">
+                        style="background-color: {user.role === 'admin' ? 'rgba(185, 122, 40, 0.14)' : 'var(--bg-secondary)'}; color: {user.role === 'admin' ? 'var(--blue)' : 'var(--text-secondary)'};">
                         {user.role}
                       </span>
                     </td>

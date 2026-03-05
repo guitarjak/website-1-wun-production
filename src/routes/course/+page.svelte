@@ -356,28 +356,34 @@
                   <ul class="space-y-1">
                     {#each module.lessons as lesson}
                       {@const isCompleted = localCompletedLessonIds.includes(lesson.id)}
+                      {@const isSelected = selectedLesson?.id === lesson.id}
                       <li>
                         <button
                           type="button"
                           on:click={() => selectLesson(lesson)}
                           class="w-full text-left px-3 py-2 text-sm rounded-lg transition-all flex items-center gap-2 font-medium"
-                          style="{selectedLesson?.id === lesson.id
+                          style="{isSelected
                             ? 'background-color: var(--blue); color: white;'
                             : 'color: var(--text-primary);'}"
                           on:mouseenter={(e) => {
-                            if (selectedLesson?.id !== lesson.id) {
+                            if (!isSelected) {
                               e.currentTarget.style.backgroundColor = 'var(--bg-secondary)';
                             }
                           }}
                           on:mouseleave={(e) => {
-                            if (selectedLesson?.id !== lesson.id) {
+                            if (!isSelected) {
                               e.currentTarget.style.backgroundColor = 'transparent';
                             }
                           }}
                         >
                           <span class="flex-1 truncate text-xs leading-snug">{lesson.title}</span>
                           {#if isCompleted}
-                            <svg class="w-4 h-4 flex-shrink-0" style="color: var(--success);" fill="currentColor" viewBox="0 0 20 20">
+                            <svg
+                              class="w-4 h-4 flex-shrink-0"
+                              style="color: {isSelected ? '#ffffff' : 'var(--success)'};"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
                               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                             </svg>
                           {/if}

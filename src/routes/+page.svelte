@@ -25,25 +25,29 @@
     });
 
     // Bunny player anti-seek guard: block seeking ahead past watched position.
+    /** @type {number} */
     let maxWatchedSeconds = 0;
+    /** @type {boolean} */
     let antiSeekSetupDone = false;
+    /** @type {any} */
     let antiSeekPlayer;
 
     const trySetupAntiSeek = () => {
       if (antiSeekSetupDone) return true;
 
       const iframe = document.getElementById('hero-bunny-player');
-      if (!iframe || !window.playerjs?.Player) return false;
+      const win = /** @type {Window & { playerjs?: { Player: new (el: Element) => any } }} */ (window);
+      if (!iframe || !win.playerjs?.Player) return false;
 
-      antiSeekPlayer = new window.playerjs.Player(iframe);
+      antiSeekPlayer = new win.playerjs.Player(iframe);
       antiSeekPlayer.on('ready', () => {
-        antiSeekPlayer.on('timeupdate', (data) => {
+        antiSeekPlayer.on('timeupdate', (/** @type {{ seconds?: number }} */ data) => {
           const seconds = typeof data?.seconds === 'number' ? data.seconds : 0;
           if (seconds > maxWatchedSeconds) maxWatchedSeconds = seconds;
         });
 
         antiSeekPlayer.on('seeked', () => {
-          antiSeekPlayer.getCurrentTime((currentTime) => {
+          antiSeekPlayer.getCurrentTime((/** @type {number} */ currentTime) => {
             if (typeof currentTime !== 'number') return;
 
             // Allow tiny jitter but disallow jumping ahead.
@@ -116,7 +120,7 @@
           loading="lazy"
           style="border:0;position:absolute;top:0;height:100%;width:100%;"
           allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
-          allowfullscreen="true"
+          allowfullscreen
           title="Online Vending Machine Intro Video"
         ></iframe>
       </div>
