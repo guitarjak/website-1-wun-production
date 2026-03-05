@@ -89,7 +89,6 @@ declare module '$env/static/private' {
 	export const SHLVL: string;
 	export const HOME: string;
 	export const VSCODE_GIT_ASKPASS_MAIN: string;
-	export const npm_config_loglevel: string;
 	export const HOMEBREW_PREFIX: string;
 	export const GH_PAGER: string;
 	export const npm_config_cache: string;
@@ -202,7 +201,6 @@ declare module '$env/dynamic/private' {
 		SHLVL: string;
 		HOME: string;
 		VSCODE_GIT_ASKPASS_MAIN: string;
-		npm_config_loglevel: string;
 		HOMEBREW_PREFIX: string;
 		GH_PAGER: string;
 		npm_config_cache: string;

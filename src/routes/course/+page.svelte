@@ -380,7 +380,7 @@
                           {#if isCompleted}
                             <svg
                               class="w-4 h-4 flex-shrink-0"
-                              style="color: {isSelected ? '#ffffff' : 'var(--success)'};"
+                              style="color: {isSelected ? '#ffffff' : '#22c55e'};"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                             >

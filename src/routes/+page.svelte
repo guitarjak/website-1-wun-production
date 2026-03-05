@@ -132,11 +132,12 @@
 
     <div class="hero-proof reveal" style="transition-delay:.48s;">
       <div class="hero-avatars">
-        <div class="avatar-circle"></div>
-        <div class="avatar-circle"></div>
-        <div class="avatar-circle"></div>
-        <div class="avatar-circle"></div>
-        <div class="avatar-circle"></div>
+        <img class="avatar-circle" src="/ovm/testi-profile-1.png" alt="รูปโปรไฟล์รีวิว 1" loading="lazy" />
+        <img class="avatar-circle" src="/ovm/testi-profile-2.png" alt="รูปโปรไฟล์รีวิว 2" loading="lazy" />
+        <img class="avatar-circle" src="/ovm/testi-profile-3.png" alt="รูปโปรไฟล์รีวิว 3" loading="lazy" />
+        <img class="avatar-circle" src="/ovm/testi-profile-4.png" alt="รูปโปรไฟล์รีวิว 4" loading="lazy" />
+        <img class="avatar-circle" src="/ovm/testi-profile-5.png" alt="รูปโปรไฟล์รีวิว 5" loading="lazy" />
+        <img class="avatar-circle" src="/ovm/testi-profile-6.png" alt="รูปโปรไฟล์รีวิว 6" loading="lazy" />
       </div>
       <span class="hero-proof-text">การันตีด้วยผู้เรียนที่พึงพอใจมากกว่า 100+ คน</span>
     </div>
@@ -157,14 +158,35 @@
       <div class="t-card reveal d1">
         <div class="t-stars">★★★★★</div>
         <p class="t-text">เนื้อหาที่อาจารย์กีตาร์ได้เรียบเรียงไว้นั้นดีมากๆ ใช้ภาษาที่เข้าใจ ง่าย ความซับซ้อนกำลังพอดี ไม่น้อยเกิน ไม่มากเกิน เวลาทำตาม แล้วเกิด Aha! moment เป็นระยะๆ</p>
+        <div class="t-author">
+          <div class="t-author-avatar" aria-hidden="true">IMG</div>
+          <div class="t-author-meta">
+            <p class="t-author-name">ชื่อผู้เรียน #1</p>
+            <p class="t-author-role">ผู้เรียน OVM</p>
+          </div>
+        </div>
       </div>
       <div class="t-card reveal d2">
         <div class="t-stars">★★★★★</div>
         <p class="t-text">ก่อนอื่นเลย อยากจะขอขอบคุณ คุณกีต้าร์ ที่ตั้งใจทำสื่อการสอน ดีๆแบบนี้นะครับ ผมติดตามมาตั้งแต่ ebook n8n แล้วครับ ชื่นชอบการถ่ายทอด เรื่องยากให้เข้าใจง่ายของคุณกีต้าร์ รอบนี้เลยตั้งใจเรียนเลย ผมกำลังสนใจเรื่อง vibe coding และได้ทดลองใช้ Google Antigravity ทำ WebApp ใช้งานเองได้แล้วครับ หลังจากงมกับ lovable มาพักใหญ่</p>
+        <div class="t-author">
+          <img class="t-author-avatar" src="/ovm/testi-profile-8.png" alt="Art Tamrongsak Choeisa-ard" loading="lazy" />
+          <div class="t-author-meta">
+            <p class="t-author-name">Art Tamrongsak Choeisa-ard</p>
+            <p class="t-author-role">ผู้เรียน OVM</p>
+          </div>
+        </div>
       </div>
       <div class="t-card reveal d3">
         <div class="t-stars">★★★★★</div>
         <p class="t-text">ชอบที่สอนแบบทำตามได้เลย ไม่ต้องเขียนโค้ดอะไรให้วุ่นวาย สอนแบบเหมือนจับมือทำถ้าละเอียดกว่านี้คือทำให้แล้ววว ปวดหัว อย่างเดียวคือตอนเลือกแบบที่อยากได้เพราะอยากได้ไปหมด สอนใช้เครื่องมือครบ และเอาไปต่อยอดใช้งานจริงได้ แค่นี้ก็มี บ้านเป็นของตัวเองแล้ว เย้ๆ ขอบคุณที่เปิดคลาสสอนครับเปิดโลก และเอาไปต่อยอดได้เยอะจริงๆครับ จะใช้เว็บนี้ขายงานจริงๆครับ</p>
+        <div class="t-author">
+          <img class="t-author-avatar" src="/ovm/testi-profile-9.png" alt="แป๊ะยิ้มเล่าเรื่อง" loading="lazy" />
+          <div class="t-author-meta">
+            <p class="t-author-name">แป๊ะยิ้มเล่าเรื่อง</p>
+            <p class="t-author-role">ผู้เรียน OVM</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -255,7 +277,7 @@
         <p><strong>Online Vending Machine คือคำตอบสำหรับคุณเลยครับ</strong></p>
       </div>
 
-      <p class="reveal">ผมมั่นใจว่าคุณต้องรักมันแน่นอน</p>
+      <p class="reveal">ผมมั่นใจว่า<u><strong>คุณต้องรัก</strong></u>มันแน่นอน</p>
       <p class="reveal">แล้วเจอกันข้างในค้าบ :)</p>
       <p class="reveal">กีตาร์</p>
 
@@ -281,10 +303,24 @@
       <div class="t-card reveal d1">
         <div class="t-stars">★★★★★</div>
         <p class="t-text">สอนเข้าใจง่ายมากค่ะ เปิดโลกเลยจริงๆ ทำตามได้ไม่ยาก 1 วันก็ สามารถทำได้เลยจริงๆ ขอบคุณมากๆเลยค่ะ</p>
+        <div class="t-author">
+          <img class="t-author-avatar" src="/ovm/testi-profile-7.png" alt="ตุ๊รูเหรี่ยง ก๋ากะ" loading="lazy" />
+          <div class="t-author-meta">
+            <p class="t-author-name">ตุ๊รูเหรี่ยง ก๋ากะ</p>
+            <p class="t-author-role">ผู้เรียน OVM</p>
+          </div>
+        </div>
       </div>
       <div class="t-card reveal d2">
         <div class="t-stars">★★★★★</div>
         <p class="t-text">เป็นการสอนที่เข้าใจง่าย ถึงแม้ว่าผมจะไม่ได้จบสายนี้ คุณกีต้าร์สอนให้เข้าใจได้โดยง่ายครับ และที่สำคัญ สามารถนำไปใช้ ต่อยอดได้จริงด้วย อยากให้มีสอนเพิ่มอีกๆ ครับ555</p>
+        <div class="t-author">
+          <div class="t-author-avatar" aria-hidden="true">IMG</div>
+          <div class="t-author-meta">
+            <p class="t-author-name">ชื่อผู้เรียน #5</p>
+            <p class="t-author-role">ผู้เรียน OVM</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -438,14 +474,35 @@
       <div class="t-card reveal d1">
         <div class="t-stars">★★★★★</div>
         <p class="t-text">ผมชอบคอร์สนีมากเลยครับ เพราะว่าพี่กีต้าร์ สอนแบบจับมือทำมาก ๆ มากขนาดที่แบบว่าคนไม่มีความรู้แบบ ผมก็เริ่มทำเองได้ อยากให้มีคอร์สแบบนี้เรื่อยๆ เลยครับ ไว้มีงาน ประจำแล้วจะมาอุดหนุนหนังสือและงานอื่นๆ อีกนะครับ ปล. ตอน แรก ๆ ไม่เชื่อว่าจะเป็นคอร์สที่สอนจริงจังและให้ความรู้ได้ขนาดนี้ ขอบคุณมาก ๆ อีกครั้งนะครับ เว็บเราเอาไปเป็นเคสได้เลยค้าบ</p>
+        <div class="t-author">
+          <img class="t-author-avatar" src="/ovm/testi-profile-6.png" alt="Voraphon Aroonsamran" loading="lazy" />
+          <div class="t-author-meta">
+            <p class="t-author-name">Voraphon Aroonsamran</p>
+            <p class="t-author-role">ผู้เรียน OVM</p>
+          </div>
+        </div>
       </div>
       <div class="t-card reveal d2">
         <div class="t-stars">★★★★★</div>
         <p class="t-text">สอนละเอียดดีครับชอบมากครับ ปล.ถ้ามีเปิดอีก ขอเป็นนักเรียนอีกนะครับ</p>
+        <div class="t-author">
+          <div class="t-author-avatar" aria-hidden="true">IMG</div>
+          <div class="t-author-meta">
+            <p class="t-author-name">ชื่อผู้เรียน #7</p>
+            <p class="t-author-role">ผู้เรียน OVM</p>
+          </div>
+        </div>
       </div>
       <div class="t-card reveal d3">
         <div class="t-stars">★★★★★</div>
         <p class="t-text">สอนง่าย ๆ ทำตามได้จริง มีหน้าจอประกอบ เห็นขั้น ตอนต่างๆ วนดูซ้ำได้ ดีที่สอนเป็น คลิป ฟังวนไปมา ดูซ้ำ ทำตาม จนได้ครับ</p>
+        <div class="t-author">
+          <div class="t-author-avatar" aria-hidden="true">IMG</div>
+          <div class="t-author-meta">
+            <p class="t-author-name">ชื่อผู้เรียน #8</p>
+            <p class="t-author-role">ผู้เรียน OVM</p>
+          </div>
+        </div>
       </div>
     </div>
     <div style="text-align:center; margin-top: 56px;" class="reveal">
@@ -616,7 +673,6 @@
     /* ─── LAYOUT ─── */
     .wrap        { max-width: 820px;  margin: 0 auto; padding: 0 28px; }
     .wrap--wide  { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
-    .wrap--tight { max-width: 640px;  margin: 0 auto; padding: 0 28px; }
 
     section { padding: 112px 0; }
     section.alt { background: var(--off-white); }
@@ -716,7 +772,7 @@
     .hero-highlight {
       position: relative;
       display: inline-block;
-      padding: 0 .08em;
+      padding: 0 .1em;
       isolation: isolate;
     }
 
@@ -725,36 +781,45 @@
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 0.1em;
-      height: 0.42em;
-      background: rgba(201,126,20,.34);
-      border-radius: 0.12em;
-      transform: scaleX(0);
       transform-origin: left center;
-      opacity: 0;
       z-index: -1;
-      animation: hero-highlight-sweep 3.2s ease-in-out infinite;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    /* main highlighter stroke */
+    .hero-highlight::after {
+      bottom: 0.1em;
+      height: 0.44em;
+      background:
+        linear-gradient(180deg, rgba(201,126,20,.25) 0%, rgba(201,126,20,.38) 40%, rgba(201,126,20,.3) 100%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.08) 0 10px, rgba(0,0,0,.02) 10px 18px);
+      border-radius: 0.42em 0.14em 0.34em 0.18em;
+      transform: scaleX(0) rotate(-0.35deg);
+      opacity: 0;
+      animation: hero-highlight-sweep 3.4s cubic-bezier(0.22, 0.7, 0.24, 1) infinite;
+      will-change: transform, opacity;
     }
 
     @keyframes hero-highlight-sweep {
       0%, 14% {
-        transform: scaleX(0);
+        transform: scaleX(0) rotate(-0.35deg) translateY(0);
         opacity: 1;
       }
-      62% {
-        transform: scaleX(1);
+      68% {
+        transform: scaleX(1) rotate(0deg) translateY(0);
         opacity: 1;
       }
       71.9% {
-        transform: scaleX(1);
+        transform: scaleX(1) rotate(0deg) translateY(0);
         opacity: 1;
       }
       72% {
-        transform: scaleX(1);
+        transform: scaleX(1) rotate(0deg) translateY(0);
         opacity: 0;
       }
       100% {
-        transform: scaleX(0);
+        transform: scaleX(0) rotate(0deg) translateY(0);
         opacity: 0;
       }
     }
@@ -783,7 +848,7 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--gray-border) 0%, var(--gray-light) 100%);
+      object-fit: cover;
       border: 2px solid var(--white);
       margin-left: -9px;
       box-shadow: 0 1px 4px rgba(0,0,0,.08);
@@ -816,30 +881,6 @@
       .vsl { max-width: 691px; }
     }
     .vsl:hover { border-color: var(--accent); box-shadow: 0 4px 32px rgba(201,126,20,.12); }
-    .vsl:hover .vsl-play { background: var(--accent); transform: scale(1.1); }
-
-    .vsl-inner {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 16px;
-    }
-
-    .vsl-play {
-      width: 56px; height: 56px;
-      background: var(--black);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      transition: background .25s, transform .3s cubic-bezier(.34,1.56,.64,1);
-      box-shadow: 0 4px 20px rgba(0,0,0,.2);
-    }
-
-    .vsl-play svg { width: 20px; height: 20px; fill: #fff; margin-left: 3px; }
-
-    .vsl-label {
-      font-size: 12.5px; font-weight: 500;
-      color: var(--gray-mid); letter-spacing: .06em;
-      text-transform: uppercase;
-    }
 
     /* ─── ══════════════════════════════════
          TESTIMONIAL CARDS
@@ -867,6 +908,43 @@
       font-size: 15px;
       color: var(--gray-dark);
       line-height: 1.95;
+      margin-bottom: 18px;
+    }
+
+    .t-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .t-author-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px dashed var(--gray-border);
+      color: var(--gray-light);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: var(--off-white);
+      text-transform: uppercase;
+    }
+
+    .t-author-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--black);
+      line-height: 1.3;
+    }
+
+    .t-author-role {
+      font-size: 11px;
+      color: var(--gray-mid);
+      line-height: 1.3;
     }
 
     .section-header { text-align: center; margin-bottom: 60px; }
@@ -921,7 +999,6 @@
       margin: 40px 0;
       color: var(--gray-light);
     }
-    .img-slot svg { width: 32px; height: 32px; }
     .img-slot img {
       width: 100%;
       height: 100%;
@@ -929,11 +1006,6 @@
       display: block;
       border-radius: 16px;
     }
-    .img-slot-label { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
-
-    .sig { margin-top: 52px; padding-top: 36px; border-top: 1px solid var(--gray-border); }
-    .sig .name  { font-size: 20px; font-weight: 700; color: var(--black); }
-    .sig .title { font-size: 14px; color: var(--gray-mid); margin-top: 4px; }
 
     /* ─── ══════════════════════════════════
          WHAT YOU GET
