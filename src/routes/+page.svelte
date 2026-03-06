@@ -135,7 +135,7 @@
     </div>
 
     <div class="reveal" style="transition-delay:.4s;">
-      <a href="#pricing" class="btn btn--lg">พร้อมลุยแล้ว!</a>
+      <a href="#early-bird" class="btn btn--lg">พร้อมลุยแล้ว!</a>
     </div>
 
     <div class="hero-proof reveal" style="transition-delay:.48s;">
@@ -385,7 +385,7 @@
       <p class="reveal">กีตาร์</p>
 
       <div style="text-align:center; margin-top: 56px;" class="reveal">
-        <a href="#pricing" class="btn btn--lg">พร้อมลุยแล้ววว</a>
+        <a href="#early-bird" class="btn btn--lg">พร้อมลุยแล้ววว</a>
       </div>
     </div>
   </div>
@@ -569,7 +569,7 @@
           <span class="amount"><u>4,890 บาท</u></span>
       </div>
       <p class="price-only">เท่านั้น</p>
-      <a href="#early-bird" class="btn btn--lg">พร้อมลุยแล้ว!</a
+      <a href="https://pay.website1wun.com/ovm" class="btn btn--lg">พร้อมลุยแล้ว!</a
       >
     </div>
 
