@@ -132,12 +132,11 @@
       <div style="position:relative;padding-top:56.25%;">
         <iframe
           id="hero-bunny-player"
-          src="https://iframe.mediadelivery.net/embed/491305/bc6a1ec4-32e0-482a-af3a-da2f64ec02f8?autoplay=true&loop=false&muted=false&preload=true&responsive=true"
+          src="https://iframe.mediadelivery.net/embed/491305/2fd6de06-22cf-4a36-b2db-e2e84337177c?autoplay=true&loop=false&muted=false&preload=true&responsive=true"
           loading="lazy"
           style="border:0;position:absolute;top:0;height:100%;width:100%;"
           allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
-          allowfullscreen
-          title="Online Vending Machine Intro Video"
+          allowfullscreen="true"
         ></iframe>
       </div>
     </div>
@@ -278,39 +277,29 @@
 <section>
   <div class="wrap">
     <div class="section-header reveal">
-      <h2 class="heading-lg">ถึงคุณคนที่กำลังวิ่งตามความฝัน...</h2>
+      <h2 class="heading-lg">คุณขาย Digital Product อยู่ไหมครับ?</h2>
     </div>
 
     <div class="story-body">
+      <p class="reveal">ถึงคุณคนที่กำลังวิ่งตามความฝัน...</p>
       <p class="reveal">
         ถ้าคุณกำลังหาอะไรบางอย่างที่ใช้เวลาแค่ <strong>1 วัน</strong>ในการทำ
       </p>
       <p class="reveal">
-        และสามารถเป็นพื้นฐานของการสร้างรายได้เสริม<strong
+        และสามารถเป็นพื้นฐานของการสร้างรายได้เพิ่ม<strong
           >หลักหมื่นถึงหลักแสน</strong
         >ต่อเดือนได้...
       </p>
-
-      <p><strong>คุณมาถูกที่แล้ว</strong> เดี๋ยวผมเล่าให้ฟัง</p>
-
+      <p class="reveal"><strong>คุณมาถูกที่แล้ว</strong> เดี๋ยวผมเล่าให้ฟังฮะ</p>
       <p class="reveal">ผมชื่อกีตาร์ครับ เมื่อ 10 เดือนก่อน</p>
-      <p class="reveal">ผมเป็นพนักงานประจำธรรมดาๆ คนนึงเหมือนเพื่อนๆ นี่แหละ</p>
-      <p class="reveal">ทำตำแหน่งผู้ประสานงาน วิ่งไปหาคนนู้นคนนี้ทั้งวัน</p>
+      <p class="reveal">ผมเป็นพนักงานประจำธรรมดาๆ คนนึง</p>
       <p class="reveal">เลิกงานมาก็<strong>เหนื่อยและท้อกับชีวิต</strong></p>
-      <p class="reveal">แต่ในหัวคิดอย่างเดียวว่า…</p>
-
-      <p>
-        "ทำยังไงให้มีรายได้เพิ่ม โดย<strong>ไม่ต้องเอาเวลาของเราไปแลก</strong
-        >นะ?"
-      </p>
-
-      <p class="reveal">ผมกับเพื่อนๆ ที่ทำงานลองกันมาหลายอย่าง</p>
-      <p class="reveal">ทำคลิป TikTok ทำเพจ</p>
-      <p class="reveal">รับงานเสริม เขียน eBook ขาย</p>
-      <p class="reveal">มีคนสนใจนะ มีคนทักมาบ้าง</p>
-      <p class="reveal">มีรายได้เข้ามานิดหน่อย</p>
+      <p class="reveal">ผมลองทำมาหลายอย่าง</p>
+      <p class="reveal">จนปีที่แล้ว ผมเอาทักษะการทำ Automation</p>
+      <p class="reveal">มาเปลี่ยนเป็น ebook และแชร์ลงเพจ</p>
+      <p class="reveal">เริ่มมีคนสนใจ ลูกค้าซื้อ</p>
       <p class="reveal">แต่ปัญหาคือ…</p>
-      <p class="reveal">ด้วยความที่เรายังทำงานประจำ</p>
+      <p class="reveal">ด้วยความที่ผมยังทำงานประจำ</p>
       <p class="reveal"><strong>เวลามันไม่ได้</strong> ผมต้องมาคอยตอบแชท</p>
       <p class="reveal">
         คอยอธิบายสินค้า <strong>ถ้าตอบช้าลูกค้าก็หายอีก</strong>
@@ -319,26 +308,26 @@
       <div class="img-slot reveal">
         <img
           src="/ovm/customer-needs.png"
-          alt="ภาพแสดงความต้องการของลูกค้าที่ลดลงเมื่อเวลาผ่านไป"
+          alt="ความอยากได้ของลูกค้าเมื่อเวลาผ่านไป"
         />
       </div>
 
       <p class="reveal">จนวันนึงผมเริ่มตั้งคำถามใหม่ว่า…</p>
 
       <p>
-        "ถ้าเราทำเหมือน<strong>ตู้ขายของอัตโนมัติ</strong
+        "ถ้าผมทำเหมือน<strong>ตู้ขายของอัตโนมัติ</strong
         >แต่มาอยู่บนโลกออนไลน์ได้ไหมนะ?"
       </p>
 
       <p class="reveal">
         เจ้าของเต่าบินไม่เคยต้องอยู่ตรงนั้นเลย แต่ก็ยังขายน้ำได้
       </p>
-      <p class="reveal">เราทำแบบนั้นบนออนไลน์มั่งได้มั้ย</p>
+      <p class="reveal">ผมทำแบบนั้นบนออนไลน์มั่งได้มั้ย</p>
 
       <div class="img-slot reveal">
         <img
           src="/ovm/online-vending-machine.png"
-          alt="ภาพเปรียบเทียบตู้ขายของจริงกับตู้ขายของออนไลน์"
+          alt="Online Vending Machine เปรียบเทียบตู้ขายออฟไลน์กับออนไลน์"
         />
       </div>
 
@@ -346,8 +335,9 @@
         ผมเริ่มศึกษาการสร้าง<strong>ระบบขายแบบอัตโนมัติ</strong>
       </p>
       <p class="reveal">
-        ด้วยความที่ไม่ได้มาสายเทค เลยลองทำผิดๆ ถูกๆ อยู่เป็นปี
+        ด้วยความที่ไม่ได้มาสายเทค
       </p>
+      <p class="reveal">เลยลองทำผิดๆ ถูกๆ อยู่หลายเดือน</p>
       <p class="reveal">เสียเงินลองนู่นนี่ไปก็เป็นแสน</p>
       <p class="reveal">จนวันนี้ร้านออนไลน์เล็กๆ ของผมที่ขาย ebook หลักร้อย</p>
       <p class="reveal"><strong>สร้างรายได้แซงงานประจำแล้ว</strong></p>
@@ -356,54 +346,49 @@
       </p>
 
       <div class="img-slot reveal">
-        <img src="/ovm/sales-screenshot.png" alt="ภาพรายงานยอดขายรายเดือน" />
+        <img
+          src="/ovm/sales-screenshot.png"
+          alt="สรุปยอดขายรายเดือน"
+        />
       </div>
 
-      <p class="reveal">ผมรู้ คุณอาจจะมีคำถาม</p>
-      <p class="reveal"><u>"ถ้าพี่ไม่มีสินค้าละ มันจะเหมาะมั้ย?"</u></p>
-      <p class="reveal">ผมตอบแบบนี้ครับ การเริ่มอะไรซักอย่าง</p>
       <p class="reveal">
-        มันจะ<strong>ง่ายขึ้นเยอะ</strong>เลยถ้าเราไม่มีค่าใช้จ่ายตามมากดดัน
-      </p>
-      <p class="reveal">และระบบตู้ขายสินค้าออนไลน์ที่เราจะสร้างกันนี้</p>
-      <p class="reveal">
-        <u><strong>ไม่มีค่าใช้จ่ายรายเดือนเลยซักบาท</strong></u>
+        ถ้าคุณมีของขายอยู่แล้ว แต่ขายทาง Platform อื่นอยู่
       </p>
       <p class="reveal">
-        มันจะซื้อเวลาให้เราได้<strong>ลองโน่นลองนี่เต็มที่</strong>เลย
+        ผมว่าตอนนี้คือโอกาสดี ที่คุณจะสร้างพื้นที่ของตัวเองไว้
+      </p>
+      <p class="reveal">เพราะนี่จะเป็น "ร้าน" ของคุณจริงๆ</p>
+      <p class="reveal">
+        แต่งเองได้ <strong>บ่งบอกความเป็นเราได้เต็มที่</strong>
       </p>
       <p class="reveal">
-        และถ้าคุณมีของขายอยู่แล้ว แต่ขายทาง Platform อื่นอยู่
+        พ่วงระบบอัตโนมัติ <strong>เบาสมองเราไปเยอะ</strong>
       </p>
-      <p class="reveal">โห...<u><strong>ยิ่งเหมาะเลย</strong></u></p>
       <p class="reveal">
-        เพราะนี่จะเป็นพื้นที่ของคุณจริงๆ ชอบดีไซน์แบบไหน แต่งเองได้เลย
-      </p>
-      <p class="reveal"><strong>บ่งบอกความเป็นเราได้เต็มที่</strong></p>
-      <p class="reveal">
-        และที่สำคัญที่สุด มันจะ<strong>ไม่มีใครสามารถปิดร้านคุณได้</strong>
+        และที่สำคัญที่สุด มันจะ<strong
+          >ไม่มีใครสามารถปิดร้านคุณได้</strong
+        >
       </p>
 
       <br />
 
       <p class="reveal">
-        ถ้าคุณเป็นคนที่:<br />
-        → อยากเปลี่ยน<strong>ความรู้ในหัวเป็นเงิน</strong><br />
-        → อยากมี<strong>พื้นที่ขายสินค้าออนไลน์ของตัวเอง</strong><br />
-        → อยากรู้ว่า<strong
-          >การตื่นมาแล้วมีแจ้งเตือนเงินเข้ามันรู้สึกยังไง</strong
+        ถ้าคุณเป็นคนที่<strong>ขาย Digital Product</strong> อยู่แล้ว<br />
+        → อยากมี<strong>พื้นที่ขายสินค้าออนไลน์ของตัวเอง</strong
+        >แบบจริงๆ ซักที<br />
+        → อยากรู้ว่าการตื่นมาแล้ว<strong
+          >มีแจ้งเตือนเงินเข้ามันรู้สึกยังไง</strong
         ><br />
         → ไม่อยากนั่ง<strong>จ่ายค่าระบบรายเดือน</strong><br />
-        → ไม่อยาก<strong>เสียเงินเสียเวลา</strong>ไปลองผิดลองถูก
+        → ไม่อยาก<strong>เสียเงินเสียเวลาไปลองผิดลองถูก</strong>
       </p>
       <div class="callout reveal">
         <p><strong>Online Vending Machine คือคำตอบสำหรับคุณเลยครับ</strong></p>
       </div>
 
-      <p class="reveal">
-        ผมมั่นใจว่า<u><strong>คุณต้องรัก</strong></u>มันแน่นอน
-      </p>
-      <p class="reveal">แล้วเจอกันข้างในค้าบ :)</p>
+      <p class="reveal">ผมมั่นใจว่าคุณต้อง<u>รักมันแน่นอน</u></p>
+      <p class="reveal">แล้วเจอกันข้างในค้าบ</p>
       <p class="reveal">กีตาร์</p>
 
       <div style="text-align:center; margin-top: 56px;" class="reveal">
@@ -555,13 +540,25 @@
 
       <!-- Special bonus -->
       <div class="special-bonus reveal">
-        <span class="eyebrow">Special Bonus</span>
-        <h3 class="heading-md">0 to 100k Solo-Blueprint</h3>
+        <span class="eyebrow">Special Bonus 200 คนแรกเท่านั้น</span>
+        <h3 class="heading-md">พิเศษสำหรับคนที่จะลุยจริง</h3>
         <ul class="sb-list">
-          <li>ผมจะแชร์เคสของตัวเองว่าตั้งแต่ 0 ผมเริ่มยังไง</li>
-          <li>เครื่องมือที่ใช้และสิ่งที่เราต้องรู้มีอะไรบ้าง</li>
-          <li>ถ้าอยากสเกล ควรศึกษาเรื่องไหนบ้าง</li>
-          <li>เพื่อให้คุณมีภาพในหัวที่ชัดว่าคุณควรคาดหวังอะไรในจุดไหน</li>
+          <li class="sb-title">
+            Simple Course Website (
+            <a
+              class="sb-example-link"
+              href="https://dds.website1wun.com/login"
+              target="_blank"
+              rel="noopener noreferrer">ตัวอย่าง</a
+            >)
+          </li>
+          <li>สร้างพื้นที่ให้คนมาเรียนคอร์สของคุณแบบง่ายๆ</li>
+          <li>ไม่มีค่าใช้จ่ายรายเดือน ไม่ต้องเซ็ทระบบสมาชิกยุ่งยาก</li>
+          <li>ให้นักเรียนเข้าดูด้วย Password ที่เราส่งให้</li>
+          <li class="sb-title">Checklist Landing Page หลักล้าน</li>
+          <li>ถ้าคุณอยากขายสินค้าด้วย Landing Page แต่สับสน</li>
+          <li>อยากรู้ว่าเบื้องหลังคืออะไร ต้องมีส่วนประกอบอะไรบ้าง</li>
+          <li>ผมมี Checklist ให้คุณพร้อมเริ่มได้เองเลย</li>
         </ul>
       </div>
     </div>
@@ -571,20 +568,19 @@
     <div class="price-box reveal" id="early-bird">
       <span class="price-tag">Early Bird</span>
       <p class="price-intro">
-        ระบบนี้ผมใช้สร้างรายได้มาแล้ว <u>6 หลัก</u><br />
+        ระบบนี้ผมใช้สร้างรายได้มาแล้ว <u>7 หลัก</u><br />
         เป็นสิ่งที่คุณจะนำไปทำซ้ำกี่รอบก็ได้<br />
         ทดสอบไอเดียขายของได้ไม่จำกัด
       </p>
-      <p class="price-original">มูลค่ารวมของคอร์สนี้อยู่ที่ <span>28,950 บาท</span></p>
-      <p class="price-reason">แต่สำหรับ Early Bird รับไปเลย</p>
+      <p class="price-original">มูลค่ารวมของคอร์สนี้จริงๆ อยู่ที่ <span>28,950 บาท</span></p>
+      <p class="price-reason">แต่สำหรับ Early Bird รับไปเลยแค่</p>
       <div class="price-row">
         <span class="label">เพียง</span>
-        <span class="amount">3,790</span>
+        <span class="amount"><u>5,790</u></span>
         <span class="unit">บาท</span>
       </div>
       <p class="price-note">
-        ถ้าคุณอยากเริ่มต้นการเดินทางบนโลกออนไลน์<br />
-        อยากมีร้านของตัวเอง แต่งได้ตามใจ<br />
+        ถ้าคุณอยากมีร้านของตัวเอง แต่งได้ตามใจ<br />
         ไม่อยากไปติดอยู่กับระบบที่จะปิดคุณวันไหนก็ไม่รู้<br />
         เก็บคุณรายเดือนทั้งๆ ที่คุณยังขายไม่ได้<br />
         <strong>มาลุยกันข้างในได้เลยค้าบ</strong>
@@ -1671,11 +1667,37 @@
     position: relative;
     line-height: 1.75;
   }
-  .sb-list li::before {
+  .sb-list li:not(.sb-title)::before {
     content: "→";
     position: absolute;
     left: 0;
     color: var(--accent);
+  }
+  .sb-list li.sb-title {
+    padding-left: 0;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.35;
+    margin-top: 10px;
+    margin-bottom: 2px;
+    background: linear-gradient(90deg, rgba(201, 126, 20, 0.24), rgba(201, 126, 20, 0.08));
+    border: 1px solid rgba(201, 126, 20, 0.35);
+    border-radius: 12px;
+    padding: 10px 14px;
+  }
+  .sb-list li.sb-title:first-child {
+    margin-top: 0;
+  }
+  .sb-example-link {
+    color: #ffd78a;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 800;
+  }
+  .sb-example-link:hover {
+    color: #ffe7b5;
   }
 
   /* ─── ══════════════════════════════════
