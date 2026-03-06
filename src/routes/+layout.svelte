@@ -92,11 +92,11 @@
               class="block transition-opacity hover:opacity-80"
             >
               <img
-                src="/w1w/w1w-logo.webp"
-                alt="Website 1 Wun"
+                src="/ovm/ovm-logo-black.png"
+                alt="Online Vending Machine"
                 class="h-8 sm:h-10 w-auto"
-                width="144"
-                height="40"
+                width="300"
+                height="150"
                 decoding="async"
               />
             </a>

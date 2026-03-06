@@ -87,8 +87,8 @@
     <div class="text-center space-y-4">
       <a href="/" class="inline-block">
         <img
-          src="/w1w/w1w-logo.webp"
-          alt="Website 1 Wun"
+          src="/ovm/ovm-logo-black.png"
+          alt="Online Vending Machine"
           class="h-10 sm:h-12 w-auto mx-auto"
         />
       </a>

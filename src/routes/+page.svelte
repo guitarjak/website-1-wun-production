@@ -114,6 +114,17 @@
 ═══════════════════════════════════ -->
 <section class="hero">
   <div class="wrap">
+    <div class="reveal" style="margin-bottom: 18px;">
+      <img
+        class="hero-logo"
+        src="/ovm/ovm-logo-black.png"
+        alt="Online Vending Machine"
+        style="height: auto;"
+        width="300"
+        height="150"
+        decoding="async"
+      />
+    </div>
     <span class="eyebrow reveal">Online Vending Machine</span>
     <h1 class="heading-xl reveal d1">
       สร้าง<span class="hero-highlight">ตู้ขาย Digital Product</span><br
@@ -1136,6 +1147,12 @@
     );
   }
 
+  .hero-logo {
+    width: min(210px, 57vw);
+    display: block;
+    margin: 0 auto;
+  }
+
   /* Hero-specific type overrides — smaller to fit above the fold */
   .hero .eyebrow {
     margin-bottom: 10px;
@@ -1823,7 +1840,10 @@
       padding: 72px 0;
     }
     .hero {
-      padding: 100px 0 72px;
+      padding: 56px 0 72px;
+    }
+    .hero-logo {
+      width: min(147px, 40vw);
     }
     .hero .heading-xl {
       font-size: 28.8px;
