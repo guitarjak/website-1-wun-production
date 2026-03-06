@@ -468,9 +468,6 @@
             <li>เข้าใจการเอาร้านขึ้นโลกออนไลน์แบบฟรี</li>
           </ul>
         </div>
-        <div class="offer-price">
-          <span class="strike">5,950 บาท</span>
-        </div>
       </div>
 
       <!-- Bonus 1 -->
@@ -485,17 +482,13 @@
             <li>ประหยัดเวลาชีวิตและพลังงานสมองคุณแบบมหาศาล</li>
           </ul>
         </div>
-        <div class="offer-price">
-          <span class="strike">15,000 บาท</span>
-          <span class="offer-price-note">(ผมคิดลูกค้ารานี้จริงๆ)</span>
-        </div>
       </div>
 
       <!-- Bonus 2 -->
       <div class="offer-card reveal">
         <div>
           <span class="offer-badge">โบนัส #2</span>
-          <h3 class="offer-title">Support Group</h3>
+          <h3 class="offer-title">Community Support Group</h3>
           <ul class="offer-feats">
             <li>เพื่อให้ไม่เหงา คุณไม่ได้เดินคนเดียวแน่นอน</li>
             <li>มีกลุ่มไว้พูดคุยสอบถาม ระดมไอเดีย หาเพื่อน</li>
@@ -503,9 +496,6 @@
               คำถาม หรือ อะไรที่อยากทำได้แล้วรีเควสเยอะ ผม Update ในคอร์สให้
             </li>
           </ul>
-        </div>
-        <div class="offer-price">
-          <span class="strike">4,590 บาท</span>
         </div>
       </div>
 
@@ -526,60 +516,90 @@
             </li>
           </ul>
         </div>
-        <div class="offer-price">
-          <span class="strike">2,950 บาท</span>
-        </div>
-      </div>
-
-      <!-- Special bonus -->
-      <div class="special-bonus reveal">
-        <span class="eyebrow">Special Bonus 200 คนแรกเท่านั้น</span>
-        <h3 class="heading-md">พิเศษสำหรับคนที่จะลุยจริง</h3>
-        <ul class="sb-list">
-          <li class="sb-title">
-            Simple Course Website (
-            <a
-              class="sb-example-link"
-              href="https://dds.website1wun.com/login"
-              target="_blank"
-              rel="noopener noreferrer">ตัวอย่าง</a
-            >)
-          </li>
-          <li>สร้างพื้นที่ให้คนมาเรียนคอร์สของคุณแบบง่ายๆ</li>
-          <li>ไม่มีค่าใช้จ่ายรายเดือน ไม่ต้องเซ็ทระบบสมาชิกยุ่งยาก</li>
-          <li>ให้นักเรียนเข้าดูด้วย Password ที่เราส่งให้</li>
-          <li class="sb-title">Checklist Landing Page หลักล้าน</li>
-          <li>ถ้าคุณอยากขายสินค้าด้วย Landing Page แต่สับสน</li>
-          <li>อยากรู้ว่าเบื้องหลังคืออะไร ต้องมีส่วนประกอบอะไรบ้าง</li>
-          <li>ผมมี Checklist ให้คุณพร้อมเริ่มได้เองเลย</li>
-        </ul>
       </div>
     </div>
     <!-- /offer-list -->
 
+    <div class="section-header reveal">
+      <h2 class="heading-lg">
+        ถึงตรงนี้คุณอาจจะคิดว่า...<br>เดี๋ยวลองหาวิธีทำเองก็ได้?
+      </h2>
+    </div>
+
+    <div class="story-body">
+      <p class="reveal">
+        ความคิดนี้ไม่ผิดเลยครับ แต่ผมอยากชวนดูภาพจริงก่อนตัดสินใจ<br>
+        เพราะหลายคนไปสะดุดตรง "<u>ค่าใช้จ่ายแฝง</u>" หลังจากเริ่มทำไปแล้ว
+      </p>
+      <p class="reveal"><strong>ผมแกะมาให้คร่าวๆ:</strong></p>
+      <p class="reveal">
+        จ้างทำเว็บไซต์: <strong>10,000+ บาท</strong><br />
+        จ้างวางระบบ Automation: <strong>10,000+ บาท</strong><br />
+        ค่า Hosting: <strong>ประมาณ 500 บาท/เดือน</strong><br />
+        ค่าระบบ Automation: <strong>ประมาณ 800 บาท/เดือน</strong>
+      </p>
+      <p class="reveal">
+        นั่นหมายความว่าแค่เริ่มต้นก็ <strong>20,000+ บาท</strong> แล้วครับ<br>
+        และยังมี<u>รายเดือนต่อเนื่อง</u>อีกประมาณ <strong>1,300 บาท/เดือน</strong>
+      </p>
+      <p class="reveal">
+        แต่ใน OVM คุณจะได้<strong>ทั้งแนวทาง</strong>, <strong>โครงสร้างเว็บ</strong
+        >,<br />
+        <strong>ระบบขายอัตโนมัติ</strong> และ <strong>Template ที่พร้อม</strong
+        >ลงมือทำตามได้ทันที
+      </p>
+      <p class="reveal">
+        ทั้งหมดที่ว่ามานี้ คุณได้ไปในราคา<u>ไม่ถึงครี่ง</u><br />
+        เอ้ย...ไม่สิ<br />
+        ไม่ถึง<u>หนึ่งส่วนสี่</u>ของที่คุณจะจ่ายในการจ้างทำด้วยซ้ำ<br />
+        แถมคุณยัง<strong>ไม่ต้องเสียรายเดือนอีก</strong><br />
+        แถม<strong>ประหยัดเวลา ไม่ต้องไปงมอยู่</strong><br>
+        บวกกับคุณ<strong>ทำซ้ำกี่รอบก็ได้</strong><br>
+        ผมบอกเลยว่าถึงจุดนี้<i>เอเจนซี่โกรธผมแล้วนะ</i> ฮ่าา<br />
+      </p>
+    </div>
+
     <!-- Pricing summary -->
     <div class="price-box reveal" id="early-bird">
-      <span class="price-tag">Early Bird</span>
       <p class="price-intro">
-        ระบบนี้ผมใช้สร้างรายได้มาแล้ว <u>7 หลัก</u><br />
-        เป็นสิ่งที่คุณจะนำไปทำซ้ำกี่รอบก็ได้<br />
-        ทดสอบไอเดียขายของได้ไม่จำกัด
+        ใช่ครับ...<br>พวกเราสามารถมาลุยใน OVM<br />
+        ได้ในราคาเพียง
       </p>
-      <p class="price-original">มูลค่ารวมของคอร์สนี้จริงๆ อยู่ที่ <span>28,950 บาท</span></p>
-      <p class="price-reason">แต่สำหรับ Early Bird รับไปเลยแค่</p>
       <div class="price-row">
-        <span class="label">เพียง</span>
-        <span class="amount"><u>5,790</u></span>
-        <span class="unit">บาท</span>
+          <span class="amount"><u>4,890 บาท</u></span>
       </div>
-      <p class="price-note">
-        ถ้าคุณอยากมีร้านของตัวเอง แต่งได้ตามใจ<br />
-        ไม่อยากไปติดอยู่กับระบบที่จะปิดคุณวันไหนก็ไม่รู้<br />
-        เก็บคุณรายเดือนทั้งๆ ที่คุณยังขายไม่ได้<br />
-        <strong>มาลุยกันข้างในได้เลยค้าบ</strong>
-      </p>
+      <p class="price-only">เท่านั้น</p>
       <a href="#early-bird" class="btn btn--lg">พร้อมลุยแล้ว!</a
       >
+    </div>
+
+    <p class="price-bonus-lead reveal">
+      ยังไม่หมดนะ<br />
+      ผมมีโบนัสพิเศษให้ด้วย
+    </p>
+
+    <!-- Special bonus -->
+    <div class="offer-card special-bonus reveal">
+      <span class="eyebrow">Special Bonus 200 คนแรกเท่านั้น</span>
+      <h3 class="heading-md">พิเศษสำหรับคนที่จะลุยจริง</h3>
+      <ul class="sb-list">
+        <li class="sb-title">
+          Simple Course Website (
+          <a
+            class="sb-example-link"
+            href="https://dds.website1wun.com/login"
+            target="_blank"
+            rel="noopener noreferrer">ตัวอย่าง</a
+          >)
+        </li>
+        <li>สร้างพื้นที่ให้คนมาเรียนคอร์สของคุณแบบง่ายๆ</li>
+        <li>ไม่มีค่าใช้จ่ายรายเดือน ไม่ต้องเซ็ทระบบสมาชิกยุ่งยาก</li>
+        <li>ให้นักเรียนเข้าดูด้วย Password ที่เราส่งให้</li>
+        <li class="sb-title">Checklist Landing Page หลักล้าน</li>
+        <li>ถ้าคุณอยากขายสินค้าด้วย Landing Page แต่สับสน</li>
+        <li>อยากรู้ว่าเบื้องหลังคืออะไร ต้องมีส่วนประกอบอะไรบ้าง</li>
+        <li>ผมมี Checklist ให้คุณพร้อมเริ่มได้เองเลย</li>
+      </ul>
     </div>
 
   </div>
@@ -1520,28 +1540,13 @@
     color: var(--accent);
   }
 
-  .offer-price {
-    text-align: right;
-    flex-shrink: 0;
+  .cost-note-plain {
+    font-size: 13px !important;
+    color: var(--gray-light) !important;
+    line-height: 1.7 !important;
+    margin-top: 6px !important;
   }
-  .offer-price .strike {
-    font-size: 19px;
-    font-weight: 700;
-    color: var(--black);
-    display: block;
-    margin-bottom: 4px;
-    line-height: 1.2;
-  }
-  .offer-card.dark .offer-price .strike {
-    color: #fff;
-  }
-  .offer-price-note {
-    display: block;
-    margin-top: 2px;
-    font-size: 11px;
-    color: var(--gray-mid);
-    line-height: 1.4;
-  }
+
   /* Pricing box — dark & commanding */
   .price-box {
     background: var(--black);
@@ -1564,10 +1569,10 @@
   }
 
   .price-intro {
-    font-size: 15px;
+    font-size: 18px;
     color: #ddd7cb;
     margin-bottom: 18px;
-    line-height: 1.85;
+    line-height: 2.05;
   }
 
   .price-original {
@@ -1617,35 +1622,57 @@
     margin-bottom: 10px;
     line-height: 1.7;
   }
+  .price-only {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin: 0 0 24px;
+    line-height: 1.2;
+  }
+  .price-bonus-lead {
+    margin: 34px auto 12px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.9;
+    color: var(--gray-dark);
+    max-width: 640px;
+  }
   .price-note strong {
     color: #fff;
   }
 
-  /* Special bonus dark block */
+  /* Special bonus */
   .special-bonus {
-    background: #1e1c15;
-    border: 1px solid #2e2c22;
-    border-radius: 20px;
-    padding: 40px 44px;
-    margin-top: 40px;
+    display: block;
+    margin-top: 18px;
     text-align: left;
+    border-color: rgba(201, 126, 20, 0.55);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 248, 232, 0.98) 0%,
+      rgba(255, 255, 255, 1) 100%
+    );
+    box-shadow: 0 10px 34px rgba(201, 126, 20, 0.16);
   }
   .special-bonus .eyebrow {
     display: inline-block;
-    color: #f3be67;
-    font-size: 12.5px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    background: rgba(201, 126, 20, 0.16);
-    border: 1px solid rgba(201, 126, 20, 0.35);
-    padding: 6px 12px;
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    background: linear-gradient(90deg, #c97e14 0%, #de992f 100%);
+    border: 1px solid #b46a00;
+    padding: 8px 14px;
     border-radius: 999px;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 22px rgba(201, 126, 20, 0.3);
   }
   .special-bonus .heading-md {
-    color: #fff;
-    margin-bottom: 20px;
+    color: var(--black);
+    margin-bottom: 18px;
     margin-top: 8px;
+    font-size: 31px;
   }
   .sb-list {
     list-style: none;
@@ -1655,7 +1682,7 @@
   }
   .sb-list li {
     font-size: 15px;
-    color: #a09e96;
+    color: var(--gray-dark);
     padding-left: 22px;
     position: relative;
     line-height: 1.75;
@@ -1668,7 +1695,7 @@
   }
   .sb-list li.sb-title {
     padding-left: 0;
-    color: #fff;
+    color: var(--black);
     font-size: 18px;
     font-weight: 700;
     letter-spacing: 0.01em;
@@ -1684,13 +1711,13 @@
     margin-top: 0;
   }
   .sb-example-link {
-    color: #ffd78a;
+    color: #b36a00;
     text-decoration: underline;
     text-underline-offset: 3px;
     font-weight: 800;
   }
   .sb-example-link:hover {
-    color: #ffe7b5;
+    color: #8f5400;
   }
 
   /* ─── ══════════════════════════════════
@@ -1866,9 +1893,6 @@
       gap: 20px;
       padding: 28px 24px;
     }
-    .offer-price {
-      text-align: left;
-    }
     .price-box {
       padding: 44px 28px;
     }
@@ -1877,6 +1901,11 @@
     }
     .special-bonus {
       padding: 28px 24px;
+    }
+    .price-bonus-lead {
+      font-size: 16px;
+      line-height: 1.85;
+      margin-top: 26px;
     }
   }
 
