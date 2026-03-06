@@ -130,7 +130,7 @@
 
     <div class="vsl reveal d4">
       <div style="position:relative;padding-top:56.25%;">
-        <iframe src="https://player.mediadelivery.net/embed/612201/b0a4ed68-2362-4981-89e6-eb2fadc7d3b5?autoplay=true&loop=false&muted=false&preload=true&responsive=true" loading="lazy" style="border:0;position:absolute;top:0;height:100%;width:100%;" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowfullscreen="true"></iframe>
+        <iframe src="https://player.mediadelivery.net/embed/612201/b0a4ed68-2362-4981-89e6-eb2fadc7d3b5?autoplay=true&loop=false&muted=false&preload=true&responsive=true" loading="lazy" style="border:0;position:absolute;top:0;height:100%;width:100%;" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowfullscreen="true" title="Online Vending Machine VSL Video"></iframe>
       </div>
     </div>
 
@@ -1540,32 +1540,12 @@
     color: var(--accent);
   }
 
-  .cost-note-plain {
-    font-size: 13px !important;
-    color: var(--gray-light) !important;
-    line-height: 1.7 !important;
-    margin-top: 6px !important;
-  }
-
   /* Pricing box — dark & commanding */
   .price-box {
     background: var(--black);
     border-radius: 28px;
     padding: 64px 56px;
     text-align: center;
-  }
-
-  .price-tag {
-    display: inline-block;
-    background: var(--accent);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 5px 16px;
-    border-radius: 50px;
-    margin-bottom: 24px;
   }
 
   .price-intro {
@@ -1575,16 +1555,6 @@
     line-height: 2.05;
   }
 
-  .price-original {
-    font-size: 15px;
-    color: var(--gray-light);
-    margin-bottom: 6px;
-  }
-  .price-original span {
-    font-weight: 600;
-    color: #fff;
-  }
-
   .price-row {
     display: flex;
     align-items: baseline;
@@ -1592,35 +1562,12 @@
     gap: 12px;
     margin-bottom: 8px;
   }
-  .price-row .label {
-    font-size: 18px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.6);
-  }
   .price-row .amount {
     font-size: 72px;
     font-weight: 700;
     color: #fff;
     line-height: 1;
     letter-spacing: -0.01em;
-  }
-  .price-row .unit {
-    font-size: 18px;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.5);
-  }
-
-  .price-note {
-    font-size: 14.5px;
-    color: var(--gray-light);
-    margin-bottom: 36px;
-    line-height: 1.85;
-  }
-  .price-reason {
-    font-size: 14px;
-    color: var(--gray-light);
-    margin-bottom: 10px;
-    line-height: 1.7;
   }
   .price-only {
     font-size: 22px;
@@ -1637,9 +1584,6 @@
     line-height: 1.9;
     color: var(--gray-dark);
     max-width: 640px;
-  }
-  .price-note strong {
-    color: #fff;
   }
 
   /* Special bonus */
