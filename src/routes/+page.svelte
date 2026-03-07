@@ -285,7 +285,6 @@
     </div>
 
     <div class="story-body">
-      <p class="reveal">ถึงคุณคนที่กำลังวิ่งตามความฝัน...</p>
       <p class="reveal">
         ถ้าคุณกำลังหาอะไรบางอย่างที่ใช้เวลาแค่ <strong>1 วัน</strong>ในการทำ
       </p>
