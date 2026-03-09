@@ -1,7 +1,26 @@
 <script>
   import { onMount } from "svelte";
+  import { appendFbclidToUrl, captureAndStoreFbclid } from "$lib/fbclid";
+
+  const checkoutBaseUrl = "https://pay.website1wun.com/ovm";
+  let checkoutHref = checkoutBaseUrl;
+
+  function updateCheckoutHref() {
+    checkoutHref = appendFbclidToUrl(checkoutBaseUrl);
+  }
+
+  /**
+   * @param {MouseEvent & { currentTarget: HTMLAnchorElement }} event
+   */
+  function handleCheckoutClick(event) {
+    updateCheckoutHref();
+    event.currentTarget.href = checkoutHref;
+  }
 
   onMount(() => {
+    captureAndStoreFbclid();
+    updateCheckoutHref();
+
     const obs = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
@@ -579,7 +598,7 @@
           <span class="amount"><u>4,890 บาท</u></span>
       </div>
       <p class="price-only">เท่านั้น</p>
-      <a href="https://pay.website1wun.com/ovm" class="btn btn--lg">พร้อมลุยแล้ว!</a
+      <a href={checkoutHref} class="btn btn--lg" on:click={handleCheckoutClick}>พร้อมลุยแล้ว!</a
       >
     </div>
 
