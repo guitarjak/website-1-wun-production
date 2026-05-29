@@ -1,9 +1,18 @@
 import { redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals }) => {
-  // Don't check session here - let the client handle the auth flow
-  // The session will be established when Supabase processes the hash fragments
+export const load: PageServerLoad = async ({ locals, url }) => {
+  const code = url.searchParams.get('code');
+
+  if (code) {
+    const { data: exchangeData, error } = await locals.supabase.auth.exchangeCodeForSession(code);
+    if (!error && exchangeData.session) {
+      return { session: exchangeData.session };
+    }
+    // Exchange failed — return empty so client shows "invalid link" error
+    return {};
+  }
+
   return {};
 };
 
